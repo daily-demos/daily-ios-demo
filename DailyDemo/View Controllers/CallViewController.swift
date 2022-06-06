@@ -38,8 +38,8 @@ class CallViewController: UIViewController {
     // MARK: - Call state
 
     private var callState: CallState = .new
-    private lazy var inputs: InputSettings? = self.callClient.inputs()
-    private lazy var publishing: PublishingSettings? = self.callClient.publishing()
+    private lazy var inputs: InputSettings = self.callClient.inputs()
+    private lazy var publishing: PublishingSettings = self.callClient.publishing()
     private let userDefaults: UserDefaults = .standard
 
     // MARK: - Convenience getters
@@ -62,19 +62,19 @@ class CallViewController: UIViewController {
     }
 
     private var cameraIsEnabled: Bool {
-        self.inputs?.camera?.isEnabled ?? true
+        self.inputs.camera.isEnabled
     }
 
     private var microphoneIsEnabled: Bool {
-        self.inputs?.microphone?.isEnabled ?? true
+        self.inputs.microphone.isEnabled
     }
 
     private var cameraIsPublishing: Bool {
-        self.publishing?.camera?.isPublishing ?? true
+        self.publishing.camera.isPublishing
     }
 
     private var microphoneIsPublishing: Bool {
-        self.publishing?.microphone?.isPublishing ?? true
+        self.publishing.microphone.isPublishing
     }
 
     private var eventSubscriptions: Set<AnyCancellable> = []
