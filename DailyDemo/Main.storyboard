@@ -95,7 +95,7 @@
                                                                 <constraint firstAttribute="width" constant="40" id="roR-4Y-GRF"/>
                                                                 <constraint firstAttribute="height" constant="40" id="tlg-Nc-74w"/>
                                                             </constraints>
-                                                            <color key="tintColor" systemColor="systemRedColor"/>
+                                                            <color key="tintColor" systemColor="systemMintColor"/>
                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                             <state key="normal" image="camera" catalog="system"/>
                                                             <state key="selected" image="camera.fill" catalog="system"/>
@@ -114,7 +114,7 @@
                                                                 <constraint firstAttribute="width" constant="40" id="rxI-OV-jvb"/>
                                                                 <constraint firstAttribute="height" constant="40" id="vtX-q6-gYa"/>
                                                             </constraints>
-                                                            <color key="tintColor" systemColor="systemRedColor"/>
+                                                            <color key="tintColor" systemColor="systemMintColor"/>
                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                             <state key="normal" image="mic" catalog="system"/>
                                                             <state key="selected" image="mic.fill" catalog="system"/>
@@ -146,7 +146,7 @@
                                                                 <constraint firstAttribute="height" constant="40" id="hVI-li-tbF"/>
                                                                 <constraint firstAttribute="width" constant="40" id="kJz-JT-YCh"/>
                                                             </constraints>
-                                                            <color key="tintColor" systemColor="systemRedColor"/>
+                                                            <color key="tintColor" systemColor="systemMintColor"/>
                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                             <state key="normal" image="camera" catalog="system"/>
                                                             <state key="selected" image="camera.fill" catalog="system"/>
@@ -165,7 +165,7 @@
                                                                 <constraint firstAttribute="width" constant="40" id="e7g-mT-LuN"/>
                                                                 <constraint firstAttribute="height" constant="40" id="fwf-8v-4TW"/>
                                                             </constraints>
-                                                            <color key="tintColor" systemColor="systemRedColor"/>
+                                                            <color key="tintColor" systemColor="systemMintColor"/>
                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                             <state key="normal" image="mic" catalog="system"/>
                                                             <state key="selected" image="mic.fill" catalog="system"/>
@@ -279,8 +279,8 @@
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
-        <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="systemMintColor">
+            <color red="0.0" green="0.7803921568627451" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
