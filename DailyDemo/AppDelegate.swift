@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
 
         // Daily scope logs:
-        Daily.setLogLevel(.error)
+        Daily.setLogLevel(.warn)
 
         // App scope logs:
         logger.logLevel = .trace

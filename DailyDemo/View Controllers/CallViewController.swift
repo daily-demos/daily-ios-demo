@@ -1,11 +1,8 @@
-import UIKit
-
 import AVFoundation
 import Combine
-
-import Logging
-
 import Daily
+import Logging
+import UIKit
 
 func dumped<T>(_ value: T) -> String {
     var string = ""
@@ -22,25 +19,33 @@ class CallViewController: UIViewController {
     @IBOutlet private weak var joinOrLeaveButton: UIButton!
     @IBOutlet private weak var roomURLField: UITextField!
 
-    @IBOutlet private weak var localLabel: UILabel!
-    @IBOutlet private weak var remoteLabel: UILabel!
-
-    @IBOutlet private weak var localVideoView: VideoView!
-    @IBOutlet private weak var remoteVideoView: VideoView!
-
-    @IBOutlet private weak var localVideoContainerView: UIView!
+    @IBOutlet private weak var localParticipantContainerView: UIView!
 
     @IBOutlet private weak var aspectRatioConstraint: NSLayoutConstraint!
     @IBOutlet private weak var bottomConstraint: NSLayoutConstraint!
 
-    private let callClient: CallClient = .init()
+    private weak var localParticipantViewController: ParticipantViewController! {
+        didSet {
+            self.localParticipantViewControllerDidChange(
+                self.localParticipantViewController
+            )
+        }
+    }
+
+    private weak var remoteParticipantViewController: ParticipantViewController!
+    private lazy var callClient: CallClient = .init()
 
     // MARK: - Call state
 
-    private var callState: CallState = .new
-    private lazy var inputs: InputSettings = self.callClient.inputs()
-    private lazy var publishing: PublishingSettings = self.callClient.publishing()
+    private lazy var callState: CallState = self.callClient.callState
+    private lazy var inputs: InputSettings = self.callClient.inputs
+    private lazy var publishing: PublishingSettings = self.callClient.publishing
+    private lazy var subscriptions: [ParticipantId: SubscriptionSettings] = self.callClient.subscriptions
+    private lazy var subscriptionProfiles: [SubscriptionProfile: SubscriptionProfileSettings] = self.callClient.subscriptionProfiles
+
     private let userDefaults: UserDefaults = .standard
+
+    private var localVideoSizeObserver: AnyCancellable? = nil
 
     // MARK: - Convenience getters
 
@@ -84,12 +89,12 @@ class CallViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.localVideoView.delegate = self
         self.roomURLField.delegate = self
 
         self.setupViews()
         self.setupNotificationObservers()
         self.setupEventListeners()
+        self.setupCallClient()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -110,12 +115,31 @@ class CallViewController: UIViewController {
             ))
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "embedLocalContainerView":
+            guard let destination = segue.destination as? ParticipantViewController else {
+                fatalError()
+            }
+            destination.callClient = self.callClient
+            self.localParticipantViewController = destination
+        case "embedRemoteContainerView":
+            guard let destination = segue.destination as? ParticipantViewController else {
+                fatalError()
+            }
+            destination.callClient = self.callClient
+            self.remoteParticipantViewController = destination
+        case _:
+            fatalError()
+        }
+    }
+
     // Perform some minimal programmatic view setup:
     private func setupViews() {
-        let viewLayer = self.localVideoContainerView.layer
-        viewLayer.cornerRadius = 20.0
-        viewLayer.cornerCurve = .continuous
-        viewLayer.masksToBounds = true
+        let localViewLayer = self.localParticipantViewController.view.layer
+        localViewLayer.cornerRadius = 20.0
+        localViewLayer.cornerCurve = .continuous
+        localViewLayer.masksToBounds = true
     }
 
     // Setup notification observers for responding to keyboard frame changes:
@@ -168,13 +192,34 @@ class CallViewController: UIViewController {
                     strongSelf.participantDidUpdate(event.participant)
                 case .participantLeft(let event):
                     strongSelf.participantDidLeave(event.participant)
+                case .activeSpeakerChanged(let event):
+                    strongSelf.activeSpeakerDidChange(event.participant)
                 case .error(let event):
                     strongSelf.errorDidOccur(event.message)
-                @unknown case _:
-                    fatalError()
+                case .subscriptionsUpdated(let event):
+                    strongSelf.subscriptionsDidUpdate(event.subscriptions)
+                case .subscriptionProfilesUpdated(let event):
+                    strongSelf.subscriptionProfilesDidUpdate(event.profiles)
+                @unknown default:
+                    break
                 }
             }
             .store(in: &eventSubscriptions)
+    }
+
+    private func setupCallClient() {
+        let _ = try! self.callClient.updateSubscriptionProfiles(.set([
+            .base: .set(.init(
+                camera: .set(.init(
+                    receiveSettings: .set(.init(maxQuality: .set(.low)))
+                ))
+            )),
+            .activeRemote: .set(.init(
+                camera: .set(.init(
+                    receiveSettings: .set(.init(maxQuality: .set(.high)))
+                ))
+            )),
+        ]))
     }
 
     // MARK: - Button actions
@@ -218,7 +263,7 @@ class CallViewController: UIViewController {
     }
 
     @IBAction private func didTapCameraInputButton(_ sender: UIButton) {
-        let isEnabled = sender.isSelected
+        let isEnabled = !sender.isSelected
 
         DispatchQueue.global().async {
             self.inputs = try! self.callClient.updateInputs(
@@ -229,7 +274,7 @@ class CallViewController: UIViewController {
     }
 
     @IBAction private func didTapMicrophoneInputButton(_ sender: UIButton) {
-        let isEnabled = sender.isSelected
+        let isEnabled = !sender.isSelected
 
         DispatchQueue.global().async {
             self.inputs = try! self.callClient.updateInputs(
@@ -240,7 +285,7 @@ class CallViewController: UIViewController {
     }
 
     @IBAction private func didTapCameraPublishingButton(_ sender: UIButton) {
-        let isEnabled = sender.isSelected
+        let isEnabled = !sender.isSelected
 
         DispatchQueue.global().async {
             self.publishing = try! self.callClient.updatePublishing(
@@ -251,13 +296,50 @@ class CallViewController: UIViewController {
     }
 
     @IBAction private func didTapMicrophonePublishingButton(_ sender: UIButton) {
-        let isEnabled = sender.isSelected
+        let isEnabled = !sender.isSelected
 
         DispatchQueue.global().async {
             self.publishing = try! self.callClient.updatePublishing(
                 .set(
                     .init(microphone: .set(.isPublishing(isEnabled)))
                 ))
+        }
+    }
+
+    // MARK: - Video size handling
+
+    func localParticipantViewControllerDidChange(_ controller: ParticipantViewController) {
+        self.localVideoSizeObserver = controller.videoSizePublisher.sink(
+            receiveValue: localVideoSizeDidChange(_:)
+        )
+    }
+
+    func localVideoSizeDidChange(_ videoSize: CGSize) {
+        // When the local video size changes we update its view's
+        // aspect-ratio layout constraint accordingly:
+
+        guard videoSize != .zero else {
+            // Make sure we don't divide by zero!
+            return
+        }
+
+        let aspectRatio: CGFloat = videoSize.width / videoSize.height
+
+        let containerView: UIView = self.localParticipantContainerView
+
+        // Setting a constraint's `isActive` to `false` also removes it:
+        self.aspectRatioConstraint.isActive = false
+
+        // So now we need to replace it with an updated constraint:
+        self.aspectRatioConstraint = containerView.widthAnchor.constraint(
+            equalTo: containerView.heightAnchor,
+            multiplier: aspectRatio
+        )
+        self.aspectRatioConstraint.priority = .required
+        self.aspectRatioConstraint.isActive = true
+
+        UIView.animate(withDuration: 0.25) {
+            self.view.setNeedsLayout()
         }
     }
 
@@ -286,25 +368,46 @@ class CallViewController: UIViewController {
         self.updateViews()
     }
 
+    private func subscriptionsDidUpdate(_ subscriptions: [ParticipantId: SubscriptionSettings]) {
+        logger.debug("Subscriptions updated:")
+        logger.debug("\(dumped(subscriptions))")
+
+        self.subscriptions = subscriptions
+    }
+
+    private func subscriptionProfilesDidUpdate(_ subscriptionProfiles: [SubscriptionProfile: SubscriptionProfileSettings]) {
+        logger.debug("Subscriptions profiles updated:")
+        logger.debug("\(dumped(subscriptionProfiles))")
+
+        self.subscriptionProfiles = subscriptionProfiles
+    }
+
     private func participantDidJoin(_ participant: Participant) {
         logger.debug("Participant joined:")
         logger.debug("\(dumped(participant))")
 
-        self.updateParticipant(participant)
+        self.updateParticipantViewControllers()
     }
 
     private func participantDidUpdate(_ participant: Participant) {
         logger.debug("Participant updated:")
         logger.debug("\(dumped(participant))")
 
-        self.updateParticipant(participant)
+        self.updateParticipantViewControllers()
     }
 
     private func participantDidLeave(_ participant: Participant) {
         logger.debug("Participant left:")
         logger.debug("\(dumped(participant))")
 
-        self.updateParticipant(participant, whoHasLeft: true)
+        self.updateParticipantViewControllers()
+    }
+
+    private func activeSpeakerDidChange(_ participant: Participant?) {
+        logger.debug("Active speaker changed:")
+        logger.debug("\(dumped(participant))")
+
+        self.updateParticipantViewControllers()
     }
 
     private func errorDidOccur(_ message: String) {
@@ -321,46 +424,77 @@ class CallViewController: UIViewController {
         self.joinOrLeaveButton.isEnabled = self.canJoinOrLeave
         self.joinOrLeaveButton.isSelected = self.isJoined
 
-        self.cameraInputButton.isSelected = self.cameraIsEnabled
-        self.microphoneInputButton.isSelected = self.microphoneIsEnabled
+        self.cameraInputButton.isSelected = !self.cameraIsEnabled
+        self.microphoneInputButton.isSelected = !self.microphoneIsEnabled
 
-        self.cameraPublishingButton.isSelected = self.cameraIsPublishing
-        self.microphonePublishingButton.isSelected = self.microphoneIsPublishing
+        self.cameraPublishingButton.isSelected = !self.cameraIsPublishing
+        self.microphonePublishingButton.isSelected = !self.microphoneIsPublishing
+    }
 
-        if (!self.isJoined) {
-            self.remoteLabel.text = ""
-            self.remoteVideoView.isHidden = true
-            // Note that if we *have* joined, we don't set isHidden = false
-            // quite yet (we wait for the remote participant's video)
+    private func updateParticipantViewControllers() {
+        // Update participant views based on current callClient state.
+        // We play it safe and update both local and remote views since active
+        // speaker status may have passed from one to the other.
+        let participants = self.callClient.participants
+        self.update(localParticipant: participants.local)
+        self.update(remoteParticipants: participants.remote)
+    }
+
+    private func update(localParticipant: Participant) {
+        self.localParticipantViewController.participant = localParticipant
+        self.localParticipantViewController.isActiveSpeaker = self.isActiveSpeaker(localParticipant)
+    }
+
+    private func update(remoteParticipants: [ParticipantId: Participant]) {
+        var remoteParticipantToDisplay: Participant?
+
+        // Choose a remote participant to display by going down the priority list:
+        // 1. A screen sharer
+        // 2. The active speaker
+        // 3. Whoever was previously displayed (if anyone)
+        // 4. Anyone else
+
+        // 1. If a remote participant is sharing their screen, choose them
+        remoteParticipantToDisplay = remoteParticipants.values.first { participant in
+            participant.media?.screenVideo.track != nil
+        }
+
+        // 2. If a remote participant is the active speaker, choose them
+        if remoteParticipantToDisplay == nil {
+            if let activeSpeaker = self.callClient.activeSpeaker, !activeSpeaker.info.isLocal {
+                remoteParticipantToDisplay = activeSpeaker
+            }
+        }
+
+        // 3. Choose whoever was previously displayed (if anyone)
+        if remoteParticipantToDisplay == nil {
+            if let previouslyDisplayedParticipantId = self.remoteParticipantViewController.participant?.id
+            {
+                remoteParticipantToDisplay = remoteParticipants[previouslyDisplayedParticipantId]
+            }
+        }
+
+        // 4. Choose anyone else (let's just go with the first remote participant)
+        if remoteParticipantToDisplay == nil {
+            remoteParticipantToDisplay = remoteParticipants.first?.value
+        }
+
+        // Display the chosen remote participant (can be nil)
+        self.remoteParticipantViewController.participant = remoteParticipantToDisplay
+        if let remoteParticipantToDisplay = remoteParticipantToDisplay {
+            self.remoteParticipantViewController.isActiveSpeaker = self.isActiveSpeaker(
+                remoteParticipantToDisplay)
+        } else {
+            self.remoteParticipantViewController.isActiveSpeaker = false
         }
     }
 
-    private func updateParticipant(_ participant: Participant, whoHasLeft hasLeft: Bool = false) {
-        let videoTrack = participant.media?.camera.track
-        let isLocal = participant.info.isLocal
-        let locality = isLocal ? "local" : "remote"
-        let trackDescription = String(describing: videoTrack)
-
-        let username = participant.info.username ?? "Guest"
-
-        // Assign name to label, hiding it if it's a remote participant who left:
-        let label: UILabel = isLocal ? self.localLabel : self.remoteLabel
-        label.text = (!isLocal && hasLeft) ? "" : username
-
-        // Assign track to video view:
-        let videoView: VideoView = isLocal ? self.localVideoView : self.remoteVideoView
-        videoView.track = videoTrack
-
-        // Hide video view if there's no video to play
-        // TODO(kompfner): Let's switch to using participant.media?.camera.state soon to show
-        // better video state UI (loading, interrupted, off, etc.). There are
-        // still issues, though, preventing us from using the state field today.
-        videoView.isHidden = videoTrack == nil
-
-        logger.debug("Updated \(locality) video view with optional track: \(trackDescription)")
+    private func isActiveSpeaker(_ participant: Participant) -> Bool {
+        let activeSpeaker = self.callClient.activeSpeaker
+        return activeSpeaker == participant
     }
 
-    @objc func adjustForKeyboard(_ notification: Notification) {
+    @objc private func adjustForKeyboard(_ notification: Notification) {
         // When the keyboard is shown/hidden make sure to move the text field up/down accordingly:
         let userInfoKey = UIResponder.keyboardFrameEndUserInfoKey
         guard let keyboardFrameEndValue = notification.userInfo?[userInfoKey] as? NSValue else {
@@ -385,26 +519,5 @@ extension CallViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // Hide the keyboard when user taps on "Return":
         return textField.endEditing(false)
-    }
-}
-
-extension CallViewController: VideoViewDelegate {
-    func videoView(_ videoView: VideoView, didChangeVideoSize size: CGSize) {
-        // When the video size changes we update the video-view's
-        // aspect-ratio layout constraint accordingly:
-
-        let aspectRatio: CGFloat = size.width / size.height
-
-        let view: UIView = self.localVideoContainerView
-        self.aspectRatioConstraint.isActive = false
-        self.aspectRatioConstraint = view.widthAnchor.constraint(
-            equalTo: view.heightAnchor,
-            multiplier: aspectRatio
-        )
-        self.aspectRatioConstraint.isActive = true
-
-        UIView.animate(withDuration: 0.25) {
-            self.view.setNeedsLayout()
-        }
     }
 }
