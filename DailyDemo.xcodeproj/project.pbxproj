@@ -109,7 +109,6 @@
 		CAE48E4A266A8C9A00D2CA2E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CA1B725126DCF05B006E7E2C /* Daily.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -468,7 +467,7 @@
 			repositoryURL = "https://github.com/daily-co/daily-client-ios";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.3.0;
+				minimumVersion = 0.3.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
