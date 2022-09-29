@@ -40,8 +40,8 @@ class CallViewController: UIViewController {
     private lazy var callState: CallState = self.callClient.callState
     private lazy var inputs: InputSettings = self.callClient.inputs
     private lazy var publishing: PublishingSettings = self.callClient.publishing
-    private lazy var subscriptions: [ParticipantId: SubscriptionSettings] = self.callClient.subscriptions
-    private lazy var subscriptionProfiles: [SubscriptionProfile: SubscriptionProfileSettings] = self.callClient.subscriptionProfiles
+    private lazy var subscriptions: SubscriptionSettingsById = self.callClient.subscriptions
+    private lazy var subscriptionProfiles: SubscriptionProfileSettingsByProfile = self.callClient.subscriptionProfiles
 
     private let userDefaults: UserDefaults = .standard
 
@@ -109,10 +109,11 @@ class CallViewController: UIViewController {
         self.roomURLField.text = self.roomURLString
 
         // Update inputs to enable video local view prior to joining:
-        self.inputs = try! self.callClient.updateInputs(
-            .set(
-                .init(camera: .set(.isEnabled(true)))
-            ))
+        self.inputs = try! self.callClient.updateInputs { inputs in
+            inputs(\.camera) { camera in
+                camera(\.isEnabled, true)
+            }
+        }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -208,18 +209,22 @@ class CallViewController: UIViewController {
     }
 
     private func setupCallClient() {
-        let _ = try! self.callClient.updateSubscriptionProfiles(.set([
-            .base: .set(.init(
-                camera: .set(.init(
-                    receiveSettings: .set(.init(maxQuality: .set(.low)))
-                ))
-            )),
-            .activeRemote: .set(.init(
-                camera: .set(.init(
-                    receiveSettings: .set(.init(maxQuality: .set(.high)))
-                ))
-            )),
-        ]))
+        let _ = try! self.callClient.updateSubscriptionProfiles { profiles in
+            profiles(.base) { base in
+                base(\.camera) { camera in
+                    camera(\.receiveSettings) { receiveSettings in
+                        receiveSettings(\.maxQuality, .low)
+                    }
+                }
+            }
+            profiles(.activeRemote) { activeRemote in
+                activeRemote(\.camera) { camera in
+                    camera(\.receiveSettings) { receiveSettings in
+                        receiveSettings(\.maxQuality, .high)
+                    }
+                }
+            }
+        }
     }
 
     // MARK: - Button actions
@@ -266,10 +271,11 @@ class CallViewController: UIViewController {
         let isEnabled = !sender.isSelected
 
         DispatchQueue.global().async {
-            self.inputs = try! self.callClient.updateInputs(
-                .set(
-                    .init(camera: .set(.isEnabled(isEnabled)))
-                ))
+            self.inputs = try! self.callClient.updateInputs { inputs in
+                inputs(\.camera) { camera in
+                    camera(\.isEnabled, isEnabled)
+                }
+            }
         }
     }
 
@@ -277,32 +283,35 @@ class CallViewController: UIViewController {
         let isEnabled = !sender.isSelected
 
         DispatchQueue.global().async {
-            self.inputs = try! self.callClient.updateInputs(
-                .set(
-                    .init(microphone: .set(.isEnabled(isEnabled)))
-                ))
+            self.inputs = try! self.callClient.updateInputs { inputs in
+                inputs(\.microphone) { microphone in
+                    microphone(\.isEnabled, isEnabled)
+                }
+            }
         }
     }
 
     @IBAction private func didTapCameraPublishingButton(_ sender: UIButton) {
-        let isEnabled = !sender.isSelected
+        let isPublishing = !sender.isSelected
 
         DispatchQueue.global().async {
-            self.publishing = try! self.callClient.updatePublishing(
-                .set(
-                    .init(camera: .set(.isPublishing(isEnabled)))
-                ))
+            self.publishing = try! self.callClient.updatePublishing { publishing in
+                publishing(\.camera) { camera in
+                    camera(\.isPublishing, isPublishing)
+                }
+            }
         }
     }
 
     @IBAction private func didTapMicrophonePublishingButton(_ sender: UIButton) {
-        let isEnabled = !sender.isSelected
+        let isPublishing = !sender.isSelected
 
         DispatchQueue.global().async {
-            self.publishing = try! self.callClient.updatePublishing(
-                .set(
-                    .init(microphone: .set(.isPublishing(isEnabled)))
-                ))
+            self.publishing = try! self.callClient.updatePublishing { publishing in
+                publishing(\.microphone) { microphone in
+                    microphone(\.isPublishing, isPublishing)
+                }
+            }
         }
     }
 
@@ -368,14 +377,14 @@ class CallViewController: UIViewController {
         self.updateViews()
     }
 
-    private func subscriptionsDidUpdate(_ subscriptions: [ParticipantId: SubscriptionSettings]) {
+    private func subscriptionsDidUpdate(_ subscriptions: SubscriptionSettingsById) {
         logger.debug("Subscriptions updated:")
         logger.debug("\(dumped(subscriptions))")
 
         self.subscriptions = subscriptions
     }
 
-    private func subscriptionProfilesDidUpdate(_ subscriptionProfiles: [SubscriptionProfile: SubscriptionProfileSettings]) {
+    private func subscriptionProfilesDidUpdate(_ subscriptionProfiles: SubscriptionProfileSettingsByProfile) {
         logger.debug("Subscriptions profiles updated:")
         logger.debug("\(dumped(subscriptionProfiles))")
 
