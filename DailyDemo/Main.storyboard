@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="LKB-Ce-Cn8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="LKB-Ce-Cn8">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -25,7 +25,7 @@
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SMm-Ur-jDB" userLabel="Local">
-                                <rect key="frame" x="20" y="54" width="100" height="100"/>
+                                <rect key="frame" x="20" y="58" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" priority="250" constant="100" id="04s-LZ-19f"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="CkE-xU-saB"/>
@@ -37,202 +37,260 @@
                                     <segue destination="Jvw-ZM-31W" kind="embed" identifier="embedLocalContainerView" id="Pkc-NC-slf"/>
                                 </connections>
                             </containerView>
-                            <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gb9-vT-0IZ">
-                                <rect key="frame" x="84" y="797" width="310" height="45"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="TLS-yn-lru">
-                                    <rect key="frame" x="0.0" y="0.0" width="310" height="45"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="28K-px-EIv">
-                                            <rect key="frame" x="227.5" y="8" width="75" height="29"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="75" id="VWJ-Bi-7JC"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                            <state key="normal" title="Join"/>
-                                            <state key="selected" title="Leave"/>
-                                            <connections>
-                                                <action selector="didTapLeaveOrJoinButton:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="hiN-u7-bqc"/>
-                                            </connections>
-                                        </button>
-                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="https://example.daily.co/room" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cAd-sb-N2T">
-                                            <rect key="frame" x="8" y="8" width="211.5" height="29"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="URL" returnKeyType="done" textContentType="url"/>
-                                        </textField>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="cAd-sb-N2T" firstAttribute="leading" secondItem="TLS-yn-lru" secondAttribute="leading" constant="8" id="GTD-ga-5df"/>
-                                        <constraint firstItem="cAd-sb-N2T" firstAttribute="top" secondItem="TLS-yn-lru" secondAttribute="top" constant="8" id="I4m-d0-EPS"/>
-                                        <constraint firstItem="28K-px-EIv" firstAttribute="leading" secondItem="cAd-sb-N2T" secondAttribute="trailing" constant="8" symbolic="YES" id="PdY-jW-QuX"/>
-                                        <constraint firstItem="28K-px-EIv" firstAttribute="bottom" secondItem="cAd-sb-N2T" secondAttribute="bottom" id="S5l-Iq-iIO"/>
-                                        <constraint firstItem="28K-px-EIv" firstAttribute="top" secondItem="cAd-sb-N2T" secondAttribute="top" id="nGY-yw-bjb"/>
-                                        <constraint firstAttribute="trailing" secondItem="28K-px-EIv" secondAttribute="trailing" constant="8" id="rcW-Nv-7Nz"/>
-                                        <constraint firstAttribute="bottom" secondItem="cAd-sb-N2T" secondAttribute="bottom" constant="8" id="vK8-ai-c16"/>
-                                    </constraints>
-                                </view>
-                                <blurEffect style="systemMaterial"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </visualEffectView>
-                            <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hJi-uv-Pos">
-                                <rect key="frame" x="84" y="731" width="310" height="56"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Rjk-zl-7nn">
-                                    <rect key="frame" x="0.0" y="0.0" width="310" height="56"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="K10-SN-rd6">
-                                            <rect key="frame" x="8" y="8" width="294.5" height="40"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="zPw-3x-xHw">
+                                <rect key="frame" x="64.5" y="706" width="329.5" height="170"/>
+                                <subviews>
+                                    <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hJi-uv-Pos">
+                                        <rect key="frame" x="0.0" y="0.0" width="329.5" height="56"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Rjk-zl-7nn">
+                                            <rect key="frame" x="0.0" y="0.0" width="330" height="56"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="oQ0-mj-QVG">
-                                                    <rect key="frame" x="0.0" y="0.0" width="125.5" height="40"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="K10-SN-rd6">
+                                                    <rect key="frame" x="8" y="8" width="313.5" height="40"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Inputs" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3n4-TH-1wO">
-                                                            <rect key="frame" x="0.0" y="0.0" width="35.5" height="40"/>
-                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <button toolTip="Camera Publishing" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nVD-be-Bda" customClass="ToggleButton" customModule="DailyDemo" customModuleProvider="target">
-                                                            <rect key="frame" x="40.5" y="0.0" width="40" height="40"/>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="oQ0-mj-QVG">
+                                                            <rect key="frame" x="0.0" y="0.0" width="132.5" height="40"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Inputs" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3n4-TH-1wO">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="42.5" height="40"/>
+                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <button toolTip="Camera Publishing" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nVD-be-Bda" customClass="ToggleButton" customModule="DailyDemo" customModuleProvider="target">
+                                                                    <rect key="frame" x="47.5" y="0.0" width="40" height="40"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="40" id="roR-4Y-GRF"/>
+                                                                        <constraint firstAttribute="height" constant="40" id="tlg-Nc-74w"/>
+                                                                    </constraints>
+                                                                    <color key="tintColor" systemColor="systemRedColor"/>
+                                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                    <state key="normal" image="video.fill" catalog="system"/>
+                                                                    <state key="selected" image="video.slash" catalog="system"/>
+                                                                    <userDefinedRuntimeAttributes>
+                                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                            <integer key="value" value="10"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                    </userDefinedRuntimeAttributes>
+                                                                    <connections>
+                                                                        <action selector="didTapCameraInputButton:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="8mj-30-eoB"/>
+                                                                    </connections>
+                                                                </button>
+                                                                <button toolTip="Microphone Publishing" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sml-v7-ZOX" customClass="ToggleButton" customModule="DailyDemo" customModuleProvider="target">
+                                                                    <rect key="frame" x="92.5" y="0.0" width="40" height="40"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="40" id="rxI-OV-jvb"/>
+                                                                        <constraint firstAttribute="height" constant="40" id="vtX-q6-gYa"/>
+                                                                    </constraints>
+                                                                    <color key="tintColor" systemColor="systemRedColor"/>
+                                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                    <state key="normal" image="mic.fill" catalog="system"/>
+                                                                    <state key="selected" image="mic.slash" catalog="system"/>
+                                                                    <connections>
+                                                                        <action selector="didTapMicrophoneInputButton:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="42c-a1-LhH"/>
+                                                                    </connections>
+                                                                </button>
+                                                            </subviews>
+                                                        </stackView>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2gZ-Fe-fUJ">
+                                                            <rect key="frame" x="140.5" y="0.0" width="4" height="40"/>
+                                                            <color key="backgroundColor" systemColor="separatorColor"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="40" id="roR-4Y-GRF"/>
-                                                                <constraint firstAttribute="height" constant="40" id="tlg-Nc-74w"/>
+                                                                <constraint firstAttribute="width" constant="4" id="hma-K5-u26"/>
                                                             </constraints>
-                                                            <color key="tintColor" systemColor="systemRedColor"/>
-                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                            <state key="normal" image="video.fill" catalog="system"/>
-                                                            <state key="selected" image="video.slash" catalog="system"/>
-                                                            <userDefinedRuntimeAttributes>
-                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                                    <integer key="value" value="10"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                            </userDefinedRuntimeAttributes>
-                                                            <connections>
-                                                                <action selector="didTapCameraInputButton:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="8mj-30-eoB"/>
-                                                            </connections>
-                                                        </button>
-                                                        <button toolTip="Microphone Publishing" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sml-v7-ZOX" customClass="ToggleButton" customModule="DailyDemo" customModuleProvider="target">
-                                                            <rect key="frame" x="85.5" y="0.0" width="40" height="40"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="40" id="rxI-OV-jvb"/>
-                                                                <constraint firstAttribute="height" constant="40" id="vtX-q6-gYa"/>
-                                                            </constraints>
-                                                            <color key="tintColor" systemColor="systemRedColor"/>
-                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                            <state key="normal" image="mic.fill" catalog="system"/>
-                                                            <state key="selected" image="mic.slash" catalog="system"/>
-                                                            <connections>
-                                                                <action selector="didTapMicrophoneInputButton:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="42c-a1-LhH"/>
-                                                            </connections>
-                                                        </button>
+                                                        </view>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="s0A-R3-Gea">
+                                                            <rect key="frame" x="152.5" y="0.0" width="161" height="40"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Publishing" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ISd-iP-LKZ">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="71" height="40"/>
+                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <button toolTip="Camera Publishing" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Vx-dD-fHH" customClass="ToggleButton" customModule="DailyDemo" customModuleProvider="target">
+                                                                    <rect key="frame" x="76" y="0.0" width="40" height="40"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="40" id="hVI-li-tbF"/>
+                                                                        <constraint firstAttribute="width" constant="40" id="kJz-JT-YCh"/>
+                                                                    </constraints>
+                                                                    <color key="tintColor" systemColor="systemRedColor"/>
+                                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                    <state key="normal" image="video.fill" catalog="system"/>
+                                                                    <state key="selected" image="video.slash" catalog="system"/>
+                                                                    <userDefinedRuntimeAttributes>
+                                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                            <integer key="value" value="10"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                    </userDefinedRuntimeAttributes>
+                                                                    <connections>
+                                                                        <action selector="didTapCameraPublishingButton:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="KXn-EN-nnz"/>
+                                                                    </connections>
+                                                                </button>
+                                                                <button toolTip="Microphone Publishing" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YOc-hy-kIc" customClass="ToggleButton" customModule="DailyDemo" customModuleProvider="target">
+                                                                    <rect key="frame" x="121" y="0.0" width="40" height="40"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="40" id="e7g-mT-LuN"/>
+                                                                        <constraint firstAttribute="height" constant="40" id="fwf-8v-4TW"/>
+                                                                    </constraints>
+                                                                    <color key="tintColor" systemColor="systemRedColor"/>
+                                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                    <state key="normal" image="mic.fill" catalog="system"/>
+                                                                    <state key="selected" image="mic.slash" catalog="system"/>
+                                                                    <connections>
+                                                                        <action selector="didTapMicrophonePublishingButton:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="Y72-L3-Wa7"/>
+                                                                    </connections>
+                                                                </button>
+                                                            </subviews>
+                                                        </stackView>
                                                     </subviews>
-                                                </stackView>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2gZ-Fe-fUJ">
-                                                    <rect key="frame" x="133.5" y="0.0" width="4" height="40"/>
-                                                    <color key="backgroundColor" systemColor="separatorColor"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="4" id="hma-K5-u26"/>
+                                                        <constraint firstAttribute="height" constant="40" id="6US-mP-8UN"/>
                                                     </constraints>
-                                                </view>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="s0A-R3-Gea">
-                                                    <rect key="frame" x="145.5" y="0.0" width="149" height="40"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Publishing" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ISd-iP-LKZ">
-                                                            <rect key="frame" x="0.0" y="0.0" width="59" height="40"/>
-                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <button toolTip="Camera Publishing" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Vx-dD-fHH" customClass="ToggleButton" customModule="DailyDemo" customModuleProvider="target">
-                                                            <rect key="frame" x="64" y="0.0" width="40" height="40"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="40" id="hVI-li-tbF"/>
-                                                                <constraint firstAttribute="width" constant="40" id="kJz-JT-YCh"/>
-                                                            </constraints>
-                                                            <color key="tintColor" systemColor="systemRedColor"/>
-                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                            <state key="normal" image="video.fill" catalog="system"/>
-                                                            <state key="selected" image="video.slash" catalog="system"/>
-                                                            <userDefinedRuntimeAttributes>
-                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                                    <integer key="value" value="10"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                            </userDefinedRuntimeAttributes>
-                                                            <connections>
-                                                                <action selector="didTapCameraPublishingButton:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="KXn-EN-nnz"/>
-                                                            </connections>
-                                                        </button>
-                                                        <button toolTip="Microphone Publishing" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YOc-hy-kIc" customClass="ToggleButton" customModule="DailyDemo" customModuleProvider="target">
-                                                            <rect key="frame" x="109" y="0.0" width="40" height="40"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="40" id="e7g-mT-LuN"/>
-                                                                <constraint firstAttribute="height" constant="40" id="fwf-8v-4TW"/>
-                                                            </constraints>
-                                                            <color key="tintColor" systemColor="systemRedColor"/>
-                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                            <state key="normal" image="mic.fill" catalog="system"/>
-                                                            <state key="selected" image="mic.slash" catalog="system"/>
-                                                            <connections>
-                                                                <action selector="didTapMicrophonePublishingButton:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="Y72-L3-Wa7"/>
-                                                            </connections>
-                                                        </button>
-                                                    </subviews>
                                                 </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="40" id="6US-mP-8UN"/>
+                                                <constraint firstAttribute="bottom" secondItem="K10-SN-rd6" secondAttribute="bottom" constant="8" id="YVZ-TR-mjo"/>
+                                                <constraint firstAttribute="trailing" secondItem="K10-SN-rd6" secondAttribute="trailing" constant="8" id="o37-2u-cXZ"/>
+                                                <constraint firstItem="K10-SN-rd6" firstAttribute="leading" secondItem="Rjk-zl-7nn" secondAttribute="leading" constant="8" id="pJg-71-s61"/>
+                                                <constraint firstItem="K10-SN-rd6" firstAttribute="top" secondItem="Rjk-zl-7nn" secondAttribute="top" constant="8" id="xNq-mD-4Es"/>
                                             </constraints>
-                                        </stackView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="K10-SN-rd6" secondAttribute="bottom" constant="8" id="YVZ-TR-mjo"/>
-                                        <constraint firstAttribute="trailing" secondItem="K10-SN-rd6" secondAttribute="trailing" constant="8" id="o37-2u-cXZ"/>
-                                        <constraint firstItem="K10-SN-rd6" firstAttribute="leading" secondItem="Rjk-zl-7nn" secondAttribute="leading" constant="8" id="pJg-71-s61"/>
-                                        <constraint firstItem="K10-SN-rd6" firstAttribute="top" secondItem="Rjk-zl-7nn" secondAttribute="top" constant="8" id="xNq-mD-4Es"/>
-                                    </constraints>
-                                </view>
-                                <blurEffect style="systemMaterial"/>
+                                        </view>
+                                        <blurEffect style="systemMaterial"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </visualEffectView>
+                                    <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LbA-gI-0cF">
+                                        <rect key="frame" x="0.0" y="63" width="329.5" height="50"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="x8H-AL-UAm">
+                                            <rect key="frame" x="0.0" y="0.0" width="330" height="50"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Token for private rooms" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="r2c-cv-7U9">
+                                                    <rect key="frame" x="8" y="8" width="313.5" height="34"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="URL" returnKeyType="done" textContentType="url"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="LKB-Ce-Cn8" id="oNg-cP-LpA"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="r2c-cv-7U9" firstAttribute="top" secondItem="x8H-AL-UAm" secondAttribute="top" constant="8" id="Bce-et-gEt"/>
+                                                <constraint firstAttribute="bottom" secondItem="r2c-cv-7U9" secondAttribute="bottom" constant="8" id="KOc-9n-blC"/>
+                                                <constraint firstAttribute="trailing" secondItem="r2c-cv-7U9" secondAttribute="trailing" constant="8" id="ORf-9S-5PZ"/>
+                                                <constraint firstItem="r2c-cv-7U9" firstAttribute="leading" secondItem="x8H-AL-UAm" secondAttribute="leading" constant="8" id="fgX-Mf-SM5"/>
+                                            </constraints>
+                                        </view>
+                                        <blurEffect style="systemMaterial"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </visualEffectView>
+                                    <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gb9-vT-0IZ">
+                                        <rect key="frame" x="0.0" y="120" width="329.5" height="50"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="TLS-yn-lru">
+                                            <rect key="frame" x="0.0" y="0.0" width="330" height="50"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="28K-px-EIv">
+                                                    <rect key="frame" x="246.5" y="8" width="75" height="34"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="75" id="VWJ-Bi-7JC"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" title="Join"/>
+                                                    <state key="selected" title="Leave"/>
+                                                    <connections>
+                                                        <action selector="didTapLeaveOrJoinButton:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="hiN-u7-bqc"/>
+                                                    </connections>
+                                                </button>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="https://example.daily.co/room" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cAd-sb-N2T">
+                                                    <rect key="frame" x="8" y="8" width="230.5" height="34"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="URL" returnKeyType="done" textContentType="url"/>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="cAd-sb-N2T" firstAttribute="leading" secondItem="TLS-yn-lru" secondAttribute="leading" constant="8" id="GTD-ga-5df"/>
+                                                <constraint firstItem="cAd-sb-N2T" firstAttribute="top" secondItem="TLS-yn-lru" secondAttribute="top" constant="8" id="I4m-d0-EPS"/>
+                                                <constraint firstItem="28K-px-EIv" firstAttribute="leading" secondItem="cAd-sb-N2T" secondAttribute="trailing" constant="8" symbolic="YES" id="PdY-jW-QuX"/>
+                                                <constraint firstItem="28K-px-EIv" firstAttribute="bottom" secondItem="cAd-sb-N2T" secondAttribute="bottom" id="S5l-Iq-iIO"/>
+                                                <constraint firstItem="28K-px-EIv" firstAttribute="top" secondItem="cAd-sb-N2T" secondAttribute="top" id="nGY-yw-bjb"/>
+                                                <constraint firstAttribute="trailing" secondItem="28K-px-EIv" secondAttribute="trailing" constant="8" id="rcW-Nv-7Nz"/>
+                                                <constraint firstAttribute="bottom" secondItem="cAd-sb-N2T" secondAttribute="bottom" constant="8" id="vK8-ai-c16"/>
+                                            </constraints>
+                                        </view>
+                                        <blurEffect style="systemMaterial"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </visualEffectView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="Gb9-vT-0IZ" firstAttribute="width" relation="greaterThanOrEqual" secondItem="hJi-uv-Pos" secondAttribute="width" id="9zK-Rs-VQV"/>
+                                    <constraint firstAttribute="width" priority="250" constant="100" id="L7i-sv-Pah"/>
+                                </constraints>
+                            </stackView>
+                            <button toolTip="Camera Publishing" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j27-k7-NBf" userLabel="Local Toggle Button" customClass="ViewToggleButton" customModule="DailyDemo" customModuleProvider="target">
+                                <rect key="frame" x="12.5" y="50.5" width="25" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="25" id="RL0-Y3-dnC"/>
+                                    <constraint firstAttribute="height" constant="25" id="XEV-Bc-nOt"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="systemRedColor"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="minus.circle.fill" catalog="system"/>
+                                <state key="selected" image="plus.circle.fill" catalog="system"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                            </visualEffectView>
+                                <connections>
+                                    <action selector="didTapLocalViewToggleButton:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="0bO-zL-IXa"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="kQ2-uk-5dZ"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="kQ2-uk-5dZ" firstAttribute="bottom" secondItem="Gb9-vT-0IZ" secondAttribute="bottom" constant="20" id="2dC-r6-god"/>
-                            <constraint firstItem="Gb9-vT-0IZ" firstAttribute="width" relation="greaterThanOrEqual" secondItem="hJi-uv-Pos" secondAttribute="width" id="2vy-KM-dOv"/>
+                            <constraint firstAttribute="bottom" secondItem="zPw-3x-xHw" secondAttribute="bottom" constant="20" id="5OM-Fh-jB3"/>
                             <constraint firstItem="TfA-Cz-psX" firstAttribute="leading" secondItem="kQ2-uk-5dZ" secondAttribute="leading" id="5ee-8n-yyw"/>
                             <constraint firstItem="TfA-Cz-psX" firstAttribute="top" secondItem="z9A-OI-H5L" secondAttribute="top" id="EiW-9E-rFB"/>
                             <constraint firstItem="SMm-Ur-jDB" firstAttribute="leading" secondItem="kQ2-uk-5dZ" secondAttribute="leading" constant="20" id="Eqc-zx-ltR"/>
-                            <constraint firstItem="Gb9-vT-0IZ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="kQ2-uk-5dZ" secondAttribute="leading" constant="20" id="Ied-FR-EiO"/>
+                            <constraint firstItem="kQ2-uk-5dZ" firstAttribute="trailing" secondItem="zPw-3x-xHw" secondAttribute="trailing" constant="20" id="Hzz-MQ-yTW"/>
                             <constraint firstItem="kQ2-uk-5dZ" firstAttribute="trailing" secondItem="TfA-Cz-psX" secondAttribute="trailing" id="JDp-Q3-bKV"/>
+                            <constraint firstItem="j27-k7-NBf" firstAttribute="centerY" secondItem="SMm-Ur-jDB" secondAttribute="top" constant="5" id="Ner-GZ-dSz"/>
                             <constraint firstItem="SMm-Ur-jDB" firstAttribute="top" secondItem="kQ2-uk-5dZ" secondAttribute="top" constant="10" id="O1b-BJ-58I"/>
-                            <constraint firstItem="kQ2-uk-5dZ" firstAttribute="trailing" secondItem="Gb9-vT-0IZ" secondAttribute="trailing" constant="20" id="OPw-Na-biC"/>
-                            <constraint firstItem="kQ2-uk-5dZ" firstAttribute="trailing" secondItem="hJi-uv-Pos" secondAttribute="trailing" constant="20" id="Uqh-5T-jiw"/>
-                            <constraint firstItem="Gb9-vT-0IZ" firstAttribute="top" secondItem="hJi-uv-Pos" secondAttribute="bottom" constant="10" id="WeF-2g-m6R"/>
                             <constraint firstItem="SMm-Ur-jDB" firstAttribute="width" relation="lessThanOrEqual" secondItem="z9A-OI-H5L" secondAttribute="width" multiplier="0.5" id="XMD-4x-wUs"/>
+                            <constraint firstItem="j27-k7-NBf" firstAttribute="centerX" secondItem="SMm-Ur-jDB" secondAttribute="leading" constant="5" id="eVv-Mp-kLX"/>
                             <constraint firstAttribute="bottom" secondItem="TfA-Cz-psX" secondAttribute="bottom" id="ot0-ij-s6M"/>
+                            <constraint firstItem="zPw-3x-xHw" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="kQ2-uk-5dZ" secondAttribute="leading" constant="20" id="tnL-aG-VNY"/>
                             <constraint firstItem="SMm-Ur-jDB" firstAttribute="height" relation="lessThanOrEqual" secondItem="z9A-OI-H5L" secondAttribute="height" multiplier="0.5" id="xAh-C2-0Ma"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="aspectRatioConstraint" destination="v1H-Ah-Mj7" id="CPU-ax-rQY"/>
-                        <outlet property="bottomConstraint" destination="2dC-r6-god" id="seP-ID-ieh"/>
+                        <outlet property="bottomConstraint" destination="5OM-Fh-jB3" id="srJ-ox-Zua"/>
                         <outlet property="cameraInputButton" destination="nVD-be-Bda" id="4LH-Jl-qoV"/>
                         <outlet property="cameraPublishingButton" destination="9Vx-dD-fHH" id="XGk-Xi-t0b"/>
                         <outlet property="joinOrLeaveButton" destination="28K-px-EIv" id="aQP-iL-D7Z"/>
                         <outlet property="localParticipantContainerView" destination="SMm-Ur-jDB" id="4tk-9i-HNa"/>
+                        <outlet property="localViewToggleButton" destination="j27-k7-NBf" id="fCm-IH-iJ3"/>
                         <outlet property="microphoneInputButton" destination="Sml-v7-ZOX" id="1mk-U2-76L"/>
                         <outlet property="microphonePublishingButton" destination="YOc-hy-kIc" id="wfJ-pe-eUx"/>
                         <outlet property="roomURLField" destination="cAd-sb-N2T" id="oNs-AM-Ixa"/>
+                        <outlet property="tokenField" destination="r2c-cv-7U9" id="kxc-lG-JVq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AK7-OX-5IH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -249,6 +307,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="70F-0J-CVi" customClass="VideoView" customModule="Daily">
                                 <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                <color key="backgroundColor" systemColor="systemGroupedBackgroundColor"/>
                             </view>
                             <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="speaker.1.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="ese-br-k5q">
                                 <rect key="frame" x="70" y="11.5" width="20" height="17"/>
@@ -300,9 +359,10 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NI8-C1-BFs" customClass="VideoView" customModule="Daily">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QBr-3A-zXD" userLabel="Active Speaker">
-                                <rect key="frame" x="354" y="55.5" width="30" height="27"/>
+                                <rect key="frame" x="354" y="59.5" width="30" height="27"/>
                                 <color key="tintColor" systemColor="systemGreenColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="VB9-H9-Uch"/>
@@ -344,11 +404,13 @@
         </scene>
     </scenes>
     <resources>
-        <image name="mic.fill" catalog="system" width="108" height="128"/>
+        <image name="mic.fill" catalog="system" width="110" height="128"/>
         <image name="mic.slash" catalog="system" width="108" height="128"/>
-        <image name="speaker.1.fill" catalog="system" width="128" height="108"/>
-        <image name="video.fill" catalog="system" width="128" height="82"/>
-        <image name="video.slash" catalog="system" width="128" height="106"/>
+        <image name="minus.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="plus.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="speaker.1.fill" catalog="system" width="128" height="104"/>
+        <image name="video.fill" catalog="system" width="128" height="81"/>
+        <image name="video.slash" catalog="system" width="128" height="105"/>
         <systemColor name="separatorColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
@@ -357,6 +419,9 @@
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGroupedBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -11,6 +11,14 @@ class ParticipantViewController: UIViewController {
         }
     }
 
+    var isViewHidden: Bool = false {
+        didSet {
+            UIView.animate(withDuration: 0.25, delay: 0.0) {
+                self.view.isHidden = self.isViewHidden
+            }
+        }
+    }
+
     var participant: Participant? = nil {
         didSet {
             self.didUpdate(participant: self.participant)

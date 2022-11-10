@@ -17,7 +17,10 @@ class CallViewController: UIViewController {
     @IBOutlet private weak var microphonePublishingButton: UIButton!
 
     @IBOutlet private weak var joinOrLeaveButton: UIButton!
+    @IBOutlet private weak var tokenField: UITextField!
     @IBOutlet private weak var roomURLField: UITextField!
+
+    @IBOutlet private weak var localViewToggleButton: UIButton!
 
     @IBOutlet private weak var localParticipantContainerView: UIView!
 
@@ -108,10 +111,23 @@ class CallViewController: UIViewController {
 
         self.roomURLField.text = self.roomURLString
 
-        // Update inputs to enable video local view prior to joining:
+        // Update inputs to enable/disable inputs prior to joining:
         self.inputs = try! self.callClient.updateInputs { inputs in
             inputs(\.camera) { camera in
-                camera(\.isEnabled, true)
+                camera(\.isEnabled, self.cameraIsEnabled)
+            }
+            inputs(\.microphone) { microphone in
+                microphone(\.isEnabled, self.microphoneIsEnabled)
+            }
+        }
+
+        // Update publishing to enable/disable publishing of inputs prior to joining:
+        self.publishing = try! self.callClient.updatePublishing { publishing in
+            publishing(\.camera) { camera in
+                camera(\.isPublishing, self.cameraIsPublishing)
+            }
+            publishing(\.microphone) { microphone in
+                microphone(\.isPublishing, self.microphoneIsPublishing)
             }
         }
     }
@@ -229,17 +245,24 @@ class CallViewController: UIViewController {
 
     // MARK: - Button actions
 
+    @IBAction func didTapLocalViewToggleButton(_ sender: UIButton) {
+        self.localParticipantViewController.isViewHidden = sender.isSelected
+    }
+
     @IBAction private func didTapLeaveOrJoinButton(_ sender: UIButton) {
         let callState = self.callState
         switch callState {
         case .new, .left:
-            let roomURLString = self.roomURLField.text ?? ""
+            let roomURLString = self.roomURLField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
             guard let roomURL = URL(string: roomURLString) else {
                 return
             }
+            let tokenString = self.tokenField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+            let roomToken = tokenString.map { MeetingToken(stringValue: $0) }
+
             DispatchQueue.global().async {
                 do {
-                    try self.callClient.join(url: roomURL)
+                    try self.callClient.join(url: roomURL, token: roomToken)
                     logger.info("Joined room: '\(roomURLString)'")
                     self.roomURLString = roomURLString
                 } catch let error {
@@ -359,6 +382,11 @@ class CallViewController: UIViewController {
 
         self.callState = callState
         self.updateViews()
+        
+        if case .left = self.callState {
+            self.localParticipantViewController.participant = nil
+            self.remoteParticipantViewController.participant = nil
+        }
     }
 
     private func inputsDidUpdate(_ inputs: InputSettings) {
