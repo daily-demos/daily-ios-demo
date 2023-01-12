@@ -27,8 +27,4 @@ Please note this project is designed to work with rooms that have [privacy](http
 
 ## Contributing and feedback
 
-Let us know how experimenting with this demo goes! Feel free to [open an Issue](https://github.com/daily-demos/daily-android-demo/issues), or reach us any time at `help@daily.co`.
-
-## What's next
-
-To get to know more Daily API methods and events, explore our other demos, like [how to add your own chat interface](https://github.com/daily-co/daily-demos/tree/main/static-demos/simple-chat-demo).
+Let us know how experimenting with this demo goes! Feel free to [open an Issue](https://github.com/daily-demos/daily-ios-demo/issues), or reach us any time at `help@daily.co`.
