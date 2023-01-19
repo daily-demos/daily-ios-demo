@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="LKB-Ce-Cn8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="LKB-Ce-Cn8">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -38,16 +38,16 @@
                                 </connections>
                             </containerView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="zPw-3x-xHw">
-                                <rect key="frame" x="64.5" y="706" width="329.5" height="170"/>
+                                <rect key="frame" x="58.5" y="643" width="335.5" height="233"/>
                                 <subviews>
                                     <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hJi-uv-Pos">
-                                        <rect key="frame" x="0.0" y="0.0" width="329.5" height="56"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="335.5" height="56"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Rjk-zl-7nn">
-                                            <rect key="frame" x="0.0" y="0.0" width="330" height="56"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="335.5" height="56"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="K10-SN-rd6">
-                                                    <rect key="frame" x="8" y="8" width="313.5" height="40"/>
+                                                    <rect key="frame" x="8" y="8" width="320" height="40"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="oQ0-mj-QVG">
                                                             <rect key="frame" x="0.0" y="0.0" width="132.5" height="40"/>
@@ -94,14 +94,14 @@
                                                             </subviews>
                                                         </stackView>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2gZ-Fe-fUJ">
-                                                            <rect key="frame" x="140.5" y="0.0" width="4" height="40"/>
+                                                            <rect key="frame" x="144" y="0.0" width="4" height="40"/>
                                                             <color key="backgroundColor" systemColor="separatorColor"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="4" id="hma-K5-u26"/>
                                                             </constraints>
                                                         </view>
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="s0A-R3-Gea">
-                                                            <rect key="frame" x="152.5" y="0.0" width="161" height="40"/>
+                                                            <rect key="frame" x="159" y="0.0" width="161" height="40"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Publishing" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ISd-iP-LKZ">
                                                                     <rect key="frame" x="0.0" y="0.0" width="71" height="40"/>
@@ -164,26 +164,82 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </visualEffectView>
-                                    <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LbA-gI-0cF">
-                                        <rect key="frame" x="0.0" y="63" width="329.5" height="50"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="x8H-AL-UAm">
-                                            <rect key="frame" x="0.0" y="0.0" width="330" height="50"/>
+                                    <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VQu-07-a1D">
+                                        <rect key="frame" x="0.0" y="63" width="335.5" height="56"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="hRW-p4-jdU">
+                                            <rect key="frame" x="0.0" y="0.0" width="335.5" height="56"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Token for private rooms" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="r2c-cv-7U9">
-                                                    <rect key="frame" x="8" y="8" width="313.5" height="34"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="p6W-Dd-BIS">
+                                                    <rect key="frame" x="8" y="8" width="298" height="40"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vtz-BD-mns">
+                                                            <rect key="frame" x="0.0" y="0.0" width="250" height="40"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="40" id="ELs-1d-9rC"/>
+                                                                <constraint firstAttribute="width" constant="250" id="Jng-Fg-y9c"/>
+                                                            </constraints>
+                                                            <state key="normal" title="Audio Device">
+                                                                <color key="titleColor" systemColor="labelColor"/>
+                                                            </state>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                    <integer key="value" value="10"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
+                                                            <connections>
+                                                                <action selector="didTapAudioDevicePicker:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="diN-Bn-w0K"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dJT-GT-vpR">
+                                                            <rect key="frame" x="258" y="0.0" width="40" height="40"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="40" id="3VZ-8e-oaE"/>
+                                                                <constraint firstAttribute="height" constant="40" id="Vnv-YG-sVG"/>
+                                                            </constraints>
+                                                            <state key="normal" image="chevron.down" catalog="system"/>
+                                                            <connections>
+                                                                <action selector="didTapAudioDevicePicker:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="byo-IT-ad6"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="nem-Uq-6oa"/>
+                                                    </constraints>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="p6W-Dd-BIS" secondAttribute="bottom" constant="8" id="1J3-FX-icf"/>
+                                                <constraint firstItem="p6W-Dd-BIS" firstAttribute="top" secondItem="hRW-p4-jdU" secondAttribute="top" constant="8" id="jeJ-FJ-Nqe"/>
+                                            </constraints>
+                                        </view>
+                                        <blurEffect style="systemMaterial"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </visualEffectView>
+                                    <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hCz-cJ-f6p">
+                                        <rect key="frame" x="0.0" y="126" width="335.5" height="50"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="OHJ-d8-oVY">
+                                            <rect key="frame" x="0.0" y="0.0" width="335.5" height="50"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Token for private rooms" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="w4v-HF-Lm3">
+                                                    <rect key="frame" x="8" y="8" width="320" height="34"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="URL" returnKeyType="done" textContentType="url"/>
                                                     <connections>
-                                                        <outlet property="delegate" destination="LKB-Ce-Cn8" id="oNg-cP-LpA"/>
+                                                        <outlet property="delegate" destination="LKB-Ce-Cn8" id="wGi-r5-8A2"/>
                                                     </connections>
                                                 </textField>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="r2c-cv-7U9" firstAttribute="top" secondItem="x8H-AL-UAm" secondAttribute="top" constant="8" id="Bce-et-gEt"/>
-                                                <constraint firstAttribute="bottom" secondItem="r2c-cv-7U9" secondAttribute="bottom" constant="8" id="KOc-9n-blC"/>
-                                                <constraint firstAttribute="trailing" secondItem="r2c-cv-7U9" secondAttribute="trailing" constant="8" id="ORf-9S-5PZ"/>
-                                                <constraint firstItem="r2c-cv-7U9" firstAttribute="leading" secondItem="x8H-AL-UAm" secondAttribute="leading" constant="8" id="fgX-Mf-SM5"/>
+                                                <constraint firstItem="w4v-HF-Lm3" firstAttribute="leading" secondItem="OHJ-d8-oVY" secondAttribute="leading" constant="8" id="9tl-g8-nD0"/>
+                                                <constraint firstItem="w4v-HF-Lm3" firstAttribute="top" secondItem="OHJ-d8-oVY" secondAttribute="top" constant="8" id="pdl-u0-e7J"/>
+                                                <constraint firstAttribute="trailing" secondItem="w4v-HF-Lm3" secondAttribute="trailing" constant="8" id="tcY-mJ-fsp"/>
+                                                <constraint firstAttribute="bottom" secondItem="w4v-HF-Lm3" secondAttribute="bottom" constant="8" id="xOl-8D-7SH"/>
                                             </constraints>
                                         </view>
                                         <blurEffect style="systemMaterial"/>
@@ -194,13 +250,13 @@
                                         </userDefinedRuntimeAttributes>
                                     </visualEffectView>
                                     <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gb9-vT-0IZ">
-                                        <rect key="frame" x="0.0" y="120" width="329.5" height="50"/>
+                                        <rect key="frame" x="0.0" y="183" width="335.5" height="50"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="TLS-yn-lru">
-                                            <rect key="frame" x="0.0" y="0.0" width="330" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="335.5" height="50"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="28K-px-EIv">
-                                                    <rect key="frame" x="246.5" y="8" width="75" height="34"/>
+                                                    <rect key="frame" x="253" y="8" width="75" height="34"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="75" id="VWJ-Bi-7JC"/>
                                                     </constraints>
@@ -213,7 +269,7 @@
                                                     </connections>
                                                 </button>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="https://example.daily.co/room" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cAd-sb-N2T">
-                                                    <rect key="frame" x="8" y="8" width="230.5" height="34"/>
+                                                    <rect key="frame" x="8" y="8" width="237" height="34"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="URL" returnKeyType="done" textContentType="url"/>
                                                 </textField>
@@ -289,8 +345,9 @@
                         <outlet property="localViewToggleButton" destination="j27-k7-NBf" id="fCm-IH-iJ3"/>
                         <outlet property="microphoneInputButton" destination="Sml-v7-ZOX" id="1mk-U2-76L"/>
                         <outlet property="microphonePublishingButton" destination="YOc-hy-kIc" id="wfJ-pe-eUx"/>
+                        <outlet property="pickerViewButton" destination="Vtz-BD-mns" id="GLQ-wi-cZR"/>
                         <outlet property="roomURLField" destination="cAd-sb-N2T" id="oNs-AM-Ixa"/>
-                        <outlet property="tokenField" destination="r2c-cv-7U9" id="kxc-lG-JVq"/>
+                        <outlet property="tokenField" destination="w4v-HF-Lm3" id="kxc-lG-JVq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AK7-OX-5IH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -371,7 +428,7 @@
                                 <imageReference key="image" image="speaker.1.fill" catalog="system" renderingMode="template"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.20000000298023224" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remote" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zx3-4F-cex">
-                                <rect key="frame" x="165.5" y="433" width="83.5" height="30"/>
+                                <rect key="frame" x="165.5" y="433" width="83" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -404,6 +461,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="chevron.down" catalog="system" width="128" height="70"/>
         <image name="mic.fill" catalog="system" width="110" height="128"/>
         <image name="mic.slash" catalog="system" width="108" height="128"/>
         <image name="minus.circle.fill" catalog="system" width="128" height="123"/>
@@ -411,6 +469,9 @@
         <image name="speaker.1.fill" catalog="system" width="128" height="104"/>
         <image name="video.fill" catalog="system" width="128" height="81"/>
         <image name="video.slash" catalog="system" width="128" height="105"/>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="separatorColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
