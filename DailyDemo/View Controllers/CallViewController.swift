@@ -26,6 +26,9 @@ class CallViewController: UIViewController {
 
     @IBOutlet private weak var aspectRatioConstraint: NSLayoutConstraint!
     @IBOutlet private weak var bottomConstraint: NSLayoutConstraint!
+    
+    // TODO refactor
+    @IBOutlet weak var pickerViewButton: UIButton!
 
     private weak var localParticipantViewController: ParticipantViewController! {
         didSet {
@@ -36,15 +39,14 @@ class CallViewController: UIViewController {
     }
 
     private weak var remoteParticipantViewController: ParticipantViewController!
-    private lazy var callClient: CallClient = .init()
+    
+    private lazy var callClient: CallClient = {
+        let callClient = CallClient()
+        callClient.delegate = self
+        return callClient
+    }()
 
     // MARK: - Call state
-
-    private lazy var callState: CallState = self.callClient.callState
-    private lazy var inputs: InputSettings = self.callClient.inputs
-    private lazy var publishing: PublishingSettings = self.callClient.publishing
-    private lazy var subscriptions: SubscriptionSettingsById = self.callClient.subscriptions
-    private lazy var subscriptionProfiles: SubscriptionProfileSettingsByProfile = self.callClient.subscriptionProfiles
 
     private let userDefaults: UserDefaults = .standard
 
@@ -62,30 +64,29 @@ class CallViewController: UIViewController {
     }
 
     private var canJoinOrLeave: Bool {
-        (self.callState != .joining) && (self.callState != .leaving)
+        let callState = self.callClient.callState
+        return (callState != .joining) && (callState != .leaving)
     }
 
     private var isJoined: Bool {
-        self.callState == .joined
+        self.callClient.callState == .joined
     }
 
     private var cameraIsEnabled: Bool {
-        self.inputs.camera.isEnabled
+        self.callClient.inputs.camera.isEnabled
     }
 
     private var microphoneIsEnabled: Bool {
-        self.inputs.microphone.isEnabled
+        self.callClient.inputs.microphone.isEnabled
     }
 
     private var cameraIsPublishing: Bool {
-        self.publishing.camera.isPublishing
+        self.callClient.publishing.camera.isPublishing
     }
 
     private var microphoneIsPublishing: Bool {
-        self.publishing.microphone.isPublishing
+        self.callClient.publishing.microphone.isPublishing
     }
-
-    private var eventSubscriptions: Set<AnyCancellable> = []
 
     // MARK: - Lifecycle
 
@@ -96,7 +97,6 @@ class CallViewController: UIViewController {
 
         self.setupViews()
         self.setupNotificationObservers()
-        self.setupEventListeners()
         self.setupCallClient()
     }
 
@@ -112,17 +112,20 @@ class CallViewController: UIViewController {
         self.roomURLField.text = self.roomURLString
 
         // Update inputs to enable/disable inputs prior to joining:
-        self.inputs = try! self.callClient.updateInputs { inputs in
+        // By default, we are always starting the demo app with the mic and camera on
+        let _ = try! self.callClient.updateInputs { inputs in
             inputs(\.camera) { camera in
                 camera(\.isEnabled, self.cameraIsEnabled)
+                camera(\.isEnabled, true)
             }
             inputs(\.microphone) { microphone in
                 microphone(\.isEnabled, self.microphoneIsEnabled)
+                microphone(\.isEnabled, true)
             }
         }
 
         // Update publishing to enable/disable publishing of inputs prior to joining:
-        self.publishing = try! self.callClient.updatePublishing { publishing in
+        let _ = try! self.callClient.updatePublishing { publishing in
             publishing(\.camera) { camera in
                 camera(\.isPublishing, self.cameraIsPublishing)
             }
@@ -130,6 +133,17 @@ class CallViewController: UIViewController {
                 microphone(\.isPublishing, self.microphoneIsPublishing)
             }
         }
+        self.refreshSelectedAudioDevice()
+    }
+    
+    private func refreshSelectedAudioDevice() {
+        let audioDeviceId = self.callClient.audioDevice.deviceId
+
+        let selectedDevice = self.callClient.availableDevices.audio.first {
+            $0.deviceId == audioDeviceId
+        }
+
+        self.pickerViewButton.setTitle(selectedDevice?.label, for: .normal)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -176,54 +190,6 @@ class CallViewController: UIViewController {
         )
     }
 
-    private func setupEventListeners() {
-        // In a scenario where we were just interested in a few types of events we *could*
-        // alternatively choose to register to individual event publishers, such as:
-        //
-        // ```
-        // callClient.events.callStateUpdated.sink { event in
-        //     print("Call state changed to \(event.state)")
-        // }
-        // ```
-        //
-        // In our case here we're actually interested in all events, so a simple switch is best:
-
-        self.callClient.events.all.receive(on: DispatchQueue.main)
-            .sink { [weak self] event in
-                guard let strongSelf = self else {
-                    return
-                }
-
-                logger.info("Event: \(event.action)")
-
-                switch event {
-                case .callStateUpdated(let event):
-                    strongSelf.callStateDidUpdate(event.state)
-                case .inputsUpdated(let event):
-                    strongSelf.inputsDidUpdate(event.inputs)
-                case .publishingUpdated(let event):
-                    strongSelf.publishingDidUpdate(event.publishing)
-                case .participantJoined(let event):
-                    strongSelf.participantDidJoin(event.participant)
-                case .participantUpdated(let event):
-                    strongSelf.participantDidUpdate(event.participant)
-                case .participantLeft(let event):
-                    strongSelf.participantDidLeave(event.participant)
-                case .activeSpeakerChanged(let event):
-                    strongSelf.activeSpeakerDidChange(event.participant)
-                case .error(let event):
-                    strongSelf.errorDidOccur(event.message)
-                case .subscriptionsUpdated(let event):
-                    strongSelf.subscriptionsDidUpdate(event.subscriptions)
-                case .subscriptionProfilesUpdated(let event):
-                    strongSelf.subscriptionProfilesDidUpdate(event.profiles)
-                @unknown default:
-                    break
-                }
-            }
-            .store(in: &eventSubscriptions)
-    }
-
     private func setupCallClient() {
         let _ = try! self.callClient.updateSubscriptionProfiles { profiles in
             profiles(.base) { base in
@@ -243,16 +209,74 @@ class CallViewController: UIViewController {
         }
     }
 
+    // MARK: Device picker
+
+    private func showAudioDevicePicker() {
+        let controller = UIViewController()
+
+        let screenBounds = UIScreen.main.bounds
+        let pickerWidth = screenBounds.width - 10.0
+        let pickerHeight = screenBounds.height / 2.0
+
+        let pickerSize = CGSize(
+            width: pickerWidth,
+            height: pickerHeight
+        )
+        controller.preferredContentSize = pickerSize
+
+        let pickerFrame = CGRect(
+            origin: .zero,
+            size: pickerSize
+        )
+
+        let pickerView = UIPickerView(frame: pickerFrame)
+        pickerView.dataSource = self
+        pickerView.delegate = self
+        let selectedRow = self.selectedDevicePickerRow()
+        pickerView.selectRow(selectedRow, inComponent: 0, animated: false)
+
+        controller.view.addSubview(pickerView)
+        pickerView.centerXAnchor.constraint(equalTo: controller.view.centerXAnchor).isActive = true
+        pickerView.centerYAnchor.constraint(equalTo: controller.view.centerYAnchor).isActive = true
+
+        let alert = UIAlertController(title: "Select audio route", message: "", preferredStyle: .actionSheet)
+
+        alert.popoverPresentationController?.sourceView = pickerViewButton
+        alert.popoverPresentationController?.sourceRect = pickerViewButton.bounds
+
+        alert.setValue(controller, forKey: "contentViewController")
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Select", style: .default) { action in
+            let selectedRow = pickerView.selectedRow(inComponent: 0)
+            let selectedDevice = self.callClient.availableDevices.audio[selectedRow]
+            self.pickerViewButton.setTitle(selectedDevice.label, for: .normal)
+            self.callClient.preferredAudioDevice = AudioDeviceType(deviceId: selectedDevice.deviceId)
+        })
+
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    private func selectedDevicePickerRow() -> Int {
+        let selectedDeviceId = self.callClient.audioDevice.deviceId
+        return self.callClient.availableDevices.audio.firstIndex {
+            $0.deviceId == selectedDeviceId
+        } ?? 0
+    }
+
     // MARK: - Button actions
 
-    @IBAction func didTapLocalViewToggleButton(_ sender: UIButton) {
+    @IBAction private func didTapAudioDevicePicker(_ sender: Any) {
+        self.showAudioDevicePicker()
+    }
+
+    @IBAction private func didTapLocalViewToggleButton(_ sender: UIButton) {
         self.localParticipantViewController.isViewHidden = sender.isSelected
     }
 
     @IBAction private func didTapLeaveOrJoinButton(_ sender: UIButton) {
-        let callState = self.callState
+        let callState = self.callClient.callState
         switch callState {
-        case .new, .left:
+        case .initialized, .left:
             let roomURLString = self.roomURLField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
             guard let roomURL = URL(string: roomURLString) else {
                 return
@@ -291,10 +315,10 @@ class CallViewController: UIViewController {
     }
 
     @IBAction private func didTapCameraInputButton(_ sender: UIButton) {
-        let isEnabled = !sender.isSelected
+        let isEnabled = !self.callClient.inputs.camera.isEnabled
 
         DispatchQueue.global().async {
-            self.inputs = try! self.callClient.updateInputs { inputs in
+            let _ = try! self.callClient.updateInputs { inputs in
                 inputs(\.camera) { camera in
                     camera(\.isEnabled, isEnabled)
                 }
@@ -303,10 +327,10 @@ class CallViewController: UIViewController {
     }
 
     @IBAction private func didTapMicrophoneInputButton(_ sender: UIButton) {
-        let isEnabled = !sender.isSelected
+        let isEnabled = !self.callClient.inputs.microphone.isEnabled
 
         DispatchQueue.global().async {
-            self.inputs = try! self.callClient.updateInputs { inputs in
+            let _ = try! self.callClient.updateInputs { inputs in
                 inputs(\.microphone) { microphone in
                     microphone(\.isEnabled, isEnabled)
                 }
@@ -315,10 +339,10 @@ class CallViewController: UIViewController {
     }
 
     @IBAction private func didTapCameraPublishingButton(_ sender: UIButton) {
-        let isPublishing = !sender.isSelected
+        let isPublishing = !self.callClient.publishing.camera.isPublishing
 
         DispatchQueue.global().async {
-            self.publishing = try! self.callClient.updatePublishing { publishing in
+            let _ = try! self.callClient.updatePublishing { publishing in
                 publishing(\.camera) { camera in
                     camera(\.isPublishing, isPublishing)
                 }
@@ -327,10 +351,10 @@ class CallViewController: UIViewController {
     }
 
     @IBAction private func didTapMicrophonePublishingButton(_ sender: UIButton) {
-        let isPublishing = !sender.isSelected
+        let isPublishing = !self.callClient.publishing.microphone.isPublishing
 
         DispatchQueue.global().async {
-            self.publishing = try! self.callClient.updatePublishing { publishing in
+            let _ = try! self.callClient.updatePublishing { publishing in
                 publishing(\.microphone) { microphone in
                     microphone(\.isPublishing, isPublishing)
                 }
@@ -373,82 +397,6 @@ class CallViewController: UIViewController {
         UIView.animate(withDuration: 0.25) {
             self.view.setNeedsLayout()
         }
-    }
-
-    // MARK: - Event handling
-
-    private func callStateDidUpdate(_ callState: CallState) {
-        logger.debug("Call state updated: \(callState)")
-
-        self.callState = callState
-        self.updateViews()
-        
-        if case .left = self.callState {
-            self.localParticipantViewController.participant = nil
-            self.remoteParticipantViewController.participant = nil
-        }
-    }
-
-    private func inputsDidUpdate(_ inputs: InputSettings) {
-        logger.debug("Inputs updated:")
-        logger.debug("\(dumped(inputs))")
-
-        self.inputs = inputs
-        self.updateViews()
-    }
-
-    private func publishingDidUpdate(_ publishing: PublishingSettings) {
-        logger.debug("Publishing updated:")
-        logger.debug("\(dumped(publishing))")
-
-        self.publishing = publishing
-        self.updateViews()
-    }
-
-    private func subscriptionsDidUpdate(_ subscriptions: SubscriptionSettingsById) {
-        logger.debug("Subscriptions updated:")
-        logger.debug("\(dumped(subscriptions))")
-
-        self.subscriptions = subscriptions
-    }
-
-    private func subscriptionProfilesDidUpdate(_ subscriptionProfiles: SubscriptionProfileSettingsByProfile) {
-        logger.debug("Subscriptions profiles updated:")
-        logger.debug("\(dumped(subscriptionProfiles))")
-
-        self.subscriptionProfiles = subscriptionProfiles
-    }
-
-    private func participantDidJoin(_ participant: Participant) {
-        logger.debug("Participant joined:")
-        logger.debug("\(dumped(participant))")
-
-        self.updateParticipantViewControllers()
-    }
-
-    private func participantDidUpdate(_ participant: Participant) {
-        logger.debug("Participant updated:")
-        logger.debug("\(dumped(participant))")
-
-        self.updateParticipantViewControllers()
-    }
-
-    private func participantDidLeave(_ participant: Participant) {
-        logger.debug("Participant left:")
-        logger.debug("\(dumped(participant))")
-
-        self.updateParticipantViewControllers()
-    }
-
-    private func activeSpeakerDidChange(_ participant: Participant?) {
-        logger.debug("Active speaker changed:")
-        logger.debug("\(dumped(participant))")
-
-        self.updateParticipantViewControllers()
-    }
-
-    private func errorDidOccur(_ message: String) {
-        logger.error("Error: \(message)")
     }
 
     // MARK: - View management
@@ -556,5 +504,167 @@ extension CallViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // Hide the keyboard when user taps on "Return":
         return textField.endEditing(false)
+    }
+}
+
+extension CallViewController: CallClientDelegate {
+    func callClient(
+        _ callClient: CallClient,
+        callStateUpdated callState: CallState
+    ) {
+        logger.debug("Call state updated: \(callState)")
+
+        assert(self.callClient.callState == callState)
+
+        self.updateViews()
+
+        if case .left = self.callClient.callState {
+            self.localParticipantViewController.participant = nil
+            self.remoteParticipantViewController.participant = nil
+        }
+    }
+
+    func callClient(
+        _ callClient: CallClient,
+        inputsUpdated inputs: InputSettings
+    ) {
+        logger.debug("Inputs updated:")
+        logger.debug("\(dumped(inputs))")
+
+        assert(self.callClient.inputs == inputs)
+
+        self.updateViews()
+    }
+
+    func callClient(
+        _ callClient: CallClient,
+        publishingUpdated publishing: PublishingSettings
+    ) {
+        logger.debug("Publishing updated:")
+        logger.debug("\(dumped(publishing))")
+
+        assert(self.callClient.publishing == publishing)
+
+        self.updateViews()
+    }
+
+    func callClient(
+        _ callClient: CallClient,
+        participantJoined participant: Participant
+    ) {
+        logger.debug("Participant joined:")
+        logger.debug("\(dumped(participant))")
+
+        assert(self.callClient.participants.all[participant.id] == participant)
+
+        self.updateParticipantViewControllers()
+    }
+
+    func callClient(
+        _ callClient: CallClient,
+        participantUpdated participant: Participant
+    ) {
+        logger.debug("Participant updated:")
+        logger.debug("\(dumped(participant))")
+
+        assert(self.callClient.participants.all[participant.id] == participant)
+
+        self.updateParticipantViewControllers()
+    }
+
+    func callClient(
+        _ callClient: CallClient,
+        participantLeft participant: Participant,
+        withReason reason: ParticipantLeftReason
+    ) {
+        logger.debug("Participant left:")
+        logger.debug("\(dumped(participant))")
+        logger.debug("\(reason)")
+
+        assert(self.callClient.participants.all[participant.id] == nil)
+
+        self.updateParticipantViewControllers()
+    }
+
+    func callClient(
+        _ callClient: CallClient,
+        activeSpeakerChanged activeSpeaker: Participant?
+    ) {
+        logger.debug("Active speaker changed:")
+        logger.debug("\(dumped(activeSpeaker))")
+
+        assert(self.callClient.activeSpeaker == activeSpeaker)
+
+        self.updateParticipantViewControllers()
+    }
+
+    func callClient(
+        _ callClient: CallClient,
+        subscriptionsUpdated subscriptions: SubscriptionSettingsById
+    ) {
+        logger.debug("Subscriptions updated:")
+        logger.debug("\(dumped(subscriptions))")
+
+        assert(self.callClient.subscriptions == subscriptions)
+    }
+
+    func callClient(
+        _ callClient: CallClient,
+        subscriptionProfilesUpdated subscriptionProfiles: SubscriptionProfileSettingsByProfile
+    ) {
+        logger.debug("Subscriptions profiles updated:")
+        logger.debug("\(dumped(subscriptionProfiles))")
+
+        assert(self.callClient.subscriptionProfiles == subscriptionProfiles)
+    }
+
+    func callClient(
+        _ callClient: CallClient,
+        availableDevicesUpdated availableDevices: Devices
+    ) {
+        self.refreshSelectedAudioDevice()
+
+        assert(self.callClient.availableDevices == availableDevices)
+    }
+
+    func callClient(
+        _ callClient: CallClient,
+        error: CallClientError
+    ) {
+        logger.error("Error: \(error)")
+    }
+}
+
+extension CallViewController: UIPickerViewDelegate {
+    internal func pickerView(
+        _ pickerView: UIPickerView,
+        viewForRow row: Int,
+        forComponent component: Int,
+        reusing view: UIView?
+    ) -> UIView {
+        let label = UILabel()
+        label.text = self.callClient.availableDevices.audio[row].label
+        label.sizeToFit()
+        return label
+    }
+
+    internal func pickerView(
+        _ pickerView: UIPickerView,
+        rowHeightForComponent component: Int
+    ) -> CGFloat {
+        return 60
+    }
+}
+
+extension CallViewController: UIPickerViewDataSource {
+    internal func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+
+    internal func pickerView(
+        _ pickerView: UIPickerView,
+        numberOfRowsInComponent component: Int
+    ) -> Int {
+        self.callClient.availableDevices.audio.count
     }
 }
