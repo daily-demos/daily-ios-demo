@@ -93,24 +93,20 @@ class ParticipantViewController: UIViewController {
         //
         // This is done by moving participants from one pre-defined profile to another,
         // rather than changing each participant's settings individually:
-        do {
-            let _ = try callClient.updateSubscriptions(
-                forParticipants: .set([
-                    // Move the now-shown participant to the `.activeRemote` profile:
-                    activeParticipant.id: .set(.init(
-                        profile: .set(.activeRemote)
-                    ))
-                ]),
-                participantsWithProfiles: .set([
-                    // Move all previous "active remote" participants into "base" profile:
-                    .activeRemote: .set(.init(
-                        profile: .set(.base)
-                    ))
-                ])
-            )
-        } catch let error {
-            logger.warning("Failed to update subscriptions: \(error)")
-        }
+        callClient.updateSubscriptions(
+            forParticipants: .set([
+                // Move the now-shown participant to the `.activeRemote` profile:
+                activeParticipant.id: .set(
+                    profile: .set(.activeRemote)
+                ),
+            ]),
+            participantsWithProfiles: .set([
+                // Move all previous "active remote" participants into "base" profile:
+                .activeRemote: .set(
+                    profile: .set(.base)
+                ),
+            ])
+        )
     }
 }
 

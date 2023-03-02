@@ -38,16 +38,16 @@
                                 </connections>
                             </containerView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="zPw-3x-xHw">
-                                <rect key="frame" x="58.5" y="643" width="335.5" height="233"/>
+                                <rect key="frame" x="20" y="643" width="374" height="233"/>
                                 <subviews>
                                     <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hJi-uv-Pos">
-                                        <rect key="frame" x="0.0" y="0.0" width="335.5" height="56"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="56"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Rjk-zl-7nn">
-                                            <rect key="frame" x="0.0" y="0.0" width="335.5" height="56"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="56"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="K10-SN-rd6">
-                                                    <rect key="frame" x="8" y="8" width="320" height="40"/>
+                                                    <rect key="frame" x="8" y="8" width="358" height="40"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="oQ0-mj-QVG">
                                                             <rect key="frame" x="0.0" y="0.0" width="132.5" height="40"/>
@@ -58,7 +58,7 @@
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <button toolTip="Camera Publishing" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nVD-be-Bda" customClass="ToggleButton" customModule="DailyDemo" customModuleProvider="target">
+                                                                <button toolTip="Camera Publishing" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nVD-be-Bda" customClass="ToggleButton" customModule="DailyDemo" customModuleProvider="target">
                                                                     <rect key="frame" x="47.5" y="0.0" width="40" height="40"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="40" id="roR-4Y-GRF"/>
@@ -66,8 +66,17 @@
                                                                     </constraints>
                                                                     <color key="tintColor" systemColor="systemRedColor"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                    <state key="normal" image="video.fill" catalog="system"/>
+                                                                    <state key="normal" image="video.fill" catalog="system">
+                                                                        <string key="title" base64-UTF8="YES">
+Gw
+</string>
+                                                                    </state>
                                                                     <state key="selected" image="video.slash" catalog="system"/>
+                                                                    <buttonConfiguration key="configuration" style="plain" image="video.fill" catalog="system">
+                                                                        <string key="title" base64-UTF8="YES">
+Gw
+</string>
+                                                                    </buttonConfiguration>
                                                                     <userDefinedRuntimeAttributes>
                                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                                             <integer key="value" value="10"/>
@@ -77,7 +86,7 @@
                                                                         <action selector="didTapCameraInputButton:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="8mj-30-eoB"/>
                                                                     </connections>
                                                                 </button>
-                                                                <button toolTip="Microphone Publishing" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sml-v7-ZOX" customClass="ToggleButton" customModule="DailyDemo" customModuleProvider="target">
+                                                                <button toolTip="Microphone Publishing" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sml-v7-ZOX" customClass="ToggleButton" customModule="DailyDemo" customModuleProvider="target">
                                                                     <rect key="frame" x="92.5" y="0.0" width="40" height="40"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="40" id="rxI-OV-jvb"/>
@@ -87,6 +96,7 @@
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                     <state key="normal" image="mic.fill" catalog="system"/>
                                                                     <state key="selected" image="mic.slash" catalog="system"/>
+                                                                    <buttonConfiguration key="configuration" style="plain" image="mic.fill" catalog="system"/>
                                                                     <connections>
                                                                         <action selector="didTapMicrophoneInputButton:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="42c-a1-LhH"/>
                                                                     </connections>
@@ -94,14 +104,14 @@
                                                             </subviews>
                                                         </stackView>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2gZ-Fe-fUJ">
-                                                            <rect key="frame" x="144" y="0.0" width="4" height="40"/>
+                                                            <rect key="frame" x="163" y="0.0" width="4" height="40"/>
                                                             <color key="backgroundColor" systemColor="separatorColor"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="4" id="hma-K5-u26"/>
                                                             </constraints>
                                                         </view>
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="s0A-R3-Gea">
-                                                            <rect key="frame" x="159" y="0.0" width="161" height="40"/>
+                                                            <rect key="frame" x="197" y="0.0" width="161" height="40"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Publishing" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ISd-iP-LKZ">
                                                                     <rect key="frame" x="0.0" y="0.0" width="71" height="40"/>
@@ -109,7 +119,7 @@
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <button toolTip="Camera Publishing" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Vx-dD-fHH" customClass="ToggleButton" customModule="DailyDemo" customModuleProvider="target">
+                                                                <button toolTip="Camera Publishing" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Vx-dD-fHH" customClass="ToggleButton" customModule="DailyDemo" customModuleProvider="target">
                                                                     <rect key="frame" x="76" y="0.0" width="40" height="40"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="40" id="hVI-li-tbF"/>
@@ -119,6 +129,7 @@
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                     <state key="normal" image="video.fill" catalog="system"/>
                                                                     <state key="selected" image="video.slash" catalog="system"/>
+                                                                    <buttonConfiguration key="configuration" style="plain" image="video.fill" catalog="system"/>
                                                                     <userDefinedRuntimeAttributes>
                                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                                             <integer key="value" value="10"/>
@@ -128,7 +139,7 @@
                                                                         <action selector="didTapCameraPublishingButton:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="KXn-EN-nnz"/>
                                                                     </connections>
                                                                 </button>
-                                                                <button toolTip="Microphone Publishing" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YOc-hy-kIc" customClass="ToggleButton" customModule="DailyDemo" customModuleProvider="target">
+                                                                <button toolTip="Microphone Publishing" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YOc-hy-kIc" customClass="ToggleButton" customModule="DailyDemo" customModuleProvider="target">
                                                                     <rect key="frame" x="121" y="0.0" width="40" height="40"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="40" id="e7g-mT-LuN"/>
@@ -138,6 +149,7 @@
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                     <state key="normal" image="mic.fill" catalog="system"/>
                                                                     <state key="selected" image="mic.slash" catalog="system"/>
+                                                                    <buttonConfiguration key="configuration" style="plain" image="mic.fill" catalog="system"/>
                                                                     <connections>
                                                                         <action selector="didTapMicrophonePublishingButton:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="Y72-L3-Wa7"/>
                                                                     </connections>
@@ -165,52 +177,79 @@
                                         </userDefinedRuntimeAttributes>
                                     </visualEffectView>
                                     <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VQu-07-a1D">
-                                        <rect key="frame" x="0.0" y="63" width="335.5" height="56"/>
+                                        <rect key="frame" x="0.0" y="63" width="374" height="56"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="hRW-p4-jdU">
-                                            <rect key="frame" x="0.0" y="0.0" width="335.5" height="56"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="56"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="p6W-Dd-BIS">
-                                                    <rect key="frame" x="8" y="8" width="298" height="40"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="rGC-3h-S7q">
+                                                    <rect key="frame" x="8" y="8" width="358" height="40"/>
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vtz-BD-mns">
-                                                            <rect key="frame" x="0.0" y="0.0" width="250" height="40"/>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J1R-6Y-EZl" userLabel="Camera Flip View Button">
+                                                            <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="40" id="ELs-1d-9rC"/>
-                                                                <constraint firstAttribute="width" constant="250" id="Jng-Fg-y9c"/>
+                                                                <constraint firstAttribute="width" constant="40" id="WOV-4w-ulf"/>
+                                                                <constraint firstAttribute="height" constant="40" id="xNl-S0-03z"/>
                                                             </constraints>
-                                                            <state key="normal" title="Audio Device">
-                                                                <color key="titleColor" systemColor="labelColor"/>
-                                                            </state>
-                                                            <userDefinedRuntimeAttributes>
-                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                                    <integer key="value" value="10"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                            </userDefinedRuntimeAttributes>
+                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                            <state key="normal" image="camera.rotate.fill" catalog="system"/>
                                                             <connections>
-                                                                <action selector="didTapAudioDevicePicker:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="diN-Bn-w0K"/>
+                                                                <action selector="didTapCameraFlipViewButton:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="tEU-pc-sAT"/>
                                                             </connections>
                                                         </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dJT-GT-vpR">
-                                                            <rect key="frame" x="258" y="0.0" width="40" height="40"/>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9DQ-8N-026">
+                                                            <rect key="frame" x="60" y="0.0" width="4" height="40"/>
+                                                            <color key="backgroundColor" systemColor="separatorColor"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="40" id="3VZ-8e-oaE"/>
-                                                                <constraint firstAttribute="height" constant="40" id="Vnv-YG-sVG"/>
+                                                                <constraint firstAttribute="width" constant="4" id="aYD-Bv-Ur1"/>
                                                             </constraints>
-                                                            <state key="normal" image="chevron.down" catalog="system"/>
-                                                            <connections>
-                                                                <action selector="didTapAudioDevicePicker:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="byo-IT-ad6"/>
-                                                            </connections>
-                                                        </button>
+                                                        </view>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="p6W-Dd-BIS">
+                                                            <rect key="frame" x="84" y="0.0" width="274" height="40"/>
+                                                            <subviews>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vtz-BD-mns">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="226" height="40"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="40" id="ELs-1d-9rC"/>
+                                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="Jng-Fg-y9c"/>
+                                                                        <constraint firstAttribute="width" priority="250" constant="300" id="SFE-Oj-3T6"/>
+                                                                    </constraints>
+                                                                    <state key="normal" title="Audio Device">
+                                                                        <color key="titleColor" systemColor="labelColor"/>
+                                                                    </state>
+                                                                    <userDefinedRuntimeAttributes>
+                                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                            <integer key="value" value="10"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                    </userDefinedRuntimeAttributes>
+                                                                    <connections>
+                                                                        <action selector="didTapAudioDevicePicker:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="diN-Bn-w0K"/>
+                                                                    </connections>
+                                                                </button>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dJT-GT-vpR">
+                                                                    <rect key="frame" x="234" y="0.0" width="40" height="40"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="40" id="3VZ-8e-oaE"/>
+                                                                        <constraint firstAttribute="height" constant="40" id="Vnv-YG-sVG"/>
+                                                                    </constraints>
+                                                                    <state key="normal" image="chevron.down" catalog="system"/>
+                                                                    <connections>
+                                                                        <action selector="didTapAudioDevicePicker:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="byo-IT-ad6"/>
+                                                                    </connections>
+                                                                </button>
+                                                            </subviews>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="40" id="nem-Uq-6oa"/>
+                                                            </constraints>
+                                                        </stackView>
                                                     </subviews>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="40" id="nem-Uq-6oa"/>
-                                                    </constraints>
                                                 </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="p6W-Dd-BIS" secondAttribute="bottom" constant="8" id="1J3-FX-icf"/>
-                                                <constraint firstItem="p6W-Dd-BIS" firstAttribute="top" secondItem="hRW-p4-jdU" secondAttribute="top" constant="8" id="jeJ-FJ-Nqe"/>
+                                                <constraint firstItem="rGC-3h-S7q" firstAttribute="leading" secondItem="hRW-p4-jdU" secondAttribute="leading" constant="8" id="3AZ-vC-QFd"/>
+                                                <constraint firstItem="rGC-3h-S7q" firstAttribute="top" secondItem="hRW-p4-jdU" secondAttribute="top" constant="8" id="3kI-lP-pby"/>
+                                                <constraint firstAttribute="bottom" secondItem="rGC-3h-S7q" secondAttribute="bottom" constant="8" id="7WX-Ke-hnA"/>
+                                                <constraint firstAttribute="trailing" secondItem="rGC-3h-S7q" secondAttribute="trailing" constant="8" id="ZUZ-Aq-SAl"/>
                                             </constraints>
                                         </view>
                                         <blurEffect style="systemMaterial"/>
@@ -221,15 +260,15 @@
                                         </userDefinedRuntimeAttributes>
                                     </visualEffectView>
                                     <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hCz-cJ-f6p">
-                                        <rect key="frame" x="0.0" y="126" width="335.5" height="50"/>
+                                        <rect key="frame" x="0.0" y="126" width="374" height="50"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="OHJ-d8-oVY">
-                                            <rect key="frame" x="0.0" y="0.0" width="335.5" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Token for private rooms" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="w4v-HF-Lm3">
-                                                    <rect key="frame" x="8" y="8" width="320" height="34"/>
+                                                    <rect key="frame" x="8" y="8" width="358" height="34"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="URL" returnKeyType="done" textContentType="url"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="alphabet" returnKeyType="continue" textContentType="url"/>
                                                     <connections>
                                                         <outlet property="delegate" destination="LKB-Ce-Cn8" id="wGi-r5-8A2"/>
                                                     </connections>
@@ -250,13 +289,13 @@
                                         </userDefinedRuntimeAttributes>
                                     </visualEffectView>
                                     <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gb9-vT-0IZ">
-                                        <rect key="frame" x="0.0" y="183" width="335.5" height="50"/>
+                                        <rect key="frame" x="0.0" y="183" width="374" height="50"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="TLS-yn-lru">
-                                            <rect key="frame" x="0.0" y="0.0" width="335.5" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="28K-px-EIv">
-                                                    <rect key="frame" x="253" y="8" width="75" height="34"/>
+                                                    <rect key="frame" x="291" y="8" width="75" height="34"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="75" id="VWJ-Bi-7JC"/>
                                                     </constraints>
@@ -269,9 +308,12 @@
                                                     </connections>
                                                 </button>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="https://example.daily.co/room" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cAd-sb-N2T">
-                                                    <rect key="frame" x="8" y="8" width="237" height="34"/>
+                                                    <rect key="frame" x="8" y="8" width="275" height="34"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="URL" returnKeyType="done" textContentType="url"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="URL" returnKeyType="continue" textContentType="url"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="LKB-Ce-Cn8" id="cyt-rI-7fJ"/>
+                                                    </connections>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -338,6 +380,7 @@
                     <connections>
                         <outlet property="aspectRatioConstraint" destination="v1H-Ah-Mj7" id="CPU-ax-rQY"/>
                         <outlet property="bottomConstraint" destination="5OM-Fh-jB3" id="srJ-ox-Zua"/>
+                        <outlet property="cameraFlipViewButton" destination="J1R-6Y-EZl" id="eCn-7C-s24"/>
                         <outlet property="cameraInputButton" destination="nVD-be-Bda" id="4LH-Jl-qoV"/>
                         <outlet property="cameraPublishingButton" destination="9Vx-dD-fHH" id="XGk-Xi-t0b"/>
                         <outlet property="joinOrLeaveButton" destination="28K-px-EIv" id="aQP-iL-D7Z"/>
@@ -461,6 +504,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="camera.rotate.fill" catalog="system" width="128" height="93"/>
         <image name="chevron.down" catalog="system" width="128" height="70"/>
         <image name="mic.fill" catalog="system" width="110" height="128"/>
         <image name="mic.slash" catalog="system" width="108" height="128"/>
