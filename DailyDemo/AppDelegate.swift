@@ -6,7 +6,9 @@ import Daily
 var logger: Logger = .init(label: "co.daily.DailyDemo")
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder {}
+
+extension AppDelegate: UIApplicationDelegate {
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
@@ -20,6 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         logger.logLevel = .trace
 
         LoggingSystem.bootstrap(StreamLogHandler.standardOutput)
+
+        UNUserNotificationCenter.current().delegate = self
 
         return true
     }
@@ -48,5 +52,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific
         // to the discarded scenes, as they will not return.
+    }
+}
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        willPresent notification: UNNotification,
+        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
+    ) {
+        completionHandler([.alert, .badge, .sound])
+
+        center.removeDeliveredNotifications(
+            withIdentifiers: [
+                PrebuiltChatAppMessage.notificationIdentifier
+            ]
+        )
     }
 }

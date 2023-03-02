@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		2DD920FC26FA118800DD526E /* CallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD920FA26FA118800DD526E /* CallViewController.swift */; };
+		6109E304294A849B001FCB06 /* PrebuiltChatAppMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6109E303294A849B001FCB06 /* PrebuiltChatAppMessage.swift */; };
+		CA183EE028C60CB800BD4883 /* ViewToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA183EDF28C60CB800BD4883 /* ViewToggleButton.swift */; };
+		CA1B725226DCF05B006E7E2C /* Daily.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA1B725126DCF05B006E7E2C /* Daily.framework */; };
+		CA1B725326DCF05B006E7E2C /* Daily.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CA1B725126DCF05B006E7E2C /* Daily.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CA1C680A284A3D1900303C63 /* ParticipantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C6809284A3D1900303C63 /* ParticipantViewController.swift */; };
 		CA4D7A7C27A424F000AC547E /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = CA4D7A7B27A424F000AC547E /* Logging */; };
 		CAA41568288AABFF00CC8BBD /* ToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA41567288AABFF00CC8BBD /* ToggleButton.swift */; };
@@ -17,8 +21,6 @@
 		CAE48E40266A8BDF00D2CA2E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAE48E3F266A8BDF00D2CA2E /* Assets.xcassets */; };
 		CAE48E43266A8BDF00D2CA2E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CAE48E41266A8BDF00D2CA2E /* LaunchScreen.storyboard */; };
 		CAF2FBD327E9F296000F3F07 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CAF2FBD227E9F296000F3F07 /* Main.storyboard */; };
-		DB0E263D297994F70019DC55 /* Daily in Frameworks */ = {isa = PBXBuildFile; productRef = DB0E263C297994F70019DC55 /* Daily */; };
-		DBDE57112919FCD000BB913E /* ViewToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDE57102919FCD000BB913E /* ViewToggleButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +30,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				CA1B725326DCF05B006E7E2C /* Daily.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -37,6 +40,9 @@
 /* Begin PBXFileReference section */
 		2D1FAE8527047E6A001C0986 /* BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
 		2DD920FA26FA118800DD526E /* CallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallViewController.swift; sourceTree = "<group>"; };
+		6109E303294A849B001FCB06 /* PrebuiltChatAppMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrebuiltChatAppMessage.swift; sourceTree = "<group>"; };
+		CA183EDF28C60CB800BD4883 /* ViewToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewToggleButton.swift; sourceTree = "<group>"; };
+		CA1B725126DCF05B006E7E2C /* Daily.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Daily.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA1C6809284A3D1900303C63 /* ParticipantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantViewController.swift; sourceTree = "<group>"; };
 		CAA41567288AABFF00CC8BBD /* ToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleButton.swift; sourceTree = "<group>"; };
 		CADFCBD02889A11F00032A32 /* Profile+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Profile+Extensions.swift"; sourceTree = "<group>"; };
@@ -48,7 +54,6 @@
 		CAE48E44266A8BDF00D2CA2E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CAE48E5B266AA40200D2CA2E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		CAF2FBD227E9F296000F3F07 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		DBDE57102919FCD000BB913E /* ViewToggleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewToggleButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,8 +61,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB0E263D297994F70019DC55 /* Daily in Frameworks */,
 				CA4D7A7C27A424F000AC547E /* Logging in Frameworks */,
+				CA1B725226DCF05B006E7E2C /* Daily.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,10 +99,10 @@
 		CAE48E35266A8BDD00D2CA2E /* DailyDemo */ = {
 			isa = PBXGroup;
 			children = (
-				DBDE57102919FCD000BB913E /* ViewToggleButton.swift */,
 				CAE48E36266A8BDD00D2CA2E /* AppDelegate.swift */,
 				CAE48E38266A8BDD00D2CA2E /* SceneDelegate.swift */,
 				CAA41567288AABFF00CC8BBD /* ToggleButton.swift */,
+				CA183EDF28C60CB800BD4883 /* ViewToggleButton.swift */,
 				CADFCBD02889A11F00032A32 /* Profile+Extensions.swift */,
 				2DD920FF26FA11A200DD526E /* View Controllers */,
 				CAE48E3F266A8BDF00D2CA2E /* Assets.xcassets */,
@@ -105,6 +110,7 @@
 				CAF2FBD227E9F296000F3F07 /* Main.storyboard */,
 				CAE48E44266A8BDF00D2CA2E /* Info.plist */,
 				2D1FAE8527047E6A001C0986 /* BridgingHeader.h */,
+				6109E303294A849B001FCB06 /* PrebuiltChatAppMessage.swift */,
 			);
 			path = DailyDemo;
 			sourceTree = "<group>";
@@ -112,6 +118,7 @@
 		CAE48E4A266A8C9A00D2CA2E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CA1B725126DCF05B006E7E2C /* Daily.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -123,12 +130,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CAE48E47266A8BDF00D2CA2E /* Build configuration list for PBXNativeTarget "DailyDemo" */;
 			buildPhases = (
-				CA945B6527281B6E000A6275 /* Format & Lint Sources */,
 				CAE48E2F266A8BDD00D2CA2E /* Sources */,
 				CAE48E30266A8BDD00D2CA2E /* Frameworks */,
 				CAE48E31266A8BDD00D2CA2E /* Resources */,
 				CA1B725426DCF05B006E7E2C /* Embed Frameworks */,
-				2DC2357E270DDAAB00B42E7E /* Set Build Number */,
 			);
 			buildRules = (
 			);
@@ -137,7 +142,6 @@
 			name = DailyDemo;
 			packageProductDependencies = (
 				CA4D7A7B27A424F000AC547E /* Logging */,
-				DB0E263C297994F70019DC55 /* Daily */,
 			);
 			productName = DailyDemo;
 			productReference = CAE48E33266A8BDD00D2CA2E /* DailyDemo.app */;
@@ -168,7 +172,6 @@
 			mainGroup = CAE48E2A266A8BDD00D2CA2E;
 			packageReferences = (
 				CA4D7A7A27A424F000AC547E /* XCRemoteSwiftPackageReference "swift-log" */,
-				DB0E263B297994F70019DC55 /* XCRemoteSwiftPackageReference "daily-client-ios" */,
 			);
 			productRefGroup = CAE48E34266A8BDD00D2CA2E /* Products */;
 			projectDirPath = "";
@@ -192,45 +195,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		2DC2357E270DDAAB00B42E7E /* Set Build Number */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Set Build Number";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "#\n# Set the build number to the current git commit count.\n# If we're using the Dev scheme, then we'll suffix the build\n# number with the current branch name, to make collisions\n# far less likely across feature branches.\n#\n\ngit=`sh /etc/profile; which git`\nTWO=598\n\nONE=`git log --oneline | wc -l` && appBuild=`expr $ONE - $TWO`\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $appBuild\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\" || {\n    echo 'Plist Update Failed' ;\n    exit 1; \n}\n\necho \"Updated ${TARGET_BUILD_DIR}/${INFOPLIST_PATH} with Build Number: $appBuild\"\n";
-		};
-		CA945B6527281B6E000A6275 /* Format & Lint Sources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Format & Lint Sources";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "exit 0;\n\nif command -v swiftlint &> /dev/null; then\n    (set -x; swiftlint lint \\\n        --fix \\\n        --reporter \"xcode\" \\\n        --quiet \\\n        --config \"${SRCROOT}/../../daily-ios/.swiftlint.yml\" \\\n        \"${SRCROOT}/DailyDemo\")\n    \n    (set -x; swiftlint lint \\\n        --reporter \"xcode\" \\\n        --quiet \\\n        --config \"${SRCROOT}/../../daily-ios/.swiftlint.yml\" \\\n        \"${SRCROOT}/DailyDemo\")\nelse\n    echo \"warning: swiftlint could not be found, consider installing it via `brew install swiftlint` or from `https://github.com/realm/SwiftLint`\"\n    exit\nfi\n\nif command -v swift-format &> /dev/null; then\n    (set -x; swift-format format \\\n        --in-place \\\n        --parallel \\\n        --recursive \\\n        --configuration \"${SRCROOT}/../../daily-ios/.swift-format\" \\\n        \"${SRCROOT}/DailyDemo\")\n        \n    (set -x; swift-format lint \\\n        --parallel \\\n        --recursive \\\n        --configuration \"${SRCROOT}/../../daily-ios/.swift-format\" \\\n        \"${SRCROOT}/DailyDemo\")\nelse\n    echo \"warning: swift-format could not be found, consider installing it via `brew install swift-format` or from `https://github.com/apple/swift-format`\"\nfi\n\nexit 0;\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		CAE48E2F266A8BDD00D2CA2E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -240,8 +204,9 @@
 				CA1C680A284A3D1900303C63 /* ParticipantViewController.swift in Sources */,
 				CAA41568288AABFF00CC8BBD /* ToggleButton.swift in Sources */,
 				CAE48E37266A8BDD00D2CA2E /* AppDelegate.swift in Sources */,
+				6109E304294A849B001FCB06 /* PrebuiltChatAppMessage.swift in Sources */,
 				2DD920FC26FA118800DD526E /* CallViewController.swift in Sources */,
-				DBDE57112919FCD000BB913E /* ViewToggleButton.swift in Sources */,
+				CA183EE028C60CB800BD4883 /* ViewToggleButton.swift in Sources */,
 				CAE48E39266A8BDD00D2CA2E /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -295,6 +260,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -355,6 +321,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -383,9 +350,9 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = EEBGKV9N3N;
-				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)";
 				INFOPLIST_FILE = DailyDemo/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Daily iOS Demo";
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -394,7 +361,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = co.daily.DailyDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -413,9 +380,9 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = EEBGKV9N3N;
-				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "${TARGET_BUILD_DIR}/Daily.framework";
 				INFOPLIST_FILE = DailyDemo/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Daily iOS Demo";
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -424,7 +391,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = co.daily.DailyDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -466,14 +433,6 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		DB0E263B297994F70019DC55 /* XCRemoteSwiftPackageReference "daily-client-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/daily-co/daily-client-ios";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.6.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -481,11 +440,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CA4D7A7A27A424F000AC547E /* XCRemoteSwiftPackageReference "swift-log" */;
 			productName = Logging;
-		};
-		DB0E263C297994F70019DC55 /* Daily */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = DB0E263B297994F70019DC55 /* XCRemoteSwiftPackageReference "daily-client-ios" */;
-			productName = Daily;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
