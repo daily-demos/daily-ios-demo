@@ -8,10 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		2DD920FC26FA118800DD526E /* CallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD920FA26FA118800DD526E /* CallViewController.swift */; };
+		497EFB5629EDE03700762BD6 /* Daily in Frameworks */ = {isa = PBXBuildFile; productRef = 497EFB5529EDE03700762BD6 /* Daily */; };
 		6109E304294A849B001FCB06 /* PrebuiltChatAppMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6109E303294A849B001FCB06 /* PrebuiltChatAppMessage.swift */; };
 		CA183EE028C60CB800BD4883 /* ViewToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA183EDF28C60CB800BD4883 /* ViewToggleButton.swift */; };
-		CA1B725226DCF05B006E7E2C /* Daily.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA1B725126DCF05B006E7E2C /* Daily.framework */; };
-		CA1B725326DCF05B006E7E2C /* Daily.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CA1B725126DCF05B006E7E2C /* Daily.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CA1C680A284A3D1900303C63 /* ParticipantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C6809284A3D1900303C63 /* ParticipantViewController.swift */; };
 		CA4D7A7C27A424F000AC547E /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = CA4D7A7B27A424F000AC547E /* Logging */; };
 		CAA41568288AABFF00CC8BBD /* ToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA41567288AABFF00CC8BBD /* ToggleButton.swift */; };
@@ -30,7 +29,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				CA1B725326DCF05B006E7E2C /* Daily.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -42,7 +40,6 @@
 		2DD920FA26FA118800DD526E /* CallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallViewController.swift; sourceTree = "<group>"; };
 		6109E303294A849B001FCB06 /* PrebuiltChatAppMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrebuiltChatAppMessage.swift; sourceTree = "<group>"; };
 		CA183EDF28C60CB800BD4883 /* ViewToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewToggleButton.swift; sourceTree = "<group>"; };
-		CA1B725126DCF05B006E7E2C /* Daily.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Daily.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA1C6809284A3D1900303C63 /* ParticipantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantViewController.swift; sourceTree = "<group>"; };
 		CAA41567288AABFF00CC8BBD /* ToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleButton.swift; sourceTree = "<group>"; };
 		CADFCBD02889A11F00032A32 /* Profile+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Profile+Extensions.swift"; sourceTree = "<group>"; };
@@ -61,8 +58,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				497EFB5629EDE03700762BD6 /* Daily in Frameworks */,
 				CA4D7A7C27A424F000AC547E /* Logging in Frameworks */,
-				CA1B725226DCF05B006E7E2C /* Daily.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,7 +81,6 @@
 				CAE48E5B266AA40200D2CA2E /* README.md */,
 				CAE48E35266A8BDD00D2CA2E /* DailyDemo */,
 				CAE48E34266A8BDD00D2CA2E /* Products */,
-				CAE48E4A266A8C9A00D2CA2E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -115,14 +111,6 @@
 			path = DailyDemo;
 			sourceTree = "<group>";
 		};
-		CAE48E4A266A8C9A00D2CA2E /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				CA1B725126DCF05B006E7E2C /* Daily.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -142,6 +130,7 @@
 			name = DailyDemo;
 			packageProductDependencies = (
 				CA4D7A7B27A424F000AC547E /* Logging */,
+				497EFB5529EDE03700762BD6 /* Daily */,
 			);
 			productName = DailyDemo;
 			productReference = CAE48E33266A8BDD00D2CA2E /* DailyDemo.app */;
@@ -172,6 +161,7 @@
 			mainGroup = CAE48E2A266A8BDD00D2CA2E;
 			packageReferences = (
 				CA4D7A7A27A424F000AC547E /* XCRemoteSwiftPackageReference "swift-log" */,
+				497EFB5429EDE03700762BD6 /* XCRemoteSwiftPackageReference "daily-client-ios" */,
 			);
 			productRefGroup = CAE48E34266A8BDD00D2CA2E /* Products */;
 			projectDirPath = "";
@@ -425,6 +415,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		497EFB5429EDE03700762BD6 /* XCRemoteSwiftPackageReference "daily-client-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/daily-co/daily-client-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.7.0;
+			};
+		};
 		CA4D7A7A27A424F000AC547E /* XCRemoteSwiftPackageReference "swift-log" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-log.git";
@@ -436,6 +434,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		497EFB5529EDE03700762BD6 /* Daily */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 497EFB5429EDE03700762BD6 /* XCRemoteSwiftPackageReference "daily-client-ios" */;
+			productName = Daily;
+		};
 		CA4D7A7B27A424F000AC547E /* Logging */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CA4D7A7A27A424F000AC547E /* XCRemoteSwiftPackageReference "swift-log" */;
