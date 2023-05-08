@@ -16,7 +16,7 @@ class CallViewController: UIViewController {
     @IBOutlet private weak var microphoneInputButton: UIButton!
     @IBOutlet private weak var cameraPublishingButton: UIButton!
     @IBOutlet private weak var microphonePublishingButton: UIButton!
-    @IBOutlet weak var cameraFlipViewButton: UIButton!
+    @IBOutlet private weak var cameraFlipViewButton: UIButton!
     
     @IBOutlet private weak var joinOrLeaveButton: UIButton!
     @IBOutlet private weak var tokenField: UITextField!
@@ -30,7 +30,7 @@ class CallViewController: UIViewController {
     @IBOutlet private weak var bottomConstraint: NSLayoutConstraint!
     
     // TODO refactor
-    @IBOutlet weak var pickerViewButton: UIButton!
+    @IBOutlet private weak var pickerViewButton: UIButton!
     
     private weak var localParticipantViewController: ParticipantViewController! {
         didSet {
@@ -47,7 +47,7 @@ class CallViewController: UIViewController {
         callClient.delegate = self
         return callClient
     }()
-    
+
     // MARK: - Call state
     
     private let userDefaults: UserDefaults = .standard
@@ -209,8 +209,11 @@ class CallViewController: UIViewController {
         localViewLayer.cornerCurve = .continuous
         localViewLayer.masksToBounds = true
     }
-    
-    // Setup notification observers for responding to keyboard frame changes:
+
+    /// Setup notification observers for:
+    ///
+    /// - Responding to keyboard frame changes
+    /// - Managing `isIdleTimerDisabled`
     private func setupNotificationObservers() {
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(
@@ -229,6 +232,19 @@ class CallViewController: UIViewController {
             self,
             selector: #selector(adjustForKeyboard(_:)),
             name: UIResponder.keyboardWillChangeFrameNotification,
+            object: nil
+        )
+
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(callClientDidJoinFirstCall),
+            name: CallClient.NotificationName.didJoinFirstCall,
+            object: nil
+        )
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(callClientDidLeaveLastCall),
+            name: CallClient.NotificationName.didLeaveLastCall,
             object: nil
         )
     }
@@ -254,52 +270,6 @@ class CallViewController: UIViewController {
     
     // MARK: Device picker
     
-    private func showAudioDevicePicker() {
-        let controller = UIViewController()
-        
-        let screenBounds = UIScreen.main.bounds
-        let pickerWidth = screenBounds.width - 10.0
-        let pickerHeight = screenBounds.height / 2.0
-        
-        let pickerSize = CGSize(
-            width: pickerWidth,
-            height: pickerHeight
-        )
-        controller.preferredContentSize = pickerSize
-        
-        let pickerFrame = CGRect(
-            origin: .zero,
-            size: pickerSize
-        )
-        
-        let pickerView = UIPickerView(frame: pickerFrame)
-        pickerView.dataSource = self
-        pickerView.delegate = self
-        let selectedRow = self.selectedDevicePickerRow()
-        pickerView.selectRow(selectedRow, inComponent: 0, animated: false)
-        
-        controller.view.addSubview(pickerView)
-        pickerView.centerXAnchor.constraint(equalTo: controller.view.centerXAnchor).isActive = true
-        pickerView.centerYAnchor.constraint(equalTo: controller.view.centerYAnchor).isActive = true
-        
-        let alert = UIAlertController(title: "Select audio route", message: "", preferredStyle: .actionSheet)
-        
-        alert.popoverPresentationController?.sourceView = pickerViewButton
-        alert.popoverPresentationController?.sourceRect = pickerViewButton.bounds
-        
-        alert.setValue(controller, forKey: "contentViewController")
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Select", style: .default) { action in
-            let selectedRow = pickerView.selectedRow(inComponent: 0)
-            let selectedDevice = self.callClient.availableDevices.audio[selectedRow]
-            self.pickerViewButton.setTitle(selectedDevice.label, for: .normal)
-            let preferredAudioDevice = AudioDeviceType(deviceId: selectedDevice.deviceId)
-            self.callClient.set(preferredAudioDevice: preferredAudioDevice)
-        })
-        
-        self.present(alert, animated: true, completion: nil)
-    }
-    
     private func selectedDevicePickerRow() -> Int {
         let selectedDeviceId = self.callClient.audioDevice.deviceId
         return self.callClient.availableDevices.audio.firstIndex {
@@ -307,7 +277,9 @@ class CallViewController: UIViewController {
         } ?? 0
     }
     
-    func flipCameraView() {
+    // MARK: - Button actions
+    
+    @IBAction private func flipCamera(_ sender: UIButton) {
         let isUsingFrontFacingCamera = self.callClient.inputs.camera.settings.facingMode == .user
         let newFacingMode: MediaTrackFacingMode = isUsingFrontFacingCamera ? .environment : .user
 
@@ -318,23 +290,59 @@ class CallViewController: UIViewController {
         ))
     }
     
-    // MARK: - Button actions
-    
-    @IBAction func didTapCameraFlipViewButton(_ sender: UIButton) {
-        self.flipCameraView()
-    }
-    
-    @IBAction private func didTapAudioDevicePicker(_ sender: Any) {
-        self.showAudioDevicePicker()
-    }
-    
-    @IBAction private func didTapLocalViewToggleButton(_ sender: UIButton) {
-        sender.isSelected.toggle()
+    @IBAction private func showAudioDevicePicker(_ sender: Any) {
+        let controller = UIViewController()
 
+        let screenBounds = UIScreen.main.bounds
+        let pickerWidth = screenBounds.width - 10.0
+        let pickerHeight = screenBounds.height / 2.0
+
+        let pickerSize = CGSize(
+            width: pickerWidth,
+            height: pickerHeight
+        )
+        controller.preferredContentSize = pickerSize
+
+        let pickerFrame = CGRect(
+            origin: .zero,
+            size: pickerSize
+        )
+
+        let pickerView = UIPickerView(frame: pickerFrame)
+        pickerView.dataSource = self
+        pickerView.delegate = self
+        let selectedRow = self.selectedDevicePickerRow()
+        pickerView.selectRow(selectedRow, inComponent: 0, animated: false)
+
+        controller.view.addSubview(pickerView)
+        pickerView.centerXAnchor.constraint(equalTo: controller.view.centerXAnchor).isActive = true
+        pickerView.centerYAnchor.constraint(equalTo: controller.view.centerYAnchor).isActive = true
+
+        let alert = UIAlertController(title: "Select audio route", message: "", preferredStyle: .actionSheet)
+
+        alert.popoverPresentationController?.sourceView = pickerViewButton
+        alert.popoverPresentationController?.sourceRect = pickerViewButton.bounds
+
+        alert.setValue(controller, forKey: "contentViewController")
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Select", style: .default) { action in
+            let selectedRow = pickerView.selectedRow(inComponent: 0)
+            let selectedDevice = self.callClient.availableDevices.audio[selectedRow]
+            self.pickerViewButton.setTitle(selectedDevice.label, for: .normal)
+            let preferredAudioDevice = AudioDeviceType(deviceId: selectedDevice.deviceId)
+            self.callClient.set(preferredAudioDevice: preferredAudioDevice)
+        })
+
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction private func toggleLocalView(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        
         self.localParticipantViewController.isViewHidden = sender.isSelected
     }
     
-    @IBAction private func didTapLeaveOrJoinButton(_ sender: UIButton) {
+    @IBAction private func joinOrLeave(_ sender: UIButton) {
         let callState = self.callClient.callState
         switch callState {
         case .initialized, .left:
@@ -355,9 +363,7 @@ class CallViewController: UIViewController {
                 }
             }
         case .joined:
-            DispatchQueue.global().async {
-                self.callClient.leave()
-            }
+            self.callClient.leave()
         case .joining, .leaving:
             break
         @unknown case _:
@@ -365,22 +371,22 @@ class CallViewController: UIViewController {
         }
     }
     
-    @IBAction private func didTapCameraInputButton(_ sender: UIButton) {
+    @IBAction private func toggleCameraInput(_ sender: UIButton) {
         let isEnabled = !self.callClient.inputs.camera.isEnabled
         self.callClient.setInputEnabled(.camera, isEnabled)
     }
     
-    @IBAction private func didTapMicrophoneInputButton(_ sender: UIButton) {
+    @IBAction private func toggleMicrophoneInput(_ sender: UIButton) {
         let isEnabled = !self.callClient.inputs.microphone.isEnabled
         self.callClient.setInputEnabled(.microphone, isEnabled)
     }
     
-    @IBAction private func didTapCameraPublishingButton(_ sender: UIButton) {
+    @IBAction private func toggleCameraPublishing(_ sender: UIButton) {
         let isPublishing = !self.callClient.publishing.camera.isPublishing
         self.callClient.setIsPublishing(.camera, isPublishing)
     }
     
-    @IBAction private func didTapMicrophonePublishingButton(_ sender: UIButton) {
+    @IBAction private func toggleMicrophonePublishing(_ sender: UIButton) {
         let isPublishing = !self.callClient.publishing.microphone.isPublishing
         self.callClient.setIsPublishing(.microphone, isPublishing)
     }
@@ -393,7 +399,7 @@ class CallViewController: UIViewController {
         )
     }
     
-    func localVideoSizeDidChange(_ videoSize: CGSize) {
+    private func localVideoSizeDidChange(_ videoSize: CGSize) {
         // When the local video size changes we update its view's
         // aspect-ratio layout constraint accordingly:
         
@@ -569,6 +575,21 @@ class CallViewController: UIViewController {
 
         animator.startAnimation()
     }
+
+    @objc private func callClientDidJoinFirstCall() {
+        DispatchQueue.main.async {
+            // Setting `isIdleTimerDisabled` to `true` prevents the device from sleeping once a call is joined.
+            UIApplication.shared.isIdleTimerDisabled = true
+            logger.debug("Updated isIdleTimerDisabled: \(UIApplication.shared.isIdleTimerDisabled)")
+        }
+    }
+
+    @objc private func callClientDidLeaveLastCall() {
+        DispatchQueue.main.async {
+            UIApplication.shared.isIdleTimerDisabled = false
+            logger.debug("Updated isIdleTimerDisabled: \(UIApplication.shared.isIdleTimerDisabled)")
+        }
+    }
 }
 
 extension CallViewController: UITextFieldDelegate {
@@ -589,22 +610,22 @@ extension CallViewController: CallClientDelegate {
     ) {
         logger.debug("Call state updated: \(callState)")
         
-        assert(self.callClient.callState == callState)
+        assert(callClient.callState == callState)
         
-        self.updateViews()
+        updateViews()
         
-        if case .left = self.callClient.callState {
+        if case .left = callClient.callState {
             self.localParticipantViewController.participant = nil
             self.remoteParticipantViewController.participant = nil
-        } else if case .joined = self.callClient.callState {
-            if let callConfiguration = self.callClient.callConfiguration {
+        } else if case .joined = callClient.callState {
+            if let callConfiguration = callClient.callConfiguration {
                 logger.info("callConfiguration: \(callConfiguration)")
             } else {
                 logger.info("No callConfiguration when we joined the call")
             }
         }
     }
-    
+
     func callClient(
         _ callClient: CallClient,
         inputsUpdated inputs: InputSettings
@@ -612,9 +633,9 @@ extension CallViewController: CallClientDelegate {
         logger.debug("Inputs updated:")
         logger.debug("\(dumped(inputs))")
         
-        assert(self.callClient.inputs == inputs)
+        assert(callClient.inputs == inputs)
         
-        self.updateViews()
+        updateViews()
     }
     
     func callClient(
@@ -624,9 +645,9 @@ extension CallViewController: CallClientDelegate {
         logger.debug("Publishing updated:")
         logger.debug("\(dumped(publishing))")
         
-        assert(self.callClient.publishing == publishing)
+        assert(callClient.publishing == publishing)
         
-        self.updateViews()
+        updateViews()
     }
     
     func callClient(
@@ -637,9 +658,9 @@ extension CallViewController: CallClientDelegate {
         logger.debug("\(dumped(participant))")
         
         // Check if our logic adds said participant to the collection from event...
-        assert(self.callClient.participants.all[participant.id] != nil)
+        assert(callClient.participants.all[participant.id] != nil)
         
-        self.updateParticipantViewControllers()
+        updateParticipantViewControllers()
     }
     
     func callClient(
@@ -649,9 +670,9 @@ extension CallViewController: CallClientDelegate {
         logger.debug("Participant updated:")
         logger.debug("\(dumped(participant))")
         
-        assert(self.callClient.participants.all[participant.id] == participant)
+        assert(callClient.participants.all[participant.id] == participant)
         
-        self.updateParticipantViewControllers()
+        updateParticipantViewControllers()
     }
     
     func callClient(
@@ -663,9 +684,9 @@ extension CallViewController: CallClientDelegate {
         logger.debug("\(dumped(participant))")
         logger.debug("\(reason)")
         
-        assert(self.callClient.participants.all[participant.id] == nil)
+        assert(callClient.participants.all[participant.id] == nil)
         
-        self.updateParticipantViewControllers()
+        updateParticipantViewControllers()
     }
     
     func callClient(
@@ -675,9 +696,9 @@ extension CallViewController: CallClientDelegate {
         logger.debug("Active speaker changed:")
         logger.debug("\(dumped(activeSpeaker))")
         
-        assert(self.callClient.activeSpeaker == activeSpeaker)
+        assert(callClient.activeSpeaker == activeSpeaker)
         
-        self.updateParticipantViewControllers()
+        updateParticipantViewControllers()
     }
     
     func callClient(
@@ -687,7 +708,7 @@ extension CallViewController: CallClientDelegate {
         logger.debug("Subscriptions updated:")
         logger.debug("\(dumped(subscriptions))")
         
-        assert(self.callClient.subscriptions == subscriptions)
+        assert(callClient.subscriptions == subscriptions)
     }
     
     func callClient(
@@ -697,16 +718,16 @@ extension CallViewController: CallClientDelegate {
         logger.debug("Subscriptions profiles updated:")
         logger.debug("\(dumped(subscriptionProfiles))")
         
-        assert(self.callClient.subscriptionProfiles == subscriptionProfiles)
+        assert(callClient.subscriptionProfiles == subscriptionProfiles)
     }
     
     func callClient(
         _ callClient: CallClient,
         availableDevicesUpdated availableDevices: Devices
     ) {
-        self.refreshSelectedAudioDevice()
+        refreshSelectedAudioDevice()
         
-        assert(self.callClient.availableDevices == availableDevices)
+        assert(callClient.availableDevices == availableDevices)
     }
     
     func callClient(
@@ -720,7 +741,7 @@ extension CallViewController: CallClientDelegate {
         
         do {
             let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = self.dateDecodingStrategy
+            decoder.dateDecodingStrategy = dateDecodingStrategy
             chatMessage = try decoder.decode(
                 PrebuiltChatAppMessage.self,
                 from: jsonData
@@ -733,7 +754,7 @@ extension CallViewController: CallClientDelegate {
         
         logger.info("Got chat message \"\(chatMessage.message)\" from \"\(chatMessage.senderName)\" (\(senderId))")
 
-        self.showPrebuiltChatAppMessageNotification(
+        showPrebuiltChatAppMessageNotification(
             title: chatMessage.senderName,
             body: chatMessage.message
         )
@@ -745,7 +766,7 @@ extension CallViewController: CallClientDelegate {
         let messageData: Data
         do {
             let encoder = JSONEncoder()
-            encoder.dateEncodingStrategy = self.dateEncodingStrategy
+            encoder.dateEncodingStrategy = dateEncodingStrategy
             messageData = try encoder.encode(
                 PrebuiltChatAppMessage(
                     message: chatMessage.message,
@@ -776,7 +797,7 @@ extension CallViewController: CallClientDelegate {
 }
 
 extension CallViewController: UIPickerViewDelegate {
-    internal func pickerView(
+    func pickerView(
         _ pickerView: UIPickerView,
         viewForRow row: Int,
         forComponent component: Int,
@@ -788,7 +809,7 @@ extension CallViewController: UIPickerViewDelegate {
         return label
     }
     
-    internal func pickerView(
+    func pickerView(
         _ pickerView: UIPickerView,
         rowHeightForComponent component: Int
     ) -> CGFloat {
@@ -797,11 +818,11 @@ extension CallViewController: UIPickerViewDelegate {
 }
 
 extension CallViewController: UIPickerViewDataSource {
-    internal func numberOfComponents(in pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
-    internal func pickerView(
+    func pickerView(
         _ pickerView: UIPickerView,
         numberOfRowsInComponent component: Int
     ) -> Int {
