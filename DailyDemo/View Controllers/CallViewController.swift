@@ -42,7 +42,7 @@ class CallViewController: UIViewController {
     
     private weak var remoteParticipantViewController: ParticipantViewController!
     
-    private lazy var callClient: CallClient = {
+    private lazy var callClient: CallClient = { [weak self] in
         let callClient = CallClient()
         callClient.delegate = self
         return callClient
@@ -169,10 +169,10 @@ class CallViewController: UIViewController {
     }
     
     private func refreshSelectedAudioDevice() {
-        let audioDeviceId = self.callClient.audioDevice.deviceId
+        let audioDeviceID = self.callClient.audioDevice.deviceID
         
         let selectedDevice = self.callClient.availableDevices.audio.first {
-            $0.deviceId == audioDeviceId
+            $0.deviceID == audioDeviceID
         }
         
         self.pickerViewButton.setTitle(selectedDevice?.label, for: .normal)
@@ -271,9 +271,9 @@ class CallViewController: UIViewController {
     // MARK: Device picker
     
     private func selectedDevicePickerRow() -> Int {
-        let selectedDeviceId = self.callClient.audioDevice.deviceId
+        let selectedDeviceID = self.callClient.audioDevice.deviceID
         return self.callClient.availableDevices.audio.firstIndex {
-            $0.deviceId == selectedDeviceId
+            $0.deviceID == selectedDeviceID
         } ?? 0
     }
     
@@ -329,7 +329,7 @@ class CallViewController: UIViewController {
             let selectedRow = pickerView.selectedRow(inComponent: 0)
             let selectedDevice = self.callClient.availableDevices.audio[selectedRow]
             self.pickerViewButton.setTitle(selectedDevice.label, for: .normal)
-            let preferredAudioDevice = AudioDeviceType(deviceId: selectedDevice.deviceId)
+            let preferredAudioDevice = AudioDeviceType(deviceID: selectedDevice.deviceID)
             self.callClient.set(preferredAudioDevice: preferredAudioDevice)
         })
 
@@ -394,9 +394,11 @@ class CallViewController: UIViewController {
     // MARK: - Video size handling
     
     func localParticipantViewControllerDidChange(_ controller: ParticipantViewController) {
-        self.localVideoSizeObserver = controller.videoSizePublisher.sink(
-            receiveValue: localVideoSizeDidChange(_:)
-        )
+        self.localVideoSizeObserver = controller.videoSizePublisher.sink { [weak self] size in
+            guard let self = self else { return }
+
+            self.localVideoSizeDidChange(size)
+        }
     }
     
     private func localVideoSizeDidChange(_ videoSize: CGSize) {
@@ -459,7 +461,7 @@ class CallViewController: UIViewController {
         self.localParticipantViewController.isActiveSpeaker = self.isActiveSpeaker(localParticipant)
     }
     
-    private func update(remoteParticipants: [ParticipantId: Participant]) {
+    private func update(remoteParticipants: [ParticipantID: Participant]) {
         var remoteParticipantToDisplay: Participant?
         
         // Choose a remote participant to display by going down the priority list:
@@ -482,9 +484,9 @@ class CallViewController: UIViewController {
         
         // 3. Choose whoever was previously displayed (if anyone)
         if remoteParticipantToDisplay == nil {
-            if let previouslyDisplayedParticipantId = self.remoteParticipantViewController.participant?.id
+            if let previouslyDisplayedParticipantID = self.remoteParticipantViewController.participant?.id
             {
-                remoteParticipantToDisplay = remoteParticipants[previouslyDisplayedParticipantId]
+                remoteParticipantToDisplay = remoteParticipants[previouslyDisplayedParticipantID]
             }
         }
         
@@ -703,7 +705,7 @@ extension CallViewController: CallClientDelegate {
     
     func callClient(
         _ callClient: CallClient,
-        subscriptionsUpdated subscriptions: SubscriptionSettingsById
+        subscriptionsUpdated subscriptions: SubscriptionSettingsByID
     ) {
         logger.debug("Subscriptions updated:")
         logger.debug("\(dumped(subscriptions))")
@@ -733,11 +735,11 @@ extension CallViewController: CallClientDelegate {
     func callClient(
         _ callClient: CallClient,
         appMessageAsJson jsonData: Data,
-        from senderId: ParticipantId
+        from senderID: ParticipantID
     ) {
         let chatMessage: PrebuiltChatAppMessage
 
-        logger.info("Got app message from \(senderId)")
+        logger.info("Got app message from \(senderID)")
         
         do {
             let decoder = JSONDecoder()
@@ -752,7 +754,7 @@ extension CallViewController: CallClientDelegate {
             return
         }
         
-        logger.info("Got chat message \"\(chatMessage.message)\" from \"\(chatMessage.senderName)\" (\(senderId))")
+        logger.info("Got chat message \"\(chatMessage.message)\" from \"\(chatMessage.senderName)\" (\(senderID))")
 
         showPrebuiltChatAppMessageNotification(
             title: chatMessage.senderName,
