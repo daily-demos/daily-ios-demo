@@ -462,6 +462,8 @@ class CallViewController: UIViewController {
     }
     
     private func update(remoteParticipants: [ParticipantID: Participant]) {
+        guard [.joining, .joined].contains(callClient.callState) else { return }
+
         var remoteParticipantToDisplay: Participant?
         
         // Choose a remote participant to display by going down the priority list:
@@ -617,8 +619,8 @@ extension CallViewController: CallClientDelegate {
         updateViews()
         
         if case .left = callClient.callState {
-            self.localParticipantViewController.participant = nil
-            self.remoteParticipantViewController.participant = nil
+            self.localParticipantViewController.reset()
+            self.remoteParticipantViewController.reset()
         } else if case .joined = callClient.callState {
             if let callConfiguration = callClient.callConfiguration {
                 logger.info("callConfiguration: \(callConfiguration)")

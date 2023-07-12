@@ -49,6 +49,13 @@ class ParticipantViewController: UIViewController {
         self.videoView.delegate = self
     }
 
+    func reset() {
+        self.isActiveSpeaker = false
+        self.label.isHidden = false
+        self.videoView.isHidden = true
+        self.label.text = "Guest"
+    }
+
     // MARK: - Handlers
 
     private func didUpdate(isActiveSpeaker: Bool) {
