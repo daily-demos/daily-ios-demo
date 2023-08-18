@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/daily-co/daily-client-ios",
       "state" : {
-        "revision" : "aae867e9e60a7272b8f7bbc6dd9ec6840ac9600b",
-        "version" : "0.9.0"
+        "revision" : "e1a15a0d19e5a166a68ed842302900da4edcf53b",
+        "version" : "0.10.0"
       }
     },
     {
@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-log.git",
       "state" : {
-        "revision" : "32e8d724467f8fe623624570367e3d50c5638e46",
-        "version" : "1.5.2"
+        "revision" : "532d8b529501fb73a2455b179e0bbb6d49b652ed",
+        "version" : "1.5.3"
       }
     }
   ],

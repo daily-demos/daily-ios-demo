@@ -157,13 +157,13 @@ class CallViewController: UIViewController {
         self.callClient.setInputsEnabled([
             .camera: true,
             .microphone: true
-        ])
+        ], completion: nil)
         
         // Update publishing to enable/disable publishing of inputs prior to joining:
         self.callClient.setIsPublishing([
             .camera: self.cameraIsPublishing,
             .microphone: self.microphoneIsPublishing
-        ])
+        ], completion: nil)
         
         self.refreshSelectedAudioDevice()
     }
@@ -265,7 +265,7 @@ class CallViewController: UIViewController {
                     )
                 )
             )
-        ]))
+        ]), completion: nil)
     }
     
     // MARK: Device picker
@@ -287,7 +287,7 @@ class CallViewController: UIViewController {
             camera: .set(
                 settings: .set(facingMode: .set(newFacingMode))
             )
-        ))
+        ), completion: nil)
     }
     
     @IBAction private func showAudioDevicePicker(_ sender: Any) {
@@ -330,7 +330,7 @@ class CallViewController: UIViewController {
             let selectedDevice = self.callClient.availableDevices.audio[selectedRow]
             self.pickerViewButton.setTitle(selectedDevice.label, for: .normal)
             let preferredAudioDevice = AudioDeviceType(deviceID: selectedDevice.deviceID)
-            self.callClient.set(preferredAudioDevice: preferredAudioDevice)
+            self.callClient.set(preferredAudioDevice: preferredAudioDevice, completion: nil)
         })
 
         self.present(alert, animated: true, completion: nil)
@@ -363,7 +363,7 @@ class CallViewController: UIViewController {
                 }
             }
         case .joined:
-            self.callClient.leave()
+            self.callClient.leave(completion: nil)
         case .joining, .leaving:
             break
         @unknown case _:
@@ -373,22 +373,22 @@ class CallViewController: UIViewController {
     
     @IBAction private func toggleCameraInput(_ sender: UIButton) {
         let isEnabled = !self.callClient.inputs.camera.isEnabled
-        self.callClient.setInputEnabled(.camera, isEnabled)
+        self.callClient.setInputEnabled(.camera, isEnabled, completion: nil)
     }
     
     @IBAction private func toggleMicrophoneInput(_ sender: UIButton) {
         let isEnabled = !self.callClient.inputs.microphone.isEnabled
-        self.callClient.setInputEnabled(.microphone, isEnabled)
+        self.callClient.setInputEnabled(.microphone, isEnabled, completion: nil)
     }
     
     @IBAction private func toggleCameraPublishing(_ sender: UIButton) {
         let isPublishing = !self.callClient.publishing.camera.isPublishing
-        self.callClient.setIsPublishing(.camera, isPublishing)
+        self.callClient.setIsPublishing(.camera, isPublishing, completion: nil)
     }
     
     @IBAction private func toggleMicrophonePublishing(_ sender: UIButton) {
         let isPublishing = !self.callClient.publishing.microphone.isPublishing
-        self.callClient.setIsPublishing(.microphone, isPublishing)
+        self.callClient.setIsPublishing(.microphone, isPublishing, completion: nil)
     }
     
     // MARK: - Video size handling
