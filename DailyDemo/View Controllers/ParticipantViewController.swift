@@ -112,8 +112,8 @@ class ParticipantViewController: UIViewController {
                 .activeRemote: .set(
                     profile: .set(.base)
                 ),
-            ])
-        )
+            ]),
+            completion: nil)
     }
 }
 
