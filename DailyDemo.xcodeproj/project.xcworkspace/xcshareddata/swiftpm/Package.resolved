@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/daily-co/daily-client-ios",
       "state" : {
-        "revision" : "fafd257bdf3c04f0f90c6bce65d5d0a6c13712bc",
-        "version" : "0.10.1"
+        "revision" : "ebdc5ff0b1119a94b353f0cbe8d014dc188aafde",
+        "version" : "0.11.0"
       }
     },
     {
