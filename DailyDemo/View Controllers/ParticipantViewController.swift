@@ -21,7 +21,9 @@ class ParticipantViewController: UIViewController {
 
     var participant: Participant? = nil {
         didSet {
-            self.didUpdate(participant: self.participant)
+            if self.participant != oldValue {
+                self.didUpdate(participant: self.participant)
+            }
         }
     }
 
@@ -47,13 +49,6 @@ class ParticipantViewController: UIViewController {
         super.viewDidLoad()
 
         self.videoView.delegate = self
-    }
-
-    func reset() {
-        self.isActiveSpeaker = false
-        self.label.isHidden = false
-        self.videoView.isHidden = true
-        self.label.text = "Guest"
     }
 
     // MARK: - Handlers
@@ -86,7 +81,9 @@ class ParticipantViewController: UIViewController {
         // Change video's scale mode based on track type:
         self.videoView.videoScaleMode = isScreenTrack ? .fit : .fill
 
-        if let participant = participant {
+        // Don't change subscriptions for local view controller otherwise
+        // it conflicts with the changes from the remote one.
+        if let participant = participant, !participant.info.isLocal {
             self.updateSubscriptions(activeParticipant: participant)
         }
     }
@@ -113,7 +110,8 @@ class ParticipantViewController: UIViewController {
                     profile: .set(.base)
                 ),
             ]),
-            completion: nil)
+            completion: nil
+        )
     }
 }
 
