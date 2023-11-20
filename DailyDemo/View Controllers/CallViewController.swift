@@ -1,4 +1,5 @@
 import AVFoundation
+import ReplayKit
 import Combine
 import Daily
 import Logging
@@ -17,22 +18,28 @@ class CallViewController: UIViewController {
     @IBOutlet private weak var cameraPublishingButton: UIButton!
     @IBOutlet private weak var microphonePublishingButton: UIButton!
     @IBOutlet private weak var cameraFlipViewButton: UIButton!
+    @IBOutlet private weak var adaptiveHEVCButton: UIButton!
+
     
     @IBOutlet private weak var joinOrLeaveButton: UIButton!
     @IBOutlet private weak var tokenField: UITextField!
     @IBOutlet private weak var roomURLField: UITextField!
     
     @IBOutlet private weak var localViewToggleButton: UIButton!
-    
+
     @IBOutlet private weak var localParticipantContainerView: UIView!
-    
+    @IBOutlet private weak var remoteParticipantContainerView: UIView!
+    @IBOutlet private weak var systemBroadcastPickerView: RPSystemBroadcastPickerView!
+
+    @IBOutlet private weak var buttonStackView: UIStackView!
+
     @IBOutlet private weak var aspectRatioConstraint: NSLayoutConstraint!
     @IBOutlet private weak var bottomConstraint: NSLayoutConstraint!
     
     // TODO refactor
     @IBOutlet private weak var pickerViewButton: UIButton!
     
-    private weak var localParticipantViewController: ParticipantViewController! {
+    private weak var localParticipantViewController: LocalParticipantViewController! {
         didSet {
             self.localParticipantViewControllerDidChange(
                 self.localParticipantViewController
@@ -47,9 +54,11 @@ class CallViewController: UIViewController {
         callClient.delegate = self
         return callClient
     }()
-
-    // MARK: - Call state
     
+    // MARK: - Call state
+
+    private var adaptiveHEVCEnabled: Bool = false
+
     private let userDefaults: UserDefaults = .standard
     
     private var localVideoSizeObserver: AnyCancellable? = nil
@@ -120,6 +129,10 @@ class CallViewController: UIViewController {
         self.callClient.inputs.microphone.isEnabled
     }
     
+    private var screenIsEnabled: Bool {
+        self.callClient.inputs.screenVideo.isEnabled
+    }
+    
     private var cameraIsPublishing: Bool {
         self.callClient.publishing.camera.isPublishing
     }
@@ -132,8 +145,13 @@ class CallViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.roomURLField.delegate = self
+        self.roomURLField.accessibilityIdentifier = "robots-room-url-field"
+        self.cameraInputButton.accessibilityIdentifier = "robots-camera-input"
+        self.microphoneInputButton.accessibilityIdentifier = "robots-mic-input"
+        self.cameraPublishingButton.accessibilityIdentifier = "robots-camera-publish"
+        self.microphonePublishingButton.accessibilityIdentifier = "robots-mic-publish"
 
         self.setupViews()
         self.setupNotificationObservers()
@@ -181,10 +199,9 @@ class CallViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
         case "embedLocalContainerView":
-            guard let destination = segue.destination as? ParticipantViewController else {
+            guard let destination = segue.destination as? LocalParticipantViewController else {
                 fatalError()
             }
-            destination.callClient = self.callClient
             self.localParticipantViewController = destination
         case "embedRemoteContainerView":
             guard let destination = segue.destination as? ParticipantViewController else {
@@ -208,6 +225,12 @@ class CallViewController: UIViewController {
         localViewLayer.cornerRadius = 20.0
         localViewLayer.cornerCurve = .continuous
         localViewLayer.masksToBounds = true
+
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        self.remoteParticipantContainerView.addGestureRecognizer(tap)
+        
+        self.systemBroadcastPickerView.preferredExtension = "co.daily.DailyDemo.DailyDemoScreenCaptureExtension"
+        self.systemBroadcastPickerView.showsMicrophoneButton = false
     }
 
     /// Setup notification observers for:
@@ -250,6 +273,12 @@ class CallViewController: UIViewController {
     }
     
     private func setupCallClient() {
+        self.callClient.updatePublishing(.set(
+            camera: .set(
+                isPublishing: .set(self.cameraIsPublishing),
+                sendSettings: .fromDefaults
+            )
+        ), completion: nil)
         self.callClient.updateSubscriptionProfiles(.set([
             .base: .set(
                 camera: .set(
@@ -288,6 +317,28 @@ class CallViewController: UIViewController {
                 settings: .set(facingMode: .set(newFacingMode))
             )
         ), completion: nil)
+    }
+
+    @IBAction private func toggleAdaptiveHEVC(_ sender: UIButton) {
+        self.adaptiveHEVCEnabled = !self.adaptiveHEVCEnabled
+        if self.adaptiveHEVCEnabled {
+            self.callClient.updatePublishing(.set(
+                camera: .set(
+                    isPublishing: .set(self.cameraIsPublishing),
+                    sendSettings: .set(
+                        maxQuality: .set(.high),
+                        encodings: .set(.mode(.adaptiveHEVC))
+                    )
+                )
+            ), completion: nil)
+        } else {
+            self.callClient.updatePublishing(.set(
+                camera: .set(
+                    isPublishing: .set(self.cameraIsPublishing),
+                    sendSettings: .fromDefaults
+                )
+            ), completion: nil)
+        }
     }
     
     @IBAction private func showAudioDevicePicker(_ sender: Any) {
@@ -393,7 +444,7 @@ class CallViewController: UIViewController {
     
     // MARK: - Video size handling
     
-    func localParticipantViewControllerDidChange(_ controller: ParticipantViewController) {
+    func localParticipantViewControllerDidChange(_ controller: LocalParticipantViewController) {
         self.localVideoSizeObserver = controller.videoSizePublisher.sink { [weak self] size in
             guard let self = self else { return }
 
@@ -429,9 +480,15 @@ class CallViewController: UIViewController {
             self.view.setNeedsLayout()
         }
     }
-    
+
     // MARK: - View management
-    
+
+    @objc private func handleTap(_ sender: UITapGestureRecognizer) {
+        UIView.animate(withDuration: 0.25) {
+            self.buttonStackView.alpha = self.buttonStackView.alpha.isZero ? 1 : 0
+        }
+    }
+
     private func updateViews() {
         // Update views based on current state:
         
@@ -439,12 +496,23 @@ class CallViewController: UIViewController {
         
         self.joinOrLeaveButton.isEnabled = self.canJoinOrLeave
         self.joinOrLeaveButton.isSelected = self.isJoined
+        if (self.joinOrLeaveButton.isSelected) {
+            self.joinOrLeaveButton.accessibilityIdentifier = "robots-leave-button"
+        } else {
+            self.joinOrLeaveButton.accessibilityIdentifier = "robots-join-button"
+        }
         
         self.cameraInputButton.isSelected = !self.cameraIsEnabled
+        self.cameraInputButton.accessibilityIdentifier = "robots-camera-input-\(!self.cameraIsEnabled)"
         self.microphoneInputButton.isSelected = !self.microphoneIsEnabled
-        
+        self.microphoneInputButton.accessibilityIdentifier = "robots-mic-input-\(!self.microphoneIsEnabled)"
+
         self.cameraPublishingButton.isSelected = !self.cameraIsPublishing
+        self.cameraPublishingButton.accessibilityIdentifier = "robots-camera-publish-\(!self.cameraIsPublishing)"
         self.microphonePublishingButton.isSelected = !self.microphoneIsPublishing
+        self.microphonePublishingButton.accessibilityIdentifier = "robots-mic-publish-\(!self.microphoneIsPublishing)"
+
+        self.adaptiveHEVCButton.isSelected = self.adaptiveHEVCEnabled
     }
     
     private func updateParticipantViewControllers() {
@@ -462,8 +530,6 @@ class CallViewController: UIViewController {
     }
     
     private func update(remoteParticipants: [ParticipantID: Participant]) {
-        guard [.joining, .joined].contains(callClient.callState) else { return }
-
         var remoteParticipantToDisplay: Participant?
         
         // Choose a remote participant to display by going down the priority list:
@@ -480,7 +546,7 @@ class CallViewController: UIViewController {
         // 2. If a remote participant is the active speaker, choose them
         if remoteParticipantToDisplay == nil {
             if let activeSpeaker = self.callClient.activeSpeaker, !activeSpeaker.info.isLocal {
-                remoteParticipantToDisplay = activeSpeaker
+                remoteParticipantToDisplay = remoteParticipants[activeSpeaker.id]
             }
         }
         
@@ -608,6 +674,28 @@ extension CallViewController: UITextFieldDelegate {
 }
 
 extension CallViewController: CallClientDelegate {
+    func callClientDidDetectStartOfSystemBroadcast(
+        _ callClient: CallClient
+    ) {
+        logger.debug("System broadcast started")
+
+        callClient.updateInputs(
+            .set(screenVideo: .set(isEnabled: .set(true))),
+            completion: nil
+        )
+    }
+
+    public func callClientDidDetectEndOfSystemBroadcast(
+        _ callClient: CallClient
+    ) {
+        logger.debug("System broadcast ended")
+
+        callClient.updateInputs(
+            .set(screenVideo: .set(isEnabled: .set(false))),
+            completion: nil
+        )
+    }
+
     func callClient(
         _ callClient: CallClient,
         callStateUpdated callState: CallState
@@ -619,8 +707,8 @@ extension CallViewController: CallClientDelegate {
         updateViews()
         
         if case .left = callClient.callState {
-            self.localParticipantViewController.reset()
-            self.remoteParticipantViewController.reset()
+            self.localParticipantViewController.participant = nil
+            self.remoteParticipantViewController.participant = nil
         } else if case .joined = callClient.callState {
             if let callConfiguration = callClient.callConfiguration {
                 logger.info("callConfiguration: \(callConfiguration)")
@@ -742,7 +830,7 @@ extension CallViewController: CallClientDelegate {
         let chatMessage: PrebuiltChatAppMessage
 
         logger.info("Got app message from \(senderID)")
-        
+
         do {
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = dateDecodingStrategy
@@ -755,7 +843,7 @@ extension CallViewController: CallClientDelegate {
 
             return
         }
-        
+
         logger.info("Got chat message \"\(chatMessage.message)\" from \"\(chatMessage.senderName)\" (\(senderID))")
 
         showPrebuiltChatAppMessageNotification(
@@ -766,7 +854,7 @@ extension CallViewController: CallClientDelegate {
         guard chatMessage.message.starts(with: "/echo") else {
             return
         }
-        
+
         let messageData: Data
         do {
             let encoder = JSONEncoder()
@@ -784,7 +872,7 @@ extension CallViewController: CallClientDelegate {
         }
 
         logger.info("Sending app message \"\(chatMessage.message)\"")
-        
+
         callClient.sendAppMessage(json: messageData, to: .all) { result in
             if case .failure(let error) = result {
                 logger.error("Failed to send app message: \(error)")
@@ -812,7 +900,7 @@ extension CallViewController: UIPickerViewDelegate {
         label.sizeToFit()
         return label
     }
-    
+
     func pickerView(
         _ pickerView: UIPickerView,
         rowHeightForComponent component: Int
@@ -825,7 +913,7 @@ extension CallViewController: UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-    
+
     func pickerView(
         _ pickerView: UIPickerView,
         numberOfRowsInComponent component: Int
