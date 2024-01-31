@@ -830,6 +830,11 @@ extension CallViewController: CallClientDelegate {
         let chatMessage: PrebuiltChatAppMessage
 
         logger.info("Got app message from \(senderID)")
+        
+        guard PrebuiltChatAppMessage.shouldExpectAppMessageToBePrebuiltChatMessage(jsonData) else {
+            logger.info("Not a chat message")
+            return
+        }
 
         do {
             let decoder = JSONDecoder()
@@ -839,7 +844,7 @@ extension CallViewController: CallClientDelegate {
                 from: jsonData
             )
         } catch {
-            logger.error("App message decoding error: \(error)")
+            logger.error("Chat message decoding error: \(error)")
 
             return
         }
@@ -878,6 +883,13 @@ extension CallViewController: CallClientDelegate {
                 logger.error("Failed to send app message: \(error)")
             }
         }
+    }
+    
+    func callClient(
+        _ callClient: CallClient,
+        transcriptionMessage: TranscriptionMessage
+    ) {
+        logger.info("Got transcription message: \(transcriptionMessage)")
     }
 
     func callClient(
