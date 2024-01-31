@@ -43,3 +43,26 @@ public struct PrebuiltChatAppMessage: Codable {
         case invalidEventKind
     }
 }
+
+// The below is useful for checking whether an app message should be attempted
+// to be deserialized as a Prebuilt chat message or whether it's another kind of
+// app message entirely.
+extension PrebuiltChatAppMessage {
+    private struct PrebuiltAppMessage: Decodable {
+        let event: String
+    }
+    
+    public static func shouldExpectAppMessageToBePrebuiltChatMessage(_ jsonData: Data) -> Bool {
+        let decoder = JSONDecoder()
+        do {
+            let appMessage = try decoder.decode(
+                PrebuiltAppMessage.self,
+                from: jsonData
+            )
+            return appMessage.event == "chat-msg"
+        }
+        catch {
+            return false
+        }
+    }
+}
