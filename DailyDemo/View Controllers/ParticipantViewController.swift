@@ -58,12 +58,13 @@ class ParticipantViewController: UIViewController {
     }
 
     private func didUpdate(participant: Participant?) {
+        let customVideoTrack = participant?.media?.customVideo.firstPlayableTrack
         let cameraTrack = participant?.media?.camera.track
         let screenTrack = participant?.media?.screenVideo.track
-        let videoTrack = screenTrack ?? cameraTrack
+        let videoTrack = screenTrack ?? customVideoTrack ?? cameraTrack
         let username = participant?.info.username
 
-        let isScreenTrack = screenTrack != nil
+        let isScreenOrCustomVideoTrack = screenTrack != nil || customVideoTrack != nil
         let hasVideo = videoTrack != nil
 
         // Assign name to label:
@@ -79,16 +80,23 @@ class ParticipantViewController: UIViewController {
         self.videoView.isHidden = !hasVideo
 
         // Change video's scale mode based on track type:
-        self.videoView.videoScaleMode = isScreenTrack ? .fit : .fill
+        self.videoView.videoScaleMode = isScreenOrCustomVideoTrack ? .fit : .fill
 
         // Don't change subscriptions for local view controller otherwise
         // it conflicts with the changes from the remote one.
         if let participant = participant, !participant.info.isLocal {
-            self.updateSubscriptions(activeParticipant: participant)
+            let customVideoTrackToSubscribeTo = participant.media?.customVideo.firstSubscribableTrackName
+            self.updateSubscriptions(
+                activeParticipant: participant,
+                subscribeToCustomVideoTrack: customVideoTrackToSubscribeTo
+            )
         }
     }
 
-    private func updateSubscriptions(activeParticipant: Participant) {
+    private func updateSubscriptions(
+        activeParticipant: Participant,
+        subscribeToCustomVideoTrack customVideoTrackName: String?
+    ) {
         guard let callClient = self.callClient else {
             return
         }
@@ -101,7 +109,10 @@ class ParticipantViewController: UIViewController {
             forParticipants: .set([
                 // Move the now-shown participant to the `.activeRemote` profile:
                 activeParticipant.id: .set(
-                    profile: .set(.activeRemote)
+                    profile: .set(.activeRemote),
+                    media: .set(customVideo: customVideoTrackName == nil ? [:] : [
+                        customVideoTrackName!: .set(subscriptionState: .set(.subscribed))
+                    ])
                 ),
             ]),
             participantsWithProfiles: .set([

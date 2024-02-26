@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		210630072B5EFA3800A6C8B4 /* LoopingVideoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210630062B5EFA3800A6C8B4 /* LoopingVideoSource.swift */; };
+		210630092B5F10FB00A6C8B4 /* movie.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 210630082B5F10FB00A6C8B4 /* movie.mp4 */; };
+		213BB3F42B6463A3003985A6 /* CustomVideoInfoDictionary+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213BB3F32B6463A3003985A6 /* CustomVideoInfoDictionary+Extensions.swift */; };
 		2DD920FC26FA118800DD526E /* CallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD920FA26FA118800DD526E /* CallViewController.swift */; };
 		49B9C7292AD9DBC700AC8C0C /* LocalParticipantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B9C7282AD9DBC700AC8C0C /* LocalParticipantViewController.swift */; };
 		6109E304294A849B001FCB06 /* PrebuiltChatAppMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6109E303294A849B001FCB06 /* PrebuiltChatAppMessage.swift */; };
@@ -52,6 +55,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		210630062B5EFA3800A6C8B4 /* LoopingVideoSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopingVideoSource.swift; sourceTree = "<group>"; };
+		210630082B5F10FB00A6C8B4 /* movie.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = movie.mp4; sourceTree = "<group>"; };
+		213BB3F32B6463A3003985A6 /* CustomVideoInfoDictionary+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomVideoInfoDictionary+Extensions.swift"; sourceTree = "<group>"; };
 		2D1FAE8527047E6A001C0986 /* BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
 		2DD920FA26FA118800DD526E /* CallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallViewController.swift; sourceTree = "<group>"; };
 		49B9C7282AD9DBC700AC8C0C /* LocalParticipantViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalParticipantViewController.swift; sourceTree = "<group>"; };
@@ -143,6 +149,7 @@
 		CAE48E35266A8BDD00D2CA2E /* DailyDemo */ = {
 			isa = PBXGroup;
 			children = (
+				210630082B5F10FB00A6C8B4 /* movie.mp4 */,
 				9073BCFD2ACAF9D800283154 /* DailyDemo.entitlements */,
 				CAE48E36266A8BDD00D2CA2E /* AppDelegate.swift */,
 				CAE48E38266A8BDD00D2CA2E /* SceneDelegate.swift */,
@@ -156,6 +163,8 @@
 				CAE48E44266A8BDF00D2CA2E /* Info.plist */,
 				2D1FAE8527047E6A001C0986 /* BridgingHeader.h */,
 				6109E303294A849B001FCB06 /* PrebuiltChatAppMessage.swift */,
+				210630062B5EFA3800A6C8B4 /* LoopingVideoSource.swift */,
+				213BB3F32B6463A3003985A6 /* CustomVideoInfoDictionary+Extensions.swift */,
 			);
 			path = DailyDemo;
 			sourceTree = "<group>";
@@ -268,6 +277,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				210630092B5F10FB00A6C8B4 /* movie.mp4 in Resources */,
 				CAF2FBD327E9F296000F3F07 /* Main.storyboard in Resources */,
 				CAE48E43266A8BDF00D2CA2E /* LaunchScreen.storyboard in Resources */,
 				CAE48E40266A8BDF00D2CA2E /* Assets.xcassets in Resources */,
@@ -290,10 +300,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				CADFCBD12889A11F00032A32 /* Profile+Extensions.swift in Sources */,
+				210630072B5EFA3800A6C8B4 /* LoopingVideoSource.swift in Sources */,
 				CA1C680A284A3D1900303C63 /* ParticipantViewController.swift in Sources */,
 				CAA41568288AABFF00CC8BBD /* ToggleButton.swift in Sources */,
 				CAE48E37266A8BDD00D2CA2E /* AppDelegate.swift in Sources */,
 				6109E304294A849B001FCB06 /* PrebuiltChatAppMessage.swift in Sources */,
+				213BB3F42B6463A3003985A6 /* CustomVideoInfoDictionary+Extensions.swift in Sources */,
 				2DD920FC26FA118800DD526E /* CallViewController.swift in Sources */,
 				CA183EE028C60CB800BD4883 /* ViewToggleButton.swift in Sources */,
 				49B9C7292AD9DBC700AC8C0C /* LocalParticipantViewController.swift in Sources */,
@@ -433,7 +445,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MARKETING_VERSION = 0.12.0;
+				MARKETING_VERSION = 0.16.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -489,7 +501,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MARKETING_VERSION = 0.12.0;
+				MARKETING_VERSION = 0.16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

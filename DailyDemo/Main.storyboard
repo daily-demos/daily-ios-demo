@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="LKB-Ce-Cn8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="LKB-Ce-Cn8">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -38,7 +38,7 @@
                                 </connections>
                             </containerView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="zPw-3x-xHw">
-                                <rect key="frame" x="20" y="599" width="353" height="233"/>
+                                <rect key="frame" x="20" y="536" width="353" height="296"/>
                                 <subviews>
                                     <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hJi-uv-Pos">
                                         <rect key="frame" x="0.0" y="0.0" width="353" height="56"/>
@@ -46,135 +46,169 @@
                                             <rect key="frame" x="0.0" y="0.0" width="353" height="56"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="K10-SN-rd6">
-                                                    <rect key="frame" x="8" y="8" width="337" height="40"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="oQ0-mj-QVG">
+                                                    <rect key="frame" x="8" y="8" width="222.66666666666666" height="40"/>
                                                     <subviews>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="oQ0-mj-QVG">
-                                                            <rect key="frame" x="0.0" y="0.0" width="177.66666666666666" height="40"/>
-                                                            <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="751" text="Inputs" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3n4-TH-1wO">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="42.666666666666664" height="40"/>
-                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                                    <nil key="textColor"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                                <button toolTip="Camera Input" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nVD-be-Bda" customClass="ToggleButton" customModule="DailyDemo" customModuleProvider="target">
-                                                                    <rect key="frame" x="47.666666666666671" y="0.0" width="40" height="40"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="width" constant="40" id="roR-4Y-GRF"/>
-                                                                        <constraint firstAttribute="height" constant="40" id="tlg-Nc-74w"/>
-                                                                    </constraints>
-                                                                    <color key="tintColor" systemColor="systemRedColor"/>
-                                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                    <state key="normal" image="video.fill" catalog="system">
-                                                                        <string key="title" base64-UTF8="YES">
-Gw
-</string>
-                                                                    </state>
-                                                                    <state key="selected" image="video.slash" catalog="system"/>
-                                                                    <buttonConfiguration key="configuration" style="plain" image="video.fill" catalog="system">
-                                                                        <string key="title" base64-UTF8="YES">
-Gw
-</string>
-                                                                    </buttonConfiguration>
-                                                                    <userDefinedRuntimeAttributes>
-                                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                                            <integer key="value" value="10"/>
-                                                                        </userDefinedRuntimeAttribute>
-                                                                    </userDefinedRuntimeAttributes>
-                                                                    <connections>
-                                                                        <action selector="toggleCameraInput:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="8mj-30-eoB"/>
-                                                                    </connections>
-                                                                </button>
-                                                                <button toolTip="Microphone Input" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sml-v7-ZOX" customClass="ToggleButton" customModule="DailyDemo" customModuleProvider="target">
-                                                                    <rect key="frame" x="92.666666666666671" y="0.0" width="40.000000000000014" height="40"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="width" constant="40" id="rxI-OV-jvb"/>
-                                                                        <constraint firstAttribute="height" constant="40" id="vtX-q6-gYa"/>
-                                                                    </constraints>
-                                                                    <color key="tintColor" systemColor="systemRedColor"/>
-                                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                    <state key="normal" image="mic.fill" catalog="system"/>
-                                                                    <state key="selected" image="mic.slash" catalog="system"/>
-                                                                    <buttonConfiguration key="configuration" style="plain" image="mic.fill" catalog="system"/>
-                                                                    <connections>
-                                                                        <action selector="toggleMicrophoneInput:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="42c-a1-LhH"/>
-                                                                    </connections>
-                                                                </button>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uL9-IJ-Qdo" customClass="RPSystemBroadcastPickerView">
-                                                                    <rect key="frame" x="137.66666666666666" y="0.0" width="40" height="40"/>
-                                                                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="width" constant="40" id="sKz-u8-3aj"/>
-                                                                        <constraint firstAttribute="height" constant="40" id="uZE-SX-5rO"/>
-                                                                    </constraints>
-                                                                </view>
-                                                            </subviews>
-                                                        </stackView>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2gZ-Fe-fUJ">
-                                                            <rect key="frame" x="185.66666666666666" y="0.0" width="4" height="40"/>
-                                                            <color key="backgroundColor" systemColor="separatorColor"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="751" text="Inputs" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3n4-TH-1wO">
+                                                            <rect key="frame" x="0.0" y="0.0" width="42.666666666666664" height="40"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <button toolTip="Camera Input" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nVD-be-Bda" customClass="ToggleButton" customModule="DailyDemo" customModuleProvider="target">
+                                                            <rect key="frame" x="47.666666666666671" y="0.0" width="40" height="40"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="4" id="hma-K5-u26"/>
+                                                                <constraint firstAttribute="width" constant="40" id="roR-4Y-GRF"/>
+                                                                <constraint firstAttribute="height" constant="40" id="tlg-Nc-74w"/>
+                                                            </constraints>
+                                                            <color key="tintColor" systemColor="systemRedColor"/>
+                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                            <state key="normal" image="video.fill" catalog="system">
+                                                                <string key="title" base64-UTF8="YES">
+Gw
+</string>
+                                                            </state>
+                                                            <state key="selected" image="video.slash" catalog="system"/>
+                                                            <buttonConfiguration key="configuration" style="plain" image="video.fill" catalog="system">
+                                                                <string key="title" base64-UTF8="YES">
+Gw
+</string>
+                                                            </buttonConfiguration>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                    <integer key="value" value="10"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
+                                                            <connections>
+                                                                <action selector="toggleCameraInput:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="8mj-30-eoB"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button toolTip="Microphone Input" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sml-v7-ZOX" customClass="ToggleButton" customModule="DailyDemo" customModuleProvider="target">
+                                                            <rect key="frame" x="92.666666666666671" y="0.0" width="40.000000000000014" height="40"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="40" id="rxI-OV-jvb"/>
+                                                                <constraint firstAttribute="height" constant="40" id="vtX-q6-gYa"/>
+                                                            </constraints>
+                                                            <color key="tintColor" systemColor="systemRedColor"/>
+                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                            <state key="normal" image="mic.fill" catalog="system"/>
+                                                            <state key="selected" image="mic.slash" catalog="system"/>
+                                                            <buttonConfiguration key="configuration" style="plain" image="mic.fill" catalog="system"/>
+                                                            <connections>
+                                                                <action selector="toggleMicrophoneInput:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="42c-a1-LhH"/>
+                                                            </connections>
+                                                        </button>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uL9-IJ-Qdo" customClass="RPSystemBroadcastPickerView">
+                                                            <rect key="frame" x="137.66666666666666" y="0.0" width="40" height="40"/>
+                                                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="40" id="sKz-u8-3aj"/>
+                                                                <constraint firstAttribute="height" constant="40" id="uZE-SX-5rO"/>
                                                             </constraints>
                                                         </view>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="s0A-R3-Gea">
-                                                            <rect key="frame" x="197.66666666666663" y="0.0" width="139.33333333333337" height="40"/>
-                                                            <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Publishing" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ISd-iP-LKZ">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="49.333333333333336" height="40"/>
-                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                                    <nil key="textColor"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                                <button toolTip="Camera Publishing" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Vx-dD-fHH" customClass="ToggleButton" customModule="DailyDemo" customModuleProvider="target">
-                                                                    <rect key="frame" x="54.333333333333343" y="0.0" width="40" height="40"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="height" constant="40" id="hVI-li-tbF"/>
-                                                                        <constraint firstAttribute="width" constant="40" id="kJz-JT-YCh"/>
-                                                                    </constraints>
-                                                                    <color key="tintColor" systemColor="systemRedColor"/>
-                                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                    <state key="normal" image="video.fill" catalog="system"/>
-                                                                    <state key="selected" image="video.slash" catalog="system"/>
-                                                                    <buttonConfiguration key="configuration" style="plain" image="video.fill" catalog="system"/>
-                                                                    <userDefinedRuntimeAttributes>
-                                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                                            <integer key="value" value="10"/>
-                                                                        </userDefinedRuntimeAttribute>
-                                                                    </userDefinedRuntimeAttributes>
-                                                                    <connections>
-                                                                        <action selector="toggleCameraPublishing:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="KXn-EN-nnz"/>
-                                                                    </connections>
-                                                                </button>
-                                                                <button toolTip="Microphone Publishing" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YOc-hy-kIc" customClass="ToggleButton" customModule="DailyDemo" customModuleProvider="target">
-                                                                    <rect key="frame" x="99.333333333333343" y="0.0" width="40" height="40"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="width" constant="40" id="e7g-mT-LuN"/>
-                                                                        <constraint firstAttribute="height" constant="40" id="fwf-8v-4TW"/>
-                                                                    </constraints>
-                                                                    <color key="tintColor" systemColor="systemRedColor"/>
-                                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                    <state key="normal" image="mic.fill" catalog="system"/>
-                                                                    <state key="selected" image="mic.slash" catalog="system"/>
-                                                                    <buttonConfiguration key="configuration" style="plain" image="mic.fill" catalog="system"/>
-                                                                    <connections>
-                                                                        <action selector="toggleMicrophonePublishing:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="Y72-L3-Wa7"/>
-                                                                    </connections>
-                                                                </button>
-                                                            </subviews>
-                                                        </stackView>
+                                                        <button toolTip="Microphone Input" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nvb-U9-A0e" userLabel="Custom Video Input Button" customClass="ToggleButton" customModule="DailyDemo" customModuleProvider="target">
+                                                            <rect key="frame" x="182.66666666666666" y="0.0" width="40" height="40"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="40" id="cSu-A4-ziv"/>
+                                                                <constraint firstAttribute="height" constant="40" id="ksI-aU-b3p"/>
+                                                            </constraints>
+                                                            <color key="tintColor" systemColor="systemRedColor"/>
+                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                            <state key="normal" image="movieclapper.fill" catalog="system"/>
+                                                            <state key="selected" image="movieclapper.fill" catalog="system"/>
+                                                            <buttonConfiguration key="configuration" style="plain" image="movieclapper.fill" catalog="system"/>
+                                                            <connections>
+                                                                <action selector="toggleCustomVideoInput:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="n6T-fY-rf0"/>
+                                                            </connections>
+                                                        </button>
                                                     </subviews>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="40" id="6US-mP-8UN"/>
-                                                    </constraints>
                                                 </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="K10-SN-rd6" secondAttribute="bottom" constant="8" id="YVZ-TR-mjo"/>
-                                                <constraint firstAttribute="trailing" secondItem="K10-SN-rd6" secondAttribute="trailing" constant="8" id="o37-2u-cXZ"/>
-                                                <constraint firstItem="K10-SN-rd6" firstAttribute="leading" secondItem="Rjk-zl-7nn" secondAttribute="leading" constant="8" id="pJg-71-s61"/>
-                                                <constraint firstItem="K10-SN-rd6" firstAttribute="top" secondItem="Rjk-zl-7nn" secondAttribute="top" constant="8" id="xNq-mD-4Es"/>
+                                                <constraint firstItem="oQ0-mj-QVG" firstAttribute="leading" secondItem="Rjk-zl-7nn" secondAttribute="leadingMargin" id="Avl-ek-GdC"/>
+                                                <constraint firstItem="oQ0-mj-QVG" firstAttribute="top" secondItem="Rjk-zl-7nn" secondAttribute="top" constant="8" id="MLF-md-czS"/>
+                                                <constraint firstAttribute="bottom" secondItem="oQ0-mj-QVG" secondAttribute="bottom" constant="8" id="Oup-SF-mQL"/>
+                                            </constraints>
+                                        </view>
+                                        <blurEffect style="systemMaterial"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </visualEffectView>
+                                    <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rzv-df-7w1">
+                                        <rect key="frame" x="0.0" y="63" width="353" height="56"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="nNJ-Ss-gze">
+                                            <rect key="frame" x="0.0" y="0.0" width="353" height="56"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Ngy-Th-RZB">
+                                                    <rect key="frame" x="8" y="8" width="206" height="40"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Publishing" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5fl-KE-zdi">
+                                                            <rect key="frame" x="0.0" y="0.0" width="71" height="40"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <button toolTip="Camera Publishing" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JcD-aH-cQJ" customClass="ToggleButton" customModule="DailyDemo" customModuleProvider="target">
+                                                            <rect key="frame" x="76" y="0.0" width="40" height="40"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="40" id="OPo-Rc-m2c"/>
+                                                                <constraint firstAttribute="height" constant="40" id="U95-vK-Pgs"/>
+                                                            </constraints>
+                                                            <color key="tintColor" systemColor="systemRedColor"/>
+                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                            <state key="normal" image="video.fill" catalog="system"/>
+                                                            <state key="selected" image="video.slash" catalog="system"/>
+                                                            <buttonConfiguration key="configuration" style="plain" image="video.fill" catalog="system"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                    <integer key="value" value="10"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
+                                                            <connections>
+                                                                <action selector="toggleCameraPublishing:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="uTP-k8-TBC"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button toolTip="Microphone Publishing" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gJ8-Jl-3vA" customClass="ToggleButton" customModule="DailyDemo" customModuleProvider="target">
+                                                            <rect key="frame" x="121" y="0.0" width="40" height="40"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="40" id="2ho-lR-vW3"/>
+                                                                <constraint firstAttribute="width" constant="40" id="eaj-QK-kwk"/>
+                                                            </constraints>
+                                                            <color key="tintColor" systemColor="systemRedColor"/>
+                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                            <state key="normal" image="mic.fill" catalog="system"/>
+                                                            <state key="selected" image="mic.slash" catalog="system"/>
+                                                            <buttonConfiguration key="configuration" style="plain" image="mic.fill" catalog="system"/>
+                                                            <connections>
+                                                                <action selector="toggleMicrophonePublishing:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="5g7-yq-The"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button toolTip="Microphone Input" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ltU-JT-LWT" userLabel="Custom Video Publishing Button" customClass="ToggleButton" customModule="DailyDemo" customModuleProvider="target">
+                                                            <rect key="frame" x="166" y="0.0" width="40" height="40"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="40" id="RuE-dG-Z4t"/>
+                                                                <constraint firstAttribute="width" constant="40" id="iIO-Rb-Msf"/>
+                                                            </constraints>
+                                                            <color key="tintColor" systemColor="systemRedColor"/>
+                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                            <state key="normal" image="movieclapper.fill" catalog="system"/>
+                                                            <state key="selected" image="movieclapper.fill" catalog="system"/>
+                                                            <buttonConfiguration key="configuration" style="plain" image="movieclapper.fill" catalog="system"/>
+                                                            <connections>
+                                                                <action selector="toggleCustomVideoPublishing:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="AqP-Rb-GZE"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Ngy-Th-RZB" firstAttribute="leading" secondItem="nNJ-Ss-gze" secondAttribute="leading" constant="8" id="N2F-MK-5my"/>
+                                                <constraint firstAttribute="bottom" secondItem="Ngy-Th-RZB" secondAttribute="bottom" constant="8" id="Sob-Bd-QQN"/>
+                                                <constraint firstItem="Ngy-Th-RZB" firstAttribute="top" secondItem="nNJ-Ss-gze" secondAttribute="top" constant="8" id="mzA-C3-Yfg"/>
                                             </constraints>
                                         </view>
                                         <blurEffect style="systemMaterial"/>
@@ -185,7 +219,7 @@ Gw
                                         </userDefinedRuntimeAttributes>
                                     </visualEffectView>
                                     <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VQu-07-a1D">
-                                        <rect key="frame" x="0.0" y="63" width="353" height="56"/>
+                                        <rect key="frame" x="0.0" y="126" width="353" height="56"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="hRW-p4-jdU">
                                             <rect key="frame" x="0.0" y="0.0" width="353" height="56"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -286,7 +320,7 @@ Gw
                                         </userDefinedRuntimeAttributes>
                                     </visualEffectView>
                                     <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hCz-cJ-f6p">
-                                        <rect key="frame" x="0.0" y="126" width="353" height="50"/>
+                                        <rect key="frame" x="0.0" y="189" width="353" height="50"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="OHJ-d8-oVY">
                                             <rect key="frame" x="0.0" y="0.0" width="353" height="50"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -315,7 +349,7 @@ Gw
                                         </userDefinedRuntimeAttributes>
                                     </visualEffectView>
                                     <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gb9-vT-0IZ">
-                                        <rect key="frame" x="0.0" y="183" width="353" height="50"/>
+                                        <rect key="frame" x="0.0" y="246" width="353" height="50"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="TLS-yn-lru">
                                             <rect key="frame" x="0.0" y="0.0" width="353" height="50"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -410,12 +444,14 @@ Gw
                         <outlet property="buttonStackView" destination="zPw-3x-xHw" id="6fn-Zi-hTA"/>
                         <outlet property="cameraFlipViewButton" destination="J1R-6Y-EZl" id="eCn-7C-s24"/>
                         <outlet property="cameraInputButton" destination="nVD-be-Bda" id="4LH-Jl-qoV"/>
-                        <outlet property="cameraPublishingButton" destination="9Vx-dD-fHH" id="XGk-Xi-t0b"/>
+                        <outlet property="cameraPublishingButton" destination="JcD-aH-cQJ" id="oQW-FI-Gj5"/>
+                        <outlet property="customVideoInputButton" destination="nvb-U9-A0e" id="xJE-Yi-32b"/>
+                        <outlet property="customVideoPublishingButton" destination="ltU-JT-LWT" id="wYx-C1-VGP"/>
                         <outlet property="joinOrLeaveButton" destination="28K-px-EIv" id="aQP-iL-D7Z"/>
                         <outlet property="localParticipantContainerView" destination="SMm-Ur-jDB" id="4tk-9i-HNa"/>
                         <outlet property="localViewToggleButton" destination="j27-k7-NBf" id="fCm-IH-iJ3"/>
                         <outlet property="microphoneInputButton" destination="Sml-v7-ZOX" id="1mk-U2-76L"/>
-                        <outlet property="microphonePublishingButton" destination="YOc-hy-kIc" id="wfJ-pe-eUx"/>
+                        <outlet property="microphonePublishingButton" destination="gJ8-Jl-3vA" id="3ig-5O-sfU"/>
                         <outlet property="pickerViewButton" destination="Vtz-BD-mns" id="GLQ-wi-cZR"/>
                         <outlet property="remoteParticipantContainerView" destination="TfA-Cz-psX" id="UcI-xb-j99"/>
                         <outlet property="roomURLField" destination="cAd-sb-N2T" id="oNs-AM-Ixa"/>
@@ -540,27 +576,28 @@ Gw
         <image name="mic.fill" catalog="system" width="110" height="128"/>
         <image name="mic.slash" catalog="system" width="108" height="128"/>
         <image name="minus.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="movieclapper.fill" catalog="system" width="128" height="113"/>
         <image name="plus.circle.fill" catalog="system" width="128" height="123"/>
         <image name="speaker.1.fill" catalog="system" width="128" height="104"/>
         <image name="video.fill" catalog="system" width="128" height="81"/>
-        <image name="video.slash" catalog="system" width="128" height="105"/>
+        <image name="video.slash" catalog="system" width="128" height="117"/>
         <systemColor name="labelColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="separatorColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGroupedBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
