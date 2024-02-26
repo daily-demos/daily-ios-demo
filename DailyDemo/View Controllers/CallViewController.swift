@@ -6,6 +6,8 @@ import Logging
 import UIKit
 import UserNotifications
 
+private let customVideoName = "myCoolVideo"
+
 func dumped<T>(_ value: T) -> String {
     var string = ""
     Swift.dump(value, to: &string)
@@ -15,8 +17,10 @@ func dumped<T>(_ value: T) -> String {
 class CallViewController: UIViewController {
     @IBOutlet private weak var cameraInputButton: UIButton!
     @IBOutlet private weak var microphoneInputButton: UIButton!
+    @IBOutlet private weak var customVideoInputButton: UIButton!
     @IBOutlet private weak var cameraPublishingButton: UIButton!
     @IBOutlet private weak var microphonePublishingButton: UIButton!
+    @IBOutlet private weak var customVideoPublishingButton: UIButton!
     @IBOutlet private weak var cameraFlipViewButton: UIButton!
     @IBOutlet private weak var adaptiveHEVCButton: UIButton!
 
@@ -62,6 +66,8 @@ class CallViewController: UIViewController {
     private let userDefaults: UserDefaults = .standard
     
     private var localVideoSizeObserver: AnyCancellable? = nil
+    
+    private lazy var customVideoSource = LoopingVideoSource()
 
     // MARK: - Date coding
 
@@ -133,12 +139,20 @@ class CallViewController: UIViewController {
         self.callClient.inputs.screenVideo.isEnabled
     }
     
+    private var customVideoIsEnabled: Bool {
+        self.callClient.inputs.customVideo[customVideoName]?.isEnabled == true
+    }
+    
     private var cameraIsPublishing: Bool {
         self.callClient.publishing.camera.isPublishing
     }
     
     private var microphoneIsPublishing: Bool {
         self.callClient.publishing.microphone.isPublishing
+    }
+    
+    private var customVideoIsPublishing: Bool {
+        self.callClient.publishing.customVideo[customVideoName]?.isPublishing == true
     }
     
     // MARK: - Lifecycle
@@ -154,6 +168,7 @@ class CallViewController: UIViewController {
         self.microphonePublishingButton.accessibilityIdentifier = "robots-mic-publish"
 
         self.setupViews()
+        self.setupDevModeFeaturesViews()
         self.setupNotificationObservers()
         self.setupCallClient()
         self.setupAuthorizations()
@@ -226,11 +241,26 @@ class CallViewController: UIViewController {
         localViewLayer.cornerCurve = .continuous
         localViewLayer.masksToBounds = true
 
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        let tap = UITapGestureRecognizer(
+            target: self,
+            action: #selector(handleTap)
+        )
         self.remoteParticipantContainerView.addGestureRecognizer(tap)
         
         self.systemBroadcastPickerView.preferredExtension = "co.daily.DailyDemo.DailyDemoScreenCaptureExtension"
         self.systemBroadcastPickerView.showsMicrophoneButton = false
+    }
+    
+    private func setupDevModeFeaturesViews() {
+        setDevModeFeaturesViewsHidden(true)
+        
+        let devModeToggleGesture = UILongPressGestureRecognizer(
+            target: self,
+            action: #selector(handleDevModeToggleGesture)
+        )
+        devModeToggleGesture.minimumPressDuration = 2
+        devModeToggleGesture.numberOfTouchesRequired = 3
+        self.remoteParticipantContainerView.addGestureRecognizer(devModeToggleGesture)
     }
 
     /// Setup notification observers for:
@@ -295,6 +325,13 @@ class CallViewController: UIViewController {
                 )
             )
         ]), completion: nil)
+    }
+    
+    // MARK: Dev mode feature views
+    
+    private func setDevModeFeaturesViewsHidden(_ hidden: Bool) {
+        self.customVideoInputButton.isHidden = hidden
+        self.customVideoPublishingButton.isHidden = hidden
     }
     
     // MARK: Device picker
@@ -431,6 +468,37 @@ class CallViewController: UIViewController {
         let isEnabled = !self.callClient.inputs.microphone.isEnabled
         self.callClient.setInputEnabled(.microphone, isEnabled, completion: nil)
     }
+
+    @IBAction private func toggleCustomVideoInput(_ sender: UIButton) {
+        let enable = self.callClient.inputs.customVideo[customVideoName]?.isEnabled != true
+
+        if enable {
+            self.callClient.addCustomVideoTrack(
+                name: customVideoName,
+                source: self.customVideoSource
+            ) { result in
+                switch result {
+                case .success:
+                    break
+                case .failure(let error):
+                    logger.error("Failed to add custom video track: \(error)")
+                    break
+                }
+            }
+        } else {
+            self.callClient.removeCustomVideoTrack(
+                name: customVideoName
+            ) { result in
+                switch result {
+                case .success:
+                    break
+                case .failure(let error):
+                    logger.error("Failed to remove custom video track: \(error)")
+                    break
+                }
+            }
+        }
+    }
     
     @IBAction private func toggleCameraPublishing(_ sender: UIButton) {
         let isPublishing = !self.callClient.publishing.camera.isPublishing
@@ -440,6 +508,14 @@ class CallViewController: UIViewController {
     @IBAction private func toggleMicrophonePublishing(_ sender: UIButton) {
         let isPublishing = !self.callClient.publishing.microphone.isPublishing
         self.callClient.setIsPublishing(.microphone, isPublishing, completion: nil)
+    }
+    
+    @IBAction private func toggleCustomVideoPublishing(_ sender: UIButton) {
+        let isPublishing = self.callClient.publishing.customVideo[customVideoName]?.isPublishing != true
+        self.callClient.updatePublishing(.set(
+            customVideo: [
+                customVideoName: .publishing(isPublishing)
+            ]), completion: nil)
     }
     
     // MARK: - Video size handling
@@ -488,6 +564,30 @@ class CallViewController: UIViewController {
             self.buttonStackView.alpha = self.buttonStackView.alpha.isZero ? 1 : 0
         }
     }
+    
+    @objc private func handleDevModeToggleGesture(
+        _ sender: UILongPressGestureRecognizer
+    ) {
+        guard sender.state == .began else { return }
+        
+        let isDevModeEnabled = !customVideoInputButton.isHidden
+        guard !isDevModeEnabled else { return }
+        
+        let alert = UIAlertController(
+            title: "Enable dev mode?",
+            message: nil,
+            preferredStyle: .alert
+        )
+        alert.addAction(.init(
+            title: "OK",
+            style: .default,
+            handler: { _ in
+                self.setDevModeFeaturesViewsHidden(false)
+            }
+        ))
+        alert.addAction(.init(title: "Cancel", style: .cancel))
+        self.present(alert, animated: true)
+    }
 
     private func updateViews() {
         // Update views based on current state:
@@ -506,11 +606,15 @@ class CallViewController: UIViewController {
         self.cameraInputButton.accessibilityIdentifier = "robots-camera-input-\(!self.cameraIsEnabled)"
         self.microphoneInputButton.isSelected = !self.microphoneIsEnabled
         self.microphoneInputButton.accessibilityIdentifier = "robots-mic-input-\(!self.microphoneIsEnabled)"
+        self.customVideoInputButton.isSelected = !self.customVideoIsEnabled
+        self.customVideoInputButton.accessibilityIdentifier = "robots-custom-video-input-\(!self.customVideoIsEnabled)"
 
         self.cameraPublishingButton.isSelected = !self.cameraIsPublishing
         self.cameraPublishingButton.accessibilityIdentifier = "robots-camera-publish-\(!self.cameraIsPublishing)"
         self.microphonePublishingButton.isSelected = !self.microphoneIsPublishing
         self.microphonePublishingButton.accessibilityIdentifier = "robots-mic-publish-\(!self.microphoneIsPublishing)"
+        self.customVideoPublishingButton.isSelected = !self.customVideoIsPublishing
+        self.customVideoPublishingButton.accessibilityIdentifier = "robots-mic-publish-\(!self.customVideoIsPublishing)"
 
         self.adaptiveHEVCButton.isSelected = self.adaptiveHEVCEnabled
     }
@@ -534,23 +638,35 @@ class CallViewController: UIViewController {
         
         // Choose a remote participant to display by going down the priority list:
         // 1. A screen sharer
-        // 2. The active speaker
-        // 3. Whoever was previously displayed (if anyone)
-        // 4. Anyone else
+        // 2. A custom video track sharer
+        // 3. The active speaker
+        // 4. Whoever was previously displayed (if anyone)
+        // 5. Anyone else
         
         // 1. If a remote participant is sharing their screen, choose them
         remoteParticipantToDisplay = remoteParticipants.values.first { participant in
             participant.media?.screenVideo.track != nil
         }
         
-        // 2. If a remote participant is the active speaker, choose them
+        // 2. If a remote participant is sharing a custom video track, choose them
+        if (remoteParticipantToDisplay == nil) {
+            // Note that we can't check for the first available `track` here
+            // because we don't auto-subscribe to custom video tracks. The
+            // subscription is set up when the participant is first assigned to
+            // the `remoteParticipantViewController`.
+            remoteParticipantToDisplay = remoteParticipants.values.first { participant in
+                participant.media?.customVideo.firstSubscribableTrackName != nil
+            }
+        }
+        
+        // 3. If a remote participant is the active speaker, choose them
         if remoteParticipantToDisplay == nil {
             if let activeSpeaker = self.callClient.activeSpeaker, !activeSpeaker.info.isLocal {
                 remoteParticipantToDisplay = remoteParticipants[activeSpeaker.id]
             }
         }
         
-        // 3. Choose whoever was previously displayed (if anyone)
+        // 4. Choose whoever was previously displayed (if anyone)
         if remoteParticipantToDisplay == nil {
             if let previouslyDisplayedParticipantID = self.remoteParticipantViewController.participant?.id
             {
@@ -558,7 +674,7 @@ class CallViewController: UIViewController {
             }
         }
         
-        // 4. Choose anyone else (let's just go with the first remote participant)
+        // 5. Choose anyone else (let's just go with the first remote participant)
         if remoteParticipantToDisplay == nil {
             remoteParticipantToDisplay = remoteParticipants.first?.value
         }

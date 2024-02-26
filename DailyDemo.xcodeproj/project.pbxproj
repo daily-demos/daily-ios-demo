@@ -7,15 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		210630072B5EFA3800A6C8B4 /* LoopingVideoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210630062B5EFA3800A6C8B4 /* LoopingVideoSource.swift */; };
+		210630092B5F10FB00A6C8B4 /* movie.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 210630082B5F10FB00A6C8B4 /* movie.mp4 */; };
+		213BB3F42B6463A3003985A6 /* CustomVideoInfoDictionary+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213BB3F32B6463A3003985A6 /* CustomVideoInfoDictionary+Extensions.swift */; };
 		2DD920FC26FA118800DD526E /* CallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD920FA26FA118800DD526E /* CallViewController.swift */; };
 		49B9C7292AD9DBC700AC8C0C /* LocalParticipantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B9C7282AD9DBC700AC8C0C /* LocalParticipantViewController.swift */; };
 		6109E304294A849B001FCB06 /* PrebuiltChatAppMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6109E303294A849B001FCB06 /* PrebuiltChatAppMessage.swift */; };
+		900636A62B8CEDE60024BC7F /* Daily in Frameworks */ = {isa = PBXBuildFile; productRef = 900636A52B8CEDE60024BC7F /* Daily */; };
+		900636A82B8CEDE60024BC7F /* DailySystemBroadcast in Frameworks */ = {isa = PBXBuildFile; productRef = 900636A72B8CEDE60024BC7F /* DailySystemBroadcast */; };
 		9073BCF02ACAF9B300283154 /* ReplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9073BCEF2ACAF9B300283154 /* ReplayKit.framework */; };
 		9073BCF32ACAF9B300283154 /* SampleHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9073BCF22ACAF9B300283154 /* SampleHandler.swift */; };
 		9073BCF72ACAF9B300283154 /* DailyDemoScreenCaptureExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 9073BCEE2ACAF9B300283154 /* DailyDemoScreenCaptureExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		90BBBA5E2B6ABFE800112F07 /* Daily in Frameworks */ = {isa = PBXBuildFile; productRef = 90BBBA5D2B6ABFE800112F07 /* Daily */; };
-		90BBBA602B6ABFE800112F07 /* DailySystemBroadcast in Frameworks */ = {isa = PBXBuildFile; productRef = 90BBBA5F2B6ABFE800112F07 /* DailySystemBroadcast */; };
-		90BBBA622B6ABFF400112F07 /* DailySystemBroadcast in Frameworks */ = {isa = PBXBuildFile; productRef = 90BBBA612B6ABFF400112F07 /* DailySystemBroadcast */; };
 		CA183EE028C60CB800BD4883 /* ViewToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA183EDF28C60CB800BD4883 /* ViewToggleButton.swift */; };
 		CA1C680A284A3D1900303C63 /* ParticipantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C6809284A3D1900303C63 /* ParticipantViewController.swift */; };
 		CA4D7A7C27A424F000AC547E /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = CA4D7A7B27A424F000AC547E /* Logging */; };
@@ -53,6 +55,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		210630062B5EFA3800A6C8B4 /* LoopingVideoSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopingVideoSource.swift; sourceTree = "<group>"; };
+		210630082B5F10FB00A6C8B4 /* movie.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = movie.mp4; sourceTree = "<group>"; };
+		213BB3F32B6463A3003985A6 /* CustomVideoInfoDictionary+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomVideoInfoDictionary+Extensions.swift"; sourceTree = "<group>"; };
 		2D1FAE8527047E6A001C0986 /* BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
 		2DD920FA26FA118800DD526E /* CallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallViewController.swift; sourceTree = "<group>"; };
 		49B9C7282AD9DBC700AC8C0C /* LocalParticipantViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalParticipantViewController.swift; sourceTree = "<group>"; };
@@ -85,7 +90,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9073BCF02ACAF9B300283154 /* ReplayKit.framework in Frameworks */,
-				90BBBA622B6ABFF400112F07 /* DailySystemBroadcast in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,9 +97,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				90BBBA5E2B6ABFE800112F07 /* Daily in Frameworks */,
+				900636A62B8CEDE60024BC7F /* Daily in Frameworks */,
 				CA4D7A7C27A424F000AC547E /* Logging in Frameworks */,
-				90BBBA602B6ABFE800112F07 /* DailySystemBroadcast in Frameworks */,
+				900636A82B8CEDE60024BC7F /* DailySystemBroadcast in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,6 +149,7 @@
 		CAE48E35266A8BDD00D2CA2E /* DailyDemo */ = {
 			isa = PBXGroup;
 			children = (
+				210630082B5F10FB00A6C8B4 /* movie.mp4 */,
 				9073BCFD2ACAF9D800283154 /* DailyDemo.entitlements */,
 				CAE48E36266A8BDD00D2CA2E /* AppDelegate.swift */,
 				CAE48E38266A8BDD00D2CA2E /* SceneDelegate.swift */,
@@ -158,6 +163,8 @@
 				CAE48E44266A8BDF00D2CA2E /* Info.plist */,
 				2D1FAE8527047E6A001C0986 /* BridgingHeader.h */,
 				6109E303294A849B001FCB06 /* PrebuiltChatAppMessage.swift */,
+				210630062B5EFA3800A6C8B4 /* LoopingVideoSource.swift */,
+				213BB3F32B6463A3003985A6 /* CustomVideoInfoDictionary+Extensions.swift */,
 			);
 			path = DailyDemo;
 			sourceTree = "<group>";
@@ -189,7 +196,6 @@
 			);
 			name = DailyDemoScreenCaptureExtension;
 			packageProductDependencies = (
-				90BBBA612B6ABFF400112F07 /* DailySystemBroadcast */,
 			);
 			productName = DailyDemoScreenCaptureExtension;
 			productReference = 9073BCEE2ACAF9B300283154 /* DailyDemoScreenCaptureExtension.appex */;
@@ -212,8 +218,8 @@
 			name = DailyDemo;
 			packageProductDependencies = (
 				CA4D7A7B27A424F000AC547E /* Logging */,
-				90BBBA5D2B6ABFE800112F07 /* Daily */,
-				90BBBA5F2B6ABFE800112F07 /* DailySystemBroadcast */,
+				900636A52B8CEDE60024BC7F /* Daily */,
+				900636A72B8CEDE60024BC7F /* DailySystemBroadcast */,
 			);
 			productName = DailyDemo;
 			productReference = CAE48E33266A8BDD00D2CA2E /* DailyDemo.app */;
@@ -247,7 +253,7 @@
 			mainGroup = CAE48E2A266A8BDD00D2CA2E;
 			packageReferences = (
 				CA4D7A7A27A424F000AC547E /* XCRemoteSwiftPackageReference "swift-log" */,
-				90BBBA5C2B6ABFE800112F07 /* XCRemoteSwiftPackageReference "daily-client-ios" */,
+				900636A42B8CEDE60024BC7F /* XCRemoteSwiftPackageReference "daily-client-ios" */,
 			);
 			productRefGroup = CAE48E34266A8BDD00D2CA2E /* Products */;
 			projectDirPath = "";
@@ -271,6 +277,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				210630092B5F10FB00A6C8B4 /* movie.mp4 in Resources */,
 				CAF2FBD327E9F296000F3F07 /* Main.storyboard in Resources */,
 				CAE48E43266A8BDF00D2CA2E /* LaunchScreen.storyboard in Resources */,
 				CAE48E40266A8BDF00D2CA2E /* Assets.xcassets in Resources */,
@@ -293,10 +300,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				CADFCBD12889A11F00032A32 /* Profile+Extensions.swift in Sources */,
+				210630072B5EFA3800A6C8B4 /* LoopingVideoSource.swift in Sources */,
 				CA1C680A284A3D1900303C63 /* ParticipantViewController.swift in Sources */,
 				CAA41568288AABFF00CC8BBD /* ToggleButton.swift in Sources */,
 				CAE48E37266A8BDD00D2CA2E /* AppDelegate.swift in Sources */,
 				6109E304294A849B001FCB06 /* PrebuiltChatAppMessage.swift in Sources */,
+				213BB3F42B6463A3003985A6 /* CustomVideoInfoDictionary+Extensions.swift in Sources */,
 				2DD920FC26FA118800DD526E /* CallViewController.swift in Sources */,
 				CA183EE028C60CB800BD4883 /* ViewToggleButton.swift in Sources */,
 				49B9C7292AD9DBC700AC8C0C /* LocalParticipantViewController.swift in Sources */,
@@ -436,7 +445,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MARKETING_VERSION = 0.12.0;
+				MARKETING_VERSION = 0.16.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -492,7 +501,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MARKETING_VERSION = 0.12.0;
+				MARKETING_VERSION = 0.16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -597,12 +606,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		90BBBA5C2B6ABFE800112F07 /* XCRemoteSwiftPackageReference "daily-client-ios" */ = {
+		900636A42B8CEDE60024BC7F /* XCRemoteSwiftPackageReference "daily-client-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/daily-co/daily-client-ios";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.15.0;
+				minimumVersion = 0.16.0;
 			};
 		};
 		CA4D7A7A27A424F000AC547E /* XCRemoteSwiftPackageReference "swift-log" */ = {
@@ -616,19 +625,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		90BBBA5D2B6ABFE800112F07 /* Daily */ = {
+		900636A52B8CEDE60024BC7F /* Daily */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 90BBBA5C2B6ABFE800112F07 /* XCRemoteSwiftPackageReference "daily-client-ios" */;
+			package = 900636A42B8CEDE60024BC7F /* XCRemoteSwiftPackageReference "daily-client-ios" */;
 			productName = Daily;
 		};
-		90BBBA5F2B6ABFE800112F07 /* DailySystemBroadcast */ = {
+		900636A72B8CEDE60024BC7F /* DailySystemBroadcast */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 90BBBA5C2B6ABFE800112F07 /* XCRemoteSwiftPackageReference "daily-client-ios" */;
-			productName = DailySystemBroadcast;
-		};
-		90BBBA612B6ABFF400112F07 /* DailySystemBroadcast */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 90BBBA5C2B6ABFE800112F07 /* XCRemoteSwiftPackageReference "daily-client-ios" */;
+			package = 900636A42B8CEDE60024BC7F /* XCRemoteSwiftPackageReference "daily-client-ios" */;
 			productName = DailySystemBroadcast;
 		};
 		CA4D7A7B27A424F000AC547E /* Logging */ = {
