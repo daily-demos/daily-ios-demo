@@ -1010,6 +1010,36 @@ extension CallViewController: CallClientDelegate {
 
     func callClient(
         _ callClient: CallClient,
+        transcriptionStarted status: TranscriptionStatus
+    ) {
+        logger.info("Transcription started: \(status)")
+    }
+    
+    func callClient(
+        _ callClient: CallClient,
+        transcriptionStoppedBy trigger: TranscriptionStopTrigger?
+    ) {
+        switch trigger {
+        case .participant(let participantID):
+            logger.info("Transcription stopped by \(participantID)")
+        case .error:
+            logger.info("Transcription stopped due to an error")
+        case .none:
+            logger.info("Transcription stopped")
+        @unknown default:
+            break
+        }
+    }
+
+    func callClient(
+        _ callClient: CallClient,
+        transcriptionError error: String
+    ) {
+        logger.info("A transcription error has occurred: \(error)")
+    }
+
+    func callClient(
+        _ callClient: CallClient,
         error: CallClientError
     ) {
         logger.error("Error: \(error)")
