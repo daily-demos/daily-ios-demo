@@ -306,7 +306,9 @@ class CallViewController: UIViewController {
         self.callClient.updatePublishing(.set(
             camera: .set(
                 isPublishing: .set(self.cameraIsPublishing),
-                sendSettings: .fromDefaults
+                sendSettings: .set(
+                    allowAdaptiveLayers: .set(true)
+                )
             )
         ), completion: nil)
         self.callClient.updateSubscriptionProfiles(.set([
