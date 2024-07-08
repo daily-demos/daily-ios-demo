@@ -14,7 +14,7 @@ In the demo app, a user must enter a URL for a [Daily Room](https://docs.daily.c
 
 When testing or running this demo, you'll likely use a room you've manually created for calls. A production application will likely need to use the [Daily REST API](https://docs.daily.co/reference/rest-api) to create rooms on the fly for your users, which necessitates the use of a sensitive Daily API key. You likely don't want to embed this key in a production app. We recommend running a web server and keeping sensitive things like API keys there instead.
 
-Please note this project is designed to work with rooms that have [privacy](https://www.daily.co/blog/intro-to-room-access-control/) set to `public`. If you are hardcoding a room URL, please bear in mind that token creation, pre-authorization and knock-for-access have not been implemented here or in the Daily Client SDK for iOS, meaning you may not be able to join non-public meeting rooms using this demo for now.
+This project is designed to work with rooms that have [privacy](https://www.daily.co/blog/intro-to-room-access-control/) set to public or private. When joining a private room, you must provide a valid token to access the room. At the moment, knocking for access is not supported, meaning that a token is always required when joining a private room.
 
 ## Running locally
 
