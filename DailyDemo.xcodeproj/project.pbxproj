@@ -13,9 +13,9 @@
 		2DD920FC26FA118800DD526E /* CallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD920FA26FA118800DD526E /* CallViewController.swift */; };
 		49B9C7292AD9DBC700AC8C0C /* LocalParticipantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B9C7282AD9DBC700AC8C0C /* LocalParticipantViewController.swift */; };
 		6109E304294A849B001FCB06 /* PrebuiltChatAppMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6109E303294A849B001FCB06 /* PrebuiltChatAppMessage.swift */; };
-		9034DE162C2B0A9E00C236E2 /* Daily in Frameworks */ = {isa = PBXBuildFile; productRef = 9034DE152C2B0A9E00C236E2 /* Daily */; };
-		9034DE182C2B0A9E00C236E2 /* DailySystemBroadcast in Frameworks */ = {isa = PBXBuildFile; productRef = 9034DE172C2B0A9E00C236E2 /* DailySystemBroadcast */; };
-		9034DE1A2C2B0AA900C236E2 /* DailySystemBroadcast in Frameworks */ = {isa = PBXBuildFile; productRef = 9034DE192C2B0AA900C236E2 /* DailySystemBroadcast */; };
+		90031F352C598CFC00408370 /* Daily in Frameworks */ = {isa = PBXBuildFile; productRef = 90031F342C598CFC00408370 /* Daily */; };
+		90031F372C598CFC00408370 /* DailySystemBroadcast in Frameworks */ = {isa = PBXBuildFile; productRef = 90031F362C598CFC00408370 /* DailySystemBroadcast */; };
+		90031F392C598D0700408370 /* DailySystemBroadcast in Frameworks */ = {isa = PBXBuildFile; productRef = 90031F382C598D0700408370 /* DailySystemBroadcast */; };
 		9073BCF02ACAF9B300283154 /* ReplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9073BCEF2ACAF9B300283154 /* ReplayKit.framework */; };
 		9073BCF32ACAF9B300283154 /* SampleHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9073BCF22ACAF9B300283154 /* SampleHandler.swift */; };
 		9073BCF72ACAF9B300283154 /* DailyDemoScreenCaptureExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 9073BCEE2ACAF9B300283154 /* DailyDemoScreenCaptureExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -91,7 +91,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9073BCF02ACAF9B300283154 /* ReplayKit.framework in Frameworks */,
-				9034DE1A2C2B0AA900C236E2 /* DailySystemBroadcast in Frameworks */,
+				90031F392C598D0700408370 /* DailySystemBroadcast in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,9 +99,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9034DE162C2B0A9E00C236E2 /* Daily in Frameworks */,
+				90031F352C598CFC00408370 /* Daily in Frameworks */,
 				CA4D7A7C27A424F000AC547E /* Logging in Frameworks */,
-				9034DE182C2B0A9E00C236E2 /* DailySystemBroadcast in Frameworks */,
+				90031F372C598CFC00408370 /* DailySystemBroadcast in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,7 +198,7 @@
 			);
 			name = DailyDemoScreenCaptureExtension;
 			packageProductDependencies = (
-				9034DE192C2B0AA900C236E2 /* DailySystemBroadcast */,
+				90031F382C598D0700408370 /* DailySystemBroadcast */,
 			);
 			productName = DailyDemoScreenCaptureExtension;
 			productReference = 9073BCEE2ACAF9B300283154 /* DailyDemoScreenCaptureExtension.appex */;
@@ -221,8 +221,8 @@
 			name = DailyDemo;
 			packageProductDependencies = (
 				CA4D7A7B27A424F000AC547E /* Logging */,
-				9034DE152C2B0A9E00C236E2 /* Daily */,
-				9034DE172C2B0A9E00C236E2 /* DailySystemBroadcast */,
+				90031F342C598CFC00408370 /* Daily */,
+				90031F362C598CFC00408370 /* DailySystemBroadcast */,
 			);
 			productName = DailyDemo;
 			productReference = CAE48E33266A8BDD00D2CA2E /* DailyDemo.app */;
@@ -256,7 +256,7 @@
 			mainGroup = CAE48E2A266A8BDD00D2CA2E;
 			packageReferences = (
 				CA4D7A7A27A424F000AC547E /* XCRemoteSwiftPackageReference "swift-log" */,
-				9034DE142C2B0A9E00C236E2 /* XCRemoteSwiftPackageReference "daily-client-ios" */,
+				90031F332C598CFC00408370 /* XCRemoteSwiftPackageReference "daily-client-ios" */,
 			);
 			productRefGroup = CAE48E34266A8BDD00D2CA2E /* Products */;
 			projectDirPath = "";
@@ -609,12 +609,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		9034DE142C2B0A9E00C236E2 /* XCRemoteSwiftPackageReference "daily-client-ios" */ = {
+		90031F332C598CFC00408370 /* XCRemoteSwiftPackageReference "daily-client-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/daily-co/daily-client-ios";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.21.0;
+				minimumVersion = 0.22.0;
 			};
 		};
 		CA4D7A7A27A424F000AC547E /* XCRemoteSwiftPackageReference "swift-log" */ = {
@@ -628,19 +628,19 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		9034DE152C2B0A9E00C236E2 /* Daily */ = {
+		90031F342C598CFC00408370 /* Daily */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9034DE142C2B0A9E00C236E2 /* XCRemoteSwiftPackageReference "daily-client-ios" */;
+			package = 90031F332C598CFC00408370 /* XCRemoteSwiftPackageReference "daily-client-ios" */;
 			productName = Daily;
 		};
-		9034DE172C2B0A9E00C236E2 /* DailySystemBroadcast */ = {
+		90031F362C598CFC00408370 /* DailySystemBroadcast */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9034DE142C2B0A9E00C236E2 /* XCRemoteSwiftPackageReference "daily-client-ios" */;
+			package = 90031F332C598CFC00408370 /* XCRemoteSwiftPackageReference "daily-client-ios" */;
 			productName = DailySystemBroadcast;
 		};
-		9034DE192C2B0AA900C236E2 /* DailySystemBroadcast */ = {
+		90031F382C598D0700408370 /* DailySystemBroadcast */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9034DE142C2B0A9E00C236E2 /* XCRemoteSwiftPackageReference "daily-client-ios" */;
+			package = 90031F332C598CFC00408370 /* XCRemoteSwiftPackageReference "daily-client-ios" */;
 			productName = DailySystemBroadcast;
 		};
 		CA4D7A7B27A424F000AC547E /* Logging */ = {
