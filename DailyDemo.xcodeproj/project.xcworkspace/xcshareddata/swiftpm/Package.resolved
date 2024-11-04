@@ -1,13 +1,12 @@
 {
-  "originHash" : "e910ede9932380a0080a058da2f4f5b2e81f72357f9ed411f7af8bf2572b58ba",
   "pins" : [
     {
       "identity" : "daily-client-ios",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/daily-co/daily-client-ios",
       "state" : {
-        "revision" : "d0f4f54cadbfd5b69c82b8a56f14ad1c7e91e248",
-        "version" : "0.24.0"
+        "revision" : "9e2d67e39560c14402d00bb6e48a203882b8bb96",
+        "version" : "0.25.0"
       }
     },
     {
@@ -15,10 +14,10 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-log.git",
       "state" : {
-        "revision" : "532d8b529501fb73a2455b179e0bbb6d49b652ed",
-        "version" : "1.5.3"
+        "revision" : "9cb486020ebf03bfa5b5df985387a14a98744537",
+        "version" : "1.6.1"
       }
     }
   ],
-  "version" : 3
+  "version" : 2
 }
