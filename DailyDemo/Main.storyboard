@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="LKB-Ce-Cn8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="LKB-Ce-Cn8">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -47,7 +47,7 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="oQ0-mj-QVG">
-                                                    <rect key="frame" x="8" y="8" width="222.66666666666666" height="40"/>
+                                                    <rect key="frame" x="8" y="8" width="267.66666666666669" height="40"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="751" text="Inputs" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3n4-TH-1wO">
                                                             <rect key="frame" x="0.0" y="0.0" width="42.666666666666664" height="40"/>
@@ -121,6 +121,21 @@ Gw
                                                                 <action selector="toggleCustomVideoInput:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="n6T-fY-rf0"/>
                                                             </connections>
                                                         </button>
+                                                        <button toolTip="Custom Audio Input" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EfN-ct-ZrG" userLabel="Custom Audio Input Button" customClass="ToggleButton" customModule="DailyDemo" customModuleProvider="target">
+                                                            <rect key="frame" x="227.66666666666666" y="0.0" width="39.999999999999972" height="40"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="40" id="sd6-GC-QmD"/>
+                                                                <constraint firstAttribute="height" constant="40" id="yTW-vp-bYT"/>
+                                                            </constraints>
+                                                            <color key="tintColor" systemColor="systemRedColor"/>
+                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                            <state key="normal" image="airpodsmax" catalog="system"/>
+                                                            <state key="selected" image="airpodsmax" catalog="system"/>
+                                                            <buttonConfiguration key="configuration" style="plain" image="airpodsmax" catalog="system"/>
+                                                            <connections>
+                                                                <action selector="toggleCustomAudioInput:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="rMp-IA-Syk"/>
+                                                            </connections>
+                                                        </button>
                                                     </subviews>
                                                 </stackView>
                                             </subviews>
@@ -144,7 +159,7 @@ Gw
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Ngy-Th-RZB">
-                                                    <rect key="frame" x="8" y="8" width="206" height="40"/>
+                                                    <rect key="frame" x="8" y="8" width="251" height="40"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Publishing" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5fl-KE-zdi">
                                                             <rect key="frame" x="0.0" y="0.0" width="71" height="40"/>
@@ -188,7 +203,7 @@ Gw
                                                             </connections>
                                                         </button>
                                                         <button toolTip="Microphone Input" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ltU-JT-LWT" userLabel="Custom Video Publishing Button" customClass="ToggleButton" customModule="DailyDemo" customModuleProvider="target">
-                                                            <rect key="frame" x="166" y="0.0" width="40" height="40"/>
+                                                            <rect key="frame" x="211" y="0.0" width="40" height="40"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="40" id="RuE-dG-Z4t"/>
                                                                 <constraint firstAttribute="width" constant="40" id="iIO-Rb-Msf"/>
@@ -200,6 +215,21 @@ Gw
                                                             <buttonConfiguration key="configuration" style="plain" image="movieclapper.fill" catalog="system"/>
                                                             <connections>
                                                                 <action selector="toggleCustomVideoPublishing:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="AqP-Rb-GZE"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button toolTip="Custom audio Publishing" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="osc-oF-xl9" userLabel="Custom Audio Publishing Button" customClass="ToggleButton" customModule="DailyDemo" customModuleProvider="target">
+                                                            <rect key="frame" x="166" y="0.0" width="40" height="40"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="40" id="KIv-mu-mwt"/>
+                                                                <constraint firstAttribute="height" constant="40" id="eV1-Jq-Y6x"/>
+                                                            </constraints>
+                                                            <color key="tintColor" systemColor="systemRedColor"/>
+                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                            <state key="normal" image="airpodsmax" catalog="system"/>
+                                                            <state key="selected" image="airpodsmax" catalog="system"/>
+                                                            <buttonConfiguration key="configuration" style="plain" image="airpodsmax" catalog="system"/>
+                                                            <connections>
+                                                                <action selector="toggleCustomAudioPublishing:" destination="LKB-Ce-Cn8" eventType="touchUpInside" id="ENk-xo-A29"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>
@@ -446,7 +476,9 @@ Gw
                         <outlet property="cameraInputButton" destination="nVD-be-Bda" id="4LH-Jl-qoV"/>
                         <outlet property="cameraPublishingButton" destination="JcD-aH-cQJ" id="oQW-FI-Gj5"/>
                         <outlet property="customVideoInputButton" destination="nvb-U9-A0e" id="xJE-Yi-32b"/>
+                        <outlet property="customAudioInputButton" destination="EfN-ct-ZrG" id="xJE-Yi-32i"/>
                         <outlet property="customVideoPublishingButton" destination="ltU-JT-LWT" id="wYx-C1-VGP"/>
+                        <outlet property="customAudioPublishingButton" destination="osc-oF-xl9" id="wYx-C1-VGK"/>
                         <outlet property="joinOrLeaveButton" destination="28K-px-EIv" id="aQP-iL-D7Z"/>
                         <outlet property="localParticipantContainerView" destination="SMm-Ur-jDB" id="4tk-9i-HNa"/>
                         <outlet property="localViewToggleButton" destination="j27-k7-NBf" id="fCm-IH-iJ3"/>
@@ -570,6 +602,7 @@ Gw
         </scene>
     </scenes>
     <resources>
+        <image name="airpodsmax" catalog="system" width="128" height="122"/>
         <image name="camera.rotate.fill" catalog="system" width="128" height="93"/>
         <image name="chevron.down" catalog="system" width="128" height="70"/>
         <image name="flame" catalog="system" width="106" height="128"/>

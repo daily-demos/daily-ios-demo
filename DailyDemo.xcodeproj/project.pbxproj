@@ -13,12 +13,13 @@
 		2DD920FC26FA118800DD526E /* CallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD920FA26FA118800DD526E /* CallViewController.swift */; };
 		49B9C7292AD9DBC700AC8C0C /* LocalParticipantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B9C7282AD9DBC700AC8C0C /* LocalParticipantViewController.swift */; };
 		6109E304294A849B001FCB06 /* PrebuiltChatAppMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6109E303294A849B001FCB06 /* PrebuiltChatAppMessage.swift */; };
-		9047E7D12CA70B0900385A86 /* Daily in Frameworks */ = {isa = PBXBuildFile; productRef = 9047E7D02CA70B0900385A86 /* Daily */; };
-		9047E7D32CA70B0900385A86 /* DailySystemBroadcast in Frameworks */ = {isa = PBXBuildFile; productRef = 9047E7D22CA70B0900385A86 /* DailySystemBroadcast */; };
-		9047E7D52CA70B1000385A86 /* DailySystemBroadcast in Frameworks */ = {isa = PBXBuildFile; productRef = 9047E7D42CA70B1000385A86 /* DailySystemBroadcast */; };
 		9073BCF02ACAF9B300283154 /* ReplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9073BCEF2ACAF9B300283154 /* ReplayKit.framework */; };
 		9073BCF32ACAF9B300283154 /* SampleHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9073BCF22ACAF9B300283154 /* SampleHandler.swift */; };
 		9073BCF72ACAF9B300283154 /* DailyDemoScreenCaptureExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 9073BCEE2ACAF9B300283154 /* DailyDemoScreenCaptureExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		907DD6872CD8FF2E00DAB1FE /* Daily in Frameworks */ = {isa = PBXBuildFile; productRef = 907DD6862CD8FF2E00DAB1FE /* Daily */; };
+		907DD6892CD8FF2E00DAB1FE /* DailySystemBroadcast in Frameworks */ = {isa = PBXBuildFile; productRef = 907DD6882CD8FF2E00DAB1FE /* DailySystemBroadcast */; };
+		907DD68B2CD8FF3A00DAB1FE /* DailySystemBroadcast in Frameworks */ = {isa = PBXBuildFile; productRef = 907DD68A2CD8FF3A00DAB1FE /* DailySystemBroadcast */; };
+		90AB8E7F2CC6F72800AE37B3 /* LoopingAudioSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90AB8E7E2CC6F72800AE37B3 /* LoopingAudioSource.swift */; };
 		CA183EE028C60CB800BD4883 /* ViewToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA183EDF28C60CB800BD4883 /* ViewToggleButton.swift */; };
 		CA1C680A284A3D1900303C63 /* ParticipantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C6809284A3D1900303C63 /* ParticipantViewController.swift */; };
 		CA4D7A7C27A424F000AC547E /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = CA4D7A7B27A424F000AC547E /* Logging */; };
@@ -69,6 +70,7 @@
 		9073BCF42ACAF9B300283154 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9073BCFC2ACAF9C500283154 /* DailyDemoScreenCaptureExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DailyDemoScreenCaptureExtension.entitlements; sourceTree = "<group>"; };
 		9073BCFD2ACAF9D800283154 /* DailyDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DailyDemo.entitlements; sourceTree = "<group>"; };
+		90AB8E7E2CC6F72800AE37B3 /* LoopingAudioSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopingAudioSource.swift; sourceTree = "<group>"; };
 		CA183EDF28C60CB800BD4883 /* ViewToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewToggleButton.swift; sourceTree = "<group>"; };
 		CA1B725126DCF05B006E7E2C /* Daily.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Daily.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA1C6809284A3D1900303C63 /* ParticipantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantViewController.swift; sourceTree = "<group>"; };
@@ -91,7 +93,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9073BCF02ACAF9B300283154 /* ReplayKit.framework in Frameworks */,
-				9047E7D52CA70B1000385A86 /* DailySystemBroadcast in Frameworks */,
+				907DD68B2CD8FF3A00DAB1FE /* DailySystemBroadcast in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,9 +101,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9047E7D12CA70B0900385A86 /* Daily in Frameworks */,
+				907DD6872CD8FF2E00DAB1FE /* Daily in Frameworks */,
 				CA4D7A7C27A424F000AC547E /* Logging in Frameworks */,
-				9047E7D32CA70B0900385A86 /* DailySystemBroadcast in Frameworks */,
+				907DD6892CD8FF2E00DAB1FE /* DailySystemBroadcast in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,6 +128,16 @@
 				9073BCF42ACAF9B300283154 /* Info.plist */,
 			);
 			path = DailyDemoScreenCaptureExtension;
+			sourceTree = "<group>";
+		};
+		90AB8E7D2CC6F6F700AE37B3 /* customTracks */ = {
+			isa = PBXGroup;
+			children = (
+				213BB3F32B6463A3003985A6 /* CustomVideoInfoDictionary+Extensions.swift */,
+				90AB8E7E2CC6F72800AE37B3 /* LoopingAudioSource.swift */,
+				210630062B5EFA3800A6C8B4 /* LoopingVideoSource.swift */,
+			);
+			path = customTracks;
 			sourceTree = "<group>";
 		};
 		CAE48E2A266A8BDD00D2CA2E = {
@@ -158,6 +170,7 @@
 				CAA41567288AABFF00CC8BBD /* ToggleButton.swift */,
 				CA183EDF28C60CB800BD4883 /* ViewToggleButton.swift */,
 				CADFCBD02889A11F00032A32 /* Profile+Extensions.swift */,
+				90AB8E7D2CC6F6F700AE37B3 /* customTracks */,
 				2DD920FF26FA11A200DD526E /* View Controllers */,
 				CAE48E3F266A8BDF00D2CA2E /* Assets.xcassets */,
 				CAE48E41266A8BDF00D2CA2E /* LaunchScreen.storyboard */,
@@ -165,8 +178,6 @@
 				CAE48E44266A8BDF00D2CA2E /* Info.plist */,
 				2D1FAE8527047E6A001C0986 /* BridgingHeader.h */,
 				6109E303294A849B001FCB06 /* PrebuiltChatAppMessage.swift */,
-				210630062B5EFA3800A6C8B4 /* LoopingVideoSource.swift */,
-				213BB3F32B6463A3003985A6 /* CustomVideoInfoDictionary+Extensions.swift */,
 			);
 			path = DailyDemo;
 			sourceTree = "<group>";
@@ -198,7 +209,7 @@
 			);
 			name = DailyDemoScreenCaptureExtension;
 			packageProductDependencies = (
-				9047E7D42CA70B1000385A86 /* DailySystemBroadcast */,
+				907DD68A2CD8FF3A00DAB1FE /* DailySystemBroadcast */,
 			);
 			productName = DailyDemoScreenCaptureExtension;
 			productReference = 9073BCEE2ACAF9B300283154 /* DailyDemoScreenCaptureExtension.appex */;
@@ -221,8 +232,8 @@
 			name = DailyDemo;
 			packageProductDependencies = (
 				CA4D7A7B27A424F000AC547E /* Logging */,
-				9047E7D02CA70B0900385A86 /* Daily */,
-				9047E7D22CA70B0900385A86 /* DailySystemBroadcast */,
+				907DD6862CD8FF2E00DAB1FE /* Daily */,
+				907DD6882CD8FF2E00DAB1FE /* DailySystemBroadcast */,
 			);
 			productName = DailyDemo;
 			productReference = CAE48E33266A8BDD00D2CA2E /* DailyDemo.app */;
@@ -256,7 +267,7 @@
 			mainGroup = CAE48E2A266A8BDD00D2CA2E;
 			packageReferences = (
 				CA4D7A7A27A424F000AC547E /* XCRemoteSwiftPackageReference "swift-log" */,
-				9047E7CF2CA70B0900385A86 /* XCRemoteSwiftPackageReference "daily-client-ios" */,
+				907DD6852CD8FF2E00DAB1FE /* XCRemoteSwiftPackageReference "daily-client-ios" */,
 			);
 			productRefGroup = CAE48E34266A8BDD00D2CA2E /* Products */;
 			projectDirPath = "";
@@ -312,6 +323,7 @@
 				2DD920FC26FA118800DD526E /* CallViewController.swift in Sources */,
 				CA183EE028C60CB800BD4883 /* ViewToggleButton.swift in Sources */,
 				49B9C7292AD9DBC700AC8C0C /* LocalParticipantViewController.swift in Sources */,
+				90AB8E7F2CC6F72800AE37B3 /* LoopingAudioSource.swift in Sources */,
 				CAE48E39266A8BDD00D2CA2E /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -448,7 +460,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MARKETING_VERSION = 0.16.0;
+				MARKETING_VERSION = 0.25.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -504,7 +516,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MARKETING_VERSION = 0.16.0;
+				MARKETING_VERSION = 0.25.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -609,12 +621,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		9047E7CF2CA70B0900385A86 /* XCRemoteSwiftPackageReference "daily-client-ios" */ = {
+		907DD6852CD8FF2E00DAB1FE /* XCRemoteSwiftPackageReference "daily-client-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/daily-co/daily-client-ios";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.24.0;
+				minimumVersion = 0.25.0;
 			};
 		};
 		CA4D7A7A27A424F000AC547E /* XCRemoteSwiftPackageReference "swift-log" */ = {
@@ -628,19 +640,19 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		9047E7D02CA70B0900385A86 /* Daily */ = {
+		907DD6862CD8FF2E00DAB1FE /* Daily */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9047E7CF2CA70B0900385A86 /* XCRemoteSwiftPackageReference "daily-client-ios" */;
+			package = 907DD6852CD8FF2E00DAB1FE /* XCRemoteSwiftPackageReference "daily-client-ios" */;
 			productName = Daily;
 		};
-		9047E7D22CA70B0900385A86 /* DailySystemBroadcast */ = {
+		907DD6882CD8FF2E00DAB1FE /* DailySystemBroadcast */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9047E7CF2CA70B0900385A86 /* XCRemoteSwiftPackageReference "daily-client-ios" */;
+			package = 907DD6852CD8FF2E00DAB1FE /* XCRemoteSwiftPackageReference "daily-client-ios" */;
 			productName = DailySystemBroadcast;
 		};
-		9047E7D42CA70B1000385A86 /* DailySystemBroadcast */ = {
+		907DD68A2CD8FF3A00DAB1FE /* DailySystemBroadcast */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9047E7CF2CA70B0900385A86 /* XCRemoteSwiftPackageReference "daily-client-ios" */;
+			package = 907DD6852CD8FF2E00DAB1FE /* XCRemoteSwiftPackageReference "daily-client-ios" */;
 			productName = DailySystemBroadcast;
 		};
 		CA4D7A7B27A424F000AC547E /* Logging */ = {

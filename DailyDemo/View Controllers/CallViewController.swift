@@ -7,6 +7,7 @@ import UIKit
 import UserNotifications
 
 private let customVideoName = "myCoolVideo"
+private let customAudioName = "myCoolAudio"
 
 func dumped<T>(_ value: T) -> String {
     var string = ""
@@ -18,9 +19,11 @@ class CallViewController: UIViewController {
     @IBOutlet private weak var cameraInputButton: UIButton!
     @IBOutlet private weak var microphoneInputButton: UIButton!
     @IBOutlet private weak var customVideoInputButton: UIButton!
+    @IBOutlet private weak var customAudioInputButton: UIButton!
     @IBOutlet private weak var cameraPublishingButton: UIButton!
     @IBOutlet private weak var microphonePublishingButton: UIButton!
     @IBOutlet private weak var customVideoPublishingButton: UIButton!
+    @IBOutlet private weak var customAudioPublishingButton: UIButton!
     @IBOutlet private weak var cameraFlipViewButton: UIButton!
     @IBOutlet private weak var adaptiveHEVCButton: UIButton!
 
@@ -68,6 +71,8 @@ class CallViewController: UIViewController {
     private var localVideoSizeObserver: AnyCancellable? = nil
     
     private lazy var customVideoSource = LoopingVideoSource()
+    
+    private lazy var customAudioSource = LoopingAudioSource()
 
     // MARK: - Date coding
 
@@ -143,6 +148,10 @@ class CallViewController: UIViewController {
         self.callClient.inputs.customVideo[customVideoName]?.isEnabled == true
     }
     
+    private var customAudioIsEnabled: Bool {
+        self.callClient.inputs.customAudio[customAudioName]?.isEnabled == true
+    }
+    
     private var cameraIsPublishing: Bool {
         self.callClient.publishing.camera.isPublishing
     }
@@ -153,6 +162,10 @@ class CallViewController: UIViewController {
     
     private var customVideoIsPublishing: Bool {
         self.callClient.publishing.customVideo[customVideoName]?.isPublishing == true
+    }
+    
+    private var customAudioIsPublishing: Bool {
+        self.callClient.publishing.customAudio[customAudioName]?.isPublishing == true
     }
     
     // MARK: - Lifecycle
@@ -334,6 +347,8 @@ class CallViewController: UIViewController {
     private func setDevModeFeaturesViewsHidden(_ hidden: Bool) {
         self.customVideoInputButton.isHidden = hidden
         self.customVideoPublishingButton.isHidden = hidden
+        self.customAudioInputButton.isHidden = hidden
+        self.customAudioPublishingButton.isHidden = hidden
     }
     
     // MARK: Device picker
@@ -502,6 +517,36 @@ class CallViewController: UIViewController {
         }
     }
     
+    @IBAction private func toggleCustomAudioInput(_ sender: UIButton) {
+        let enable = self.callClient.inputs.customAudio[customAudioName]?.isEnabled != true
+        if enable {
+            self.callClient.addCustomAudioTrack(
+                name: customAudioName,
+                source: self.customAudioSource
+            ) { result in
+                switch result {
+                case .success:
+                    break
+                case .failure(let error):
+                    logger.error("Failed to add custom audio track: \(error)")
+                    break
+                }
+            }
+        } else {
+            self.callClient.removeCustomAudioTrack(
+                name: customAudioName
+            ) { result in
+                switch result {
+                case .success:
+                    break
+                case .failure(let error):
+                    logger.error("Failed to remove custom audio track: \(error)")
+                    break
+                }
+            }
+        }
+    }
+    
     @IBAction private func toggleCameraPublishing(_ sender: UIButton) {
         let isPublishing = !self.callClient.publishing.camera.isPublishing
         self.callClient.setIsPublishing(.camera, isPublishing, completion: nil)
@@ -517,6 +562,14 @@ class CallViewController: UIViewController {
         self.callClient.updatePublishing(.set(
             customVideo: [
                 customVideoName: .publishing(isPublishing)
+            ]), completion: nil)
+    }
+    
+    @IBAction private func toggleCustomAudioPublishing(_ sender: UIButton) {
+        let isPublishing = self.callClient.publishing.customAudio[customAudioName]?.isPublishing != true
+        self.callClient.updatePublishing(.set(
+            customAudio: [
+                customAudioName: .publishing(isPublishing)
             ]), completion: nil)
     }
     
@@ -610,13 +663,17 @@ class CallViewController: UIViewController {
         self.microphoneInputButton.accessibilityIdentifier = "robots-mic-input-\(!self.microphoneIsEnabled)"
         self.customVideoInputButton.isSelected = !self.customVideoIsEnabled
         self.customVideoInputButton.accessibilityIdentifier = "robots-custom-video-input-\(!self.customVideoIsEnabled)"
+        self.customAudioInputButton.isSelected = !self.customAudioIsEnabled
+        self.customAudioInputButton.accessibilityIdentifier = "robots-custom-audio-input-\(!self.customAudioIsEnabled)"
 
         self.cameraPublishingButton.isSelected = !self.cameraIsPublishing
         self.cameraPublishingButton.accessibilityIdentifier = "robots-camera-publish-\(!self.cameraIsPublishing)"
         self.microphonePublishingButton.isSelected = !self.microphoneIsPublishing
         self.microphonePublishingButton.accessibilityIdentifier = "robots-mic-publish-\(!self.microphoneIsPublishing)"
         self.customVideoPublishingButton.isSelected = !self.customVideoIsPublishing
-        self.customVideoPublishingButton.accessibilityIdentifier = "robots-mic-publish-\(!self.customVideoIsPublishing)"
+        self.customVideoPublishingButton.accessibilityIdentifier = "robots-custom-video-publish-\(!self.customVideoIsPublishing)"
+        self.customAudioPublishingButton.isSelected = !self.customAudioIsPublishing
+        self.customAudioPublishingButton.accessibilityIdentifier = "robots-custom-audio-publish-\(!self.customAudioIsPublishing)"
 
         self.adaptiveHEVCButton.isSelected = self.adaptiveHEVCEnabled
     }
@@ -813,6 +870,10 @@ extension CallViewController: CallClientDelegate {
             completion: nil
         )
     }
+    
+    public func callClient(_ callClient: CallClient, networkStatsUpdated networkStats: NetworkStats) {
+        logger.debug("Network stats updated: \(networkStats)")
+    }
 
     func callClient(
         _ callClient: CallClient,
@@ -938,6 +999,10 @@ extension CallViewController: CallClientDelegate {
         refreshSelectedAudioDevice()
         
         assert(callClient.availableDevices == availableDevices)
+    }
+    
+    func callClient(_ callClient: CallClient, appMessageFromRestApiAsJson jsonData: Data) {
+        logger.info("Got app message from Rest API \(String(data: jsonData, encoding: .utf8) ?? "")")
     }
     
     func callClient(
