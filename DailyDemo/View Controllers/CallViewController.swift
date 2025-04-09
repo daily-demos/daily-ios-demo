@@ -6,8 +6,8 @@ import Logging
 import UIKit
 import UserNotifications
 
-private let customVideoName = "myCoolVideo"
-private let customAudioName = "myCoolAudio"
+private let customVideoName = "customVideo0"
+private let customAudioName = "customAudio0"
 
 func dumped<T>(_ value: T) -> String {
     var string = ""
@@ -462,6 +462,14 @@ class CallViewController: UIViewController {
                 switch result {
                 case .success(_):
                     logger.info("Joined room: '\(roomURLString)'")
+                    self.callClient.startRecording { result in
+                        switch result {
+                        case .success(_):
+                            logger.info("Started recording")
+                        case .failure(let error):
+                            logger.error("\(error)")
+                        }
+                    }
                     self.roomURLString = roomURLString
                 case .failure(let error):
                     logger.error("\(error)")
