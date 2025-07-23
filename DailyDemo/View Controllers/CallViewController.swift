@@ -59,10 +59,6 @@ class CallViewController: UIViewController {
     private lazy var callClient: CallClient = { [weak self] in
         let callClient = CallClient()
         callClient.delegate = self
-        
-        // Daily scope logs:
-        Daily.setLogLevel(.debug)
-        
         return callClient
     }()
     
