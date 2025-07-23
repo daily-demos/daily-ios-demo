@@ -59,6 +59,10 @@ class CallViewController: UIViewController {
     private lazy var callClient: CallClient = { [weak self] in
         let callClient = CallClient()
         callClient.delegate = self
+        
+        // Daily scope logs:
+        Daily.setLogLevel(.debug)
+        
         return callClient
     }()
     
@@ -1110,6 +1114,13 @@ extension CallViewController: CallClientDelegate {
         error: CallClientError
     ) {
         logger.error("Error: \(error)")
+    }
+    
+    func callClient(
+        _ callClient: CallClient,
+        networkConnectionStatusUpdated status: NetworkConnectionStatusUpdate
+    ) {
+        logger.info("Network connection updated: \(status)")
     }
 }
 
