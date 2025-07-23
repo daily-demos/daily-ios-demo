@@ -17,9 +17,9 @@ extension AppDelegate: UIApplicationDelegate {
 
         // Daily scope logs:
         Daily.setLogLevel(.warn)
-
+        
         // App scope logs:
-        logger.logLevel = .trace
+        logger.logLevel = .debug
 
         LoggingSystem.bootstrap(StreamLogHandler.standardOutput)
 

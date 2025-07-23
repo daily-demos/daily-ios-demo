@@ -115,7 +115,7 @@ class LoopingVideoSource: CustomVideoSource {
         playerItem: AVPlayerItem
     ) -> AVPlayerItemVideoOutput {
         let output = AVPlayerItemVideoOutput(pixelBufferAttributes: [
-            String(kCVPixelBufferPixelFormatTypeKey): kCVPixelFormatType_32BGRA
+            String(kCVPixelBufferPixelFormatTypeKey): kCVPixelFormatType_420YpCbCr8BiPlanarFullRange
         ])
         playerItem.add(output)
         return output

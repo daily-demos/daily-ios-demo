@@ -1111,6 +1111,13 @@ extension CallViewController: CallClientDelegate {
     ) {
         logger.error("Error: \(error)")
     }
+    
+    func callClient(
+        _ callClient: CallClient,
+        networkConnectionStatusUpdated status: NetworkConnectionStatusUpdate
+    ) {
+        logger.info("Network connection updated: \(status)")
+    }
 }
 
 extension CallViewController: UIPickerViewDelegate {
