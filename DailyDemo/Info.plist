@@ -5,7 +5,7 @@
 		<key>DailyScreenCaptureExtensionBundleIdentifier</key>
 		<string>co.daily.DailyDemo.DailyDemoScreenCaptureExtension</string>
 		<key>RTCAppGroupIdentifier</key>
-		<string>group.co.daily.DailyDemo</string>
+		<string>group.new.example.daily</string>
 		<key>CFBundleExecutable</key>
 		<string>$(EXECUTABLE_NAME)</string>
 		<key>CFBundleIdentifier</key>
