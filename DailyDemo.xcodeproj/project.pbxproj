@@ -30,6 +30,7 @@
 		CAF2FBD327E9F296000F3F07 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CAF2FBD227E9F296000F3F07 /* Main.storyboard */; };
 		CCEAD38D3063EFD90078A14D /* Daily in Frameworks */ = {isa = PBXBuildFile; productRef = CCEAD38C3063EFD90078A14D /* Daily */; };
 		CCEAD38F3063EFD90078A14D /* DailySystemBroadcast in Frameworks */ = {isa = PBXBuildFile; productRef = CCEAD38E3063EFD90078A14D /* DailySystemBroadcast */; };
+		CCEAD3913063F0750078A14D /* DailySystemBroadcast in Frameworks */ = {isa = PBXBuildFile; productRef = CCEAD3903063F0750078A14D /* DailySystemBroadcast */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +95,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9073BCF02ACAF9B300283154 /* ReplayKit.framework in Frameworks */,
+				CCEAD3913063F0750078A14D /* DailySystemBroadcast in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,6 +212,7 @@
 			);
 			name = DailyDemoScreenCaptureExtension;
 			packageProductDependencies = (
+				CCEAD3903063F0750078A14D /* DailySystemBroadcast */,
 			);
 			productName = DailyDemoScreenCaptureExtension;
 			productReference = 9073BCEE2ACAF9B300283154 /* DailyDemoScreenCaptureExtension.appex */;
@@ -654,6 +657,11 @@
 			productName = Daily;
 		};
 		CCEAD38E3063EFD90078A14D /* DailySystemBroadcast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CCEAD38B3063EFD90078A14D /* XCRemoteSwiftPackageReference "daily-client-ios" */;
+			productName = DailySystemBroadcast;
+		};
+		CCEAD3903063F0750078A14D /* DailySystemBroadcast */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CCEAD38B3063EFD90078A14D /* XCRemoteSwiftPackageReference "daily-client-ios" */;
 			productName = DailySystemBroadcast;
