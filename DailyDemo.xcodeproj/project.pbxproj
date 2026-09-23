@@ -17,6 +17,7 @@
 		9073BCF32ACAF9B300283154 /* SampleHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9073BCF22ACAF9B300283154 /* SampleHandler.swift */; };
 		9073BCF72ACAF9B300283154 /* DailyDemoScreenCaptureExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 9073BCEE2ACAF9B300283154 /* DailyDemoScreenCaptureExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		90AB8E7F2CC6F72800AE37B3 /* LoopingAudioSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90AB8E7E2CC6F72800AE37B3 /* LoopingAudioSource.swift */; };
+		9AC0A0112CC6F72800AE37B3 /* CustomAudioInfoDictionary+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC0A0102CC6F72800AE37B3 /* CustomAudioInfoDictionary+Extensions.swift */; };
 		CA183EE028C60CB800BD4883 /* ViewToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA183EDF28C60CB800BD4883 /* ViewToggleButton.swift */; };
 		CA1C680A284A3D1900303C63 /* ParticipantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C6809284A3D1900303C63 /* ParticipantViewController.swift */; };
 		CA4D7A7C27A424F000AC547E /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = CA4D7A7B27A424F000AC547E /* Logging */; };
@@ -27,9 +28,9 @@
 		CAE48E40266A8BDF00D2CA2E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAE48E3F266A8BDF00D2CA2E /* Assets.xcassets */; };
 		CAE48E43266A8BDF00D2CA2E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CAE48E41266A8BDF00D2CA2E /* LaunchScreen.storyboard */; };
 		CAF2FBD327E9F296000F3F07 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CAF2FBD227E9F296000F3F07 /* Main.storyboard */; };
-		CC69AB1E3013BC47002B3FA1 /* Daily in Frameworks */ = {isa = PBXBuildFile; productRef = CC69AB1D3013BC47002B3FA1 /* Daily */; };
-		CC69AB203013BC47002B3FA1 /* DailySystemBroadcast in Frameworks */ = {isa = PBXBuildFile; productRef = CC69AB1F3013BC47002B3FA1 /* DailySystemBroadcast */; };
-		CC69AB223013BC4E002B3FA1 /* DailySystemBroadcast in Frameworks */ = {isa = PBXBuildFile; productRef = CC69AB213013BC4E002B3FA1 /* DailySystemBroadcast */; };
+		CCEAD38D3063EFD90078A14D /* Daily in Frameworks */ = {isa = PBXBuildFile; productRef = CCEAD38C3063EFD90078A14D /* Daily */; };
+		CCEAD38F3063EFD90078A14D /* DailySystemBroadcast in Frameworks */ = {isa = PBXBuildFile; productRef = CCEAD38E3063EFD90078A14D /* DailySystemBroadcast */; };
+		CCEAD3913063F0750078A14D /* DailySystemBroadcast in Frameworks */ = {isa = PBXBuildFile; productRef = CCEAD3903063F0750078A14D /* DailySystemBroadcast */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		9073BCFC2ACAF9C500283154 /* DailyDemoScreenCaptureExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DailyDemoScreenCaptureExtension.entitlements; sourceTree = "<group>"; };
 		9073BCFD2ACAF9D800283154 /* DailyDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DailyDemo.entitlements; sourceTree = "<group>"; };
 		90AB8E7E2CC6F72800AE37B3 /* LoopingAudioSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopingAudioSource.swift; sourceTree = "<group>"; };
+		9AC0A0102CC6F72800AE37B3 /* CustomAudioInfoDictionary+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomAudioInfoDictionary+Extensions.swift"; sourceTree = "<group>"; };
 		CA183EDF28C60CB800BD4883 /* ViewToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewToggleButton.swift; sourceTree = "<group>"; };
 		CA1B725126DCF05B006E7E2C /* Daily.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Daily.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA1C6809284A3D1900303C63 /* ParticipantViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantViewController.swift; sourceTree = "<group>"; };
@@ -93,7 +95,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9073BCF02ACAF9B300283154 /* ReplayKit.framework in Frameworks */,
-				CC69AB223013BC4E002B3FA1 /* DailySystemBroadcast in Frameworks */,
+				CCEAD3913063F0750078A14D /* DailySystemBroadcast in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,9 +103,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CC69AB1E3013BC47002B3FA1 /* Daily in Frameworks */,
+				CCEAD38D3063EFD90078A14D /* Daily in Frameworks */,
 				CA4D7A7C27A424F000AC547E /* Logging in Frameworks */,
-				CC69AB203013BC47002B3FA1 /* DailySystemBroadcast in Frameworks */,
+				CCEAD38F3063EFD90078A14D /* DailySystemBroadcast in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,6 +135,7 @@
 		90AB8E7D2CC6F6F700AE37B3 /* customTracks */ = {
 			isa = PBXGroup;
 			children = (
+				9AC0A0102CC6F72800AE37B3 /* CustomAudioInfoDictionary+Extensions.swift */,
 				213BB3F32B6463A3003985A6 /* CustomVideoInfoDictionary+Extensions.swift */,
 				90AB8E7E2CC6F72800AE37B3 /* LoopingAudioSource.swift */,
 				210630062B5EFA3800A6C8B4 /* LoopingVideoSource.swift */,
@@ -209,7 +212,7 @@
 			);
 			name = DailyDemoScreenCaptureExtension;
 			packageProductDependencies = (
-				CC69AB213013BC4E002B3FA1 /* DailySystemBroadcast */,
+				CCEAD3903063F0750078A14D /* DailySystemBroadcast */,
 			);
 			productName = DailyDemoScreenCaptureExtension;
 			productReference = 9073BCEE2ACAF9B300283154 /* DailyDemoScreenCaptureExtension.appex */;
@@ -232,8 +235,8 @@
 			name = DailyDemo;
 			packageProductDependencies = (
 				CA4D7A7B27A424F000AC547E /* Logging */,
-				CC69AB1D3013BC47002B3FA1 /* Daily */,
-				CC69AB1F3013BC47002B3FA1 /* DailySystemBroadcast */,
+				CCEAD38C3063EFD90078A14D /* Daily */,
+				CCEAD38E3063EFD90078A14D /* DailySystemBroadcast */,
 			);
 			productName = DailyDemo;
 			productReference = CAE48E33266A8BDD00D2CA2E /* DailyDemo.app */;
@@ -267,7 +270,7 @@
 			mainGroup = CAE48E2A266A8BDD00D2CA2E;
 			packageReferences = (
 				CA4D7A7A27A424F000AC547E /* XCRemoteSwiftPackageReference "swift-log" */,
-				CC69AB1C3013BC47002B3FA1 /* XCRemoteSwiftPackageReference "daily-client-ios" */,
+				CCEAD38B3063EFD90078A14D /* XCRemoteSwiftPackageReference "daily-client-ios" */,
 			);
 			productRefGroup = CAE48E34266A8BDD00D2CA2E /* Products */;
 			projectDirPath = "";
@@ -319,6 +322,7 @@
 				CAA41568288AABFF00CC8BBD /* ToggleButton.swift in Sources */,
 				CAE48E37266A8BDD00D2CA2E /* AppDelegate.swift in Sources */,
 				6109E304294A849B001FCB06 /* PrebuiltChatAppMessage.swift in Sources */,
+				9AC0A0112CC6F72800AE37B3 /* CustomAudioInfoDictionary+Extensions.swift in Sources */,
 				213BB3F42B6463A3003985A6 /* CustomVideoInfoDictionary+Extensions.swift in Sources */,
 				2DD920FC26FA118800DD526E /* CallViewController.swift in Sources */,
 				CA183EE028C60CB800BD4883 /* ViewToggleButton.swift in Sources */,
@@ -363,7 +367,7 @@
 				INFOPLIST_FILE = DailyDemoScreenCaptureExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DailyDemoScreenCaptureExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -392,7 +396,7 @@
 				INFOPLIST_FILE = DailyDemoScreenCaptureExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = DailyDemoScreenCaptureExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -460,7 +464,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MARKETING_VERSION = 0.25.0;
+				MARKETING_VERSION = 0.40.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -516,7 +520,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MARKETING_VERSION = 0.25.0;
+				MARKETING_VERSION = 0.40.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -542,7 +546,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Daily iOS Demo";
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -565,15 +569,17 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = DailyDemo/DailyDemo.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = EEBGKV9N3N;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = EEBGKV9N3N;
 				FRAMEWORK_SEARCH_PATHS = "${TARGET_BUILD_DIR}/Daily.framework";
 				INFOPLIST_FILE = DailyDemo/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Daily iOS Demo";
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -581,7 +587,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = co.daily.DailyDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "Daily Demo Release";
 				SWIFT_OBJC_BRIDGING_HEADER = DailyDemo/BridgingHeader.h;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -629,12 +635,12 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		CC69AB1C3013BC47002B3FA1 /* XCRemoteSwiftPackageReference "daily-client-ios" */ = {
+		CCEAD38B3063EFD90078A14D /* XCRemoteSwiftPackageReference "daily-client-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/daily-co/daily-client-ios.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.39.0;
+				minimumVersion = 0.40.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -645,19 +651,19 @@
 			package = CA4D7A7A27A424F000AC547E /* XCRemoteSwiftPackageReference "swift-log" */;
 			productName = Logging;
 		};
-		CC69AB1D3013BC47002B3FA1 /* Daily */ = {
+		CCEAD38C3063EFD90078A14D /* Daily */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CC69AB1C3013BC47002B3FA1 /* XCRemoteSwiftPackageReference "daily-client-ios" */;
+			package = CCEAD38B3063EFD90078A14D /* XCRemoteSwiftPackageReference "daily-client-ios" */;
 			productName = Daily;
 		};
-		CC69AB1F3013BC47002B3FA1 /* DailySystemBroadcast */ = {
+		CCEAD38E3063EFD90078A14D /* DailySystemBroadcast */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CC69AB1C3013BC47002B3FA1 /* XCRemoteSwiftPackageReference "daily-client-ios" */;
+			package = CCEAD38B3063EFD90078A14D /* XCRemoteSwiftPackageReference "daily-client-ios" */;
 			productName = DailySystemBroadcast;
 		};
-		CC69AB213013BC4E002B3FA1 /* DailySystemBroadcast */ = {
+		CCEAD3903063F0750078A14D /* DailySystemBroadcast */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CC69AB1C3013BC47002B3FA1 /* XCRemoteSwiftPackageReference "daily-client-ios" */;
+			package = CCEAD38B3063EFD90078A14D /* XCRemoteSwiftPackageReference "daily-client-ios" */;
 			productName = DailySystemBroadcast;
 		};
 /* End XCSwiftPackageProductDependency section */

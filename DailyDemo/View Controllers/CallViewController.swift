@@ -59,6 +59,10 @@ class CallViewController: UIViewController {
     private lazy var callClient: CallClient = { [weak self] in
         let callClient = CallClient()
         callClient.delegate = self
+        
+        // Daily scope logs:
+        Daily.setLogLevel(.debug)
+        
         return callClient
     }()
     
@@ -73,6 +77,12 @@ class CallViewController: UIViewController {
     private lazy var customVideoSource = LoopingVideoSource()
     
     private lazy var customAudioSource = LoopingAudioSource()
+
+    // Remote custom audio tracks we have already asked for, keyed by participant.
+    // Kept so we only call updateSubscriptions() when the set actually changes:
+    // participantUpdated fires for many reasons that have nothing to do with
+    // custom audio.
+    private var subscribedCustomAudioTracks: [ParticipantID: [String]] = [:]
 
     // MARK: - Date coding
 
@@ -318,10 +328,7 @@ class CallViewController: UIViewController {
     private func setupCallClient() {
         self.callClient.updatePublishing(.set(
             camera: .set(
-                isPublishing: .set(self.cameraIsPublishing),
-                sendSettings: .set(
-                    allowAdaptiveLayers: .set(true)
-                )
+                isPublishing: .set(self.cameraIsPublishing)
             )
         ), completion: nil)
         self.callClient.updateSubscriptionProfiles(.set([
@@ -408,20 +415,26 @@ class CallViewController: UIViewController {
         )
         controller.preferredContentSize = pickerSize
 
-        let pickerFrame = CGRect(
-            origin: .zero,
-            size: pickerSize
-        )
-
-        let pickerView = UIPickerView(frame: pickerFrame)
+        let pickerView = UIPickerView()
         pickerView.dataSource = self
         pickerView.delegate = self
         let selectedRow = self.selectedDevicePickerRow()
         pickerView.selectRow(selectedRow, inComponent: 0, animated: false)
 
+        // Let Auto Layout own the picker's geometry. Creating it with a frame
+        // leaves translatesAutoresizingMaskIntoConstraints on, which pins its
+        // width to the frame we passed; inside an action sheet (whose content
+        // view is capped at 240pt) that fights the centring constraints and
+        // UIKit logs "Unable to simultaneously satisfy constraints". Pinning to
+        // the container's edges lets preferredContentSize drive the size.
+        pickerView.translatesAutoresizingMaskIntoConstraints = false
         controller.view.addSubview(pickerView)
-        pickerView.centerXAnchor.constraint(equalTo: controller.view.centerXAnchor).isActive = true
-        pickerView.centerYAnchor.constraint(equalTo: controller.view.centerYAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            pickerView.leadingAnchor.constraint(equalTo: controller.view.leadingAnchor),
+            pickerView.trailingAnchor.constraint(equalTo: controller.view.trailingAnchor),
+            pickerView.topAnchor.constraint(equalTo: controller.view.topAnchor),
+            pickerView.bottomAnchor.constraint(equalTo: controller.view.bottomAnchor),
+        ])
 
         let alert = UIAlertController(title: "Select audio route", message: "", preferredStyle: .actionSheet)
 
@@ -692,7 +705,59 @@ class CallViewController: UIViewController {
         self.localParticipantViewController.isActiveSpeaker = self.isActiveSpeaker(localParticipant)
     }
     
+    /// Subscribes to every remote participant's custom audio tracks.
+    ///
+    /// Custom tracks are not auto-subscribed. A track with no explicit
+    /// subscription resolves to `unsubscribed`, so a participant publishing
+    /// custom audio is silent until we ask for it -- publishing alone is not
+    /// enough to be heard.
+    ///
+    /// Custom *video* is subscribed the same way but in `ParticipantViewController`,
+    /// tied to whichever participant is on screen, because only one is displayed.
+    /// Audio deliberately is not: you should hear everyone, not just whoever is
+    /// currently visible.
+    ///
+    /// This only ever adds subscriptions. A track that disappears takes its
+    /// settings with it, so there is nothing to unsubscribe from.
+    private func updateCustomAudioSubscriptions(
+        remoteParticipants: [ParticipantID: Participant]
+    ) {
+        var desired: [ParticipantID: [String]] = [:]
+        for (id, participant) in remoteParticipants {
+            let trackNames = participant.media?.customAudio.subscribableTrackNames ?? []
+            if !trackNames.isEmpty {
+                desired[id] = trackNames
+            }
+        }
+
+        guard desired != self.subscribedCustomAudioTracks else {
+            return
+        }
+        self.subscribedCustomAudioTracks = desired
+
+        var updates: SubscriptionSettingsUpdatesByID.ValuesByKey = [:]
+        for (id, trackNames) in desired {
+            var tracks: [String: Update<MicrophoneSubscriptionSettingsUpdate>] = [:]
+            for trackName in trackNames {
+                tracks[trackName] = .set(subscriptionState: .set(.subscribed))
+            }
+            updates[id] = .set(media: .set(customAudio: tracks))
+        }
+
+        guard !updates.isEmpty else {
+            return
+        }
+
+        logger.debug("Subscribing to custom audio tracks: \(dumped(desired))")
+        self.callClient.updateSubscriptions(
+            forParticipants: .set(.init(updates)),
+            completion: nil
+        )
+    }
+
     private func update(remoteParticipants: [ParticipantID: Participant]) {
+        self.updateCustomAudioSubscriptions(remoteParticipants: remoteParticipants)
+
         var remoteParticipantToDisplay: Participant?
         
         // Choose a remote participant to display by going down the priority list:
