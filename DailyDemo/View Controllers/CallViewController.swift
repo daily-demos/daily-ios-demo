@@ -1,4 +1,5 @@
 import AVFoundation
+import CallKit
 import ReplayKit
 import Combine
 import Daily
@@ -83,6 +84,28 @@ class CallViewController: UIViewController {
     // participantUpdated fires for many reasons that have nothing to do with
     // custom audio.
     private var subscribedCustomAudioTracks: [ParticipantID: [String]] = [:]
+
+    // MARK: - T-4717 CallKit repro
+
+    // Audio-only CallKit provider used to simulate an incoming call. The join
+    // is deferred until CallKit activates the audio session (didActivate),
+    // matching the customer's app.
+    private lazy var callKitProvider: CXProvider = {
+        let configuration = CXProviderConfiguration()
+        configuration.supportsVideo = false
+        configuration.maximumCallGroups = 1
+        configuration.maximumCallsPerCallGroup = 1
+        configuration.supportedHandleTypes = [.generic]
+        let provider = CXProvider(configuration: configuration)
+        provider.setDelegate(self, queue: nil)
+        return provider
+    }()
+
+    private var callKitCallUUID: UUID?
+    private var shouldJoinOnAudioSessionActivation = false
+
+    private let simulateIncomingCallButton = UIButton(type: .system)
+    private let reproSummaryView = UITextView()
 
     // MARK: - Date coding
 
@@ -272,6 +295,143 @@ class CallViewController: UIViewController {
         
         self.systemBroadcastPickerView.preferredExtension = "co.daily.DailyDemo.DailyDemoScreenCaptureExtension"
         self.systemBroadcastPickerView.showsMicrophoneButton = false
+
+        self.setupReproViews()
+    }
+
+    // Overlay pinned to the top-left: a "Simulate incoming call" button and a
+    // selectable text view with the timing marks and session IDs.
+    private func setupReproViews() {
+        self.simulateIncomingCallButton.setTitle("Simulate incoming call", for: .normal)
+        self.simulateIncomingCallButton.backgroundColor = UIColor.systemBackground.withAlphaComponent(0.8)
+        self.simulateIncomingCallButton.contentEdgeInsets = UIEdgeInsets(top: 6, left: 10, bottom: 6, right: 10)
+        self.simulateIncomingCallButton.layer.cornerRadius = 8
+        self.simulateIncomingCallButton.addTarget(
+            self,
+            action: #selector(simulateIncomingCall),
+            for: .touchUpInside
+        )
+
+        self.reproSummaryView.isEditable = false
+        self.reproSummaryView.isScrollEnabled = false
+        self.reproSummaryView.backgroundColor = UIColor.systemBackground.withAlphaComponent(0.8)
+        self.reproSummaryView.font = UIFont.monospacedSystemFont(ofSize: 10, weight: .regular)
+        self.reproSummaryView.layer.cornerRadius = 8
+        self.reproSummaryView.text = ReproTimer.shared.summary
+
+        let stack = UIStackView(arrangedSubviews: [
+            self.simulateIncomingCallButton,
+            self.reproSummaryView,
+        ])
+        stack.axis = .vertical
+        stack.alignment = .leading
+        stack.spacing = 6
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(stack)
+        NSLayoutConstraint.activate([
+            stack.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 8),
+            stack.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 8),
+            stack.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.7),
+        ])
+
+        ReproTimer.shared.onChange = { [weak self] summary in
+            DispatchQueue.main.async {
+                self?.reproSummaryView.text = summary
+            }
+        }
+    }
+
+    @objc private func simulateIncomingCall() {
+        self.simulateIncomingCallButton.isEnabled = false
+        ReproTimer.shared.reset(label: "callkit (incoming call in 3s)")
+
+        // Keep the app alive during the 3s delay so the user can lock or
+        // background the phone before the call is reported.
+        var backgroundTask: UIBackgroundTaskIdentifier = .invalid
+        backgroundTask = UIApplication.shared.beginBackgroundTask {
+            UIApplication.shared.endBackgroundTask(backgroundTask)
+            backgroundTask = .invalid
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            let uuid = UUID()
+            self.callKitCallUUID = uuid
+            self.shouldJoinOnAudioSessionActivation = true
+
+            let update = CXCallUpdate()
+            update.remoteHandle = CXHandle(type: .generic, value: "T-4717 web caller")
+            update.hasVideo = false
+            update.supportsGrouping = false
+            update.supportsUngrouping = false
+            update.supportsHolding = false
+
+            self.callKitProvider.reportNewIncomingCall(with: uuid, update: update) { error in
+                if let error = error {
+                    ReproTimer.shared.note("reportNewIncomingCall failed: \(error)")
+                    self.callKitCallUUID = nil
+                    self.shouldJoinOnAudioSessionActivation = false
+                    DispatchQueue.main.async {
+                        self.simulateIncomingCallButton.isEnabled = true
+                    }
+                } else {
+                    ReproTimer.shared.note("incoming call reported")
+                }
+                if backgroundTask != .invalid {
+                    UIApplication.shared.endBackgroundTask(backgroundTask)
+                    backgroundTask = .invalid
+                }
+            }
+        }
+    }
+
+    // Shared join path for the direct "Join" button and the CallKit path, so
+    // the two produce the same timing marks.
+    private func startJoin(source: String) {
+        let roomURLString = self.roomURLField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        guard let roomURL = URL(string: roomURLString) else {
+            ReproTimer.shared.note("no room URL in the field, join skipped")
+            return
+        }
+        let tokenString = self.tokenField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let roomToken = tokenString.flatMap { $0.isEmpty ? nil : MeetingToken(stringValue: $0) }
+
+        ReproTimer.shared.note("join source: \(source)")
+        ReproTimer.shared.mark("joinStart")
+
+        self.callClient.join(url: roomURL, token: roomToken) { result in
+            switch result {
+            case .success(let joinData):
+                ReproTimer.shared.mark("joined")
+                logger.info("Joined room: '\(roomURLString)'")
+                self.roomURLString = roomURLString
+                ReproTimer.shared.note("mtgSessionId: \(joinData.meetingSession.id.uuidString)")
+                ReproTimer.shared.note("userSessionId: \(joinData.participants.local.id.uuidString)")
+            case .failure(let error):
+                ReproTimer.shared.note("join failed: \(error)")
+                logger.error("\(error)")
+            }
+        }
+    }
+
+    private func recordMicrophoneMarks(for participant: Participant) {
+        guard participant.media?.microphone.state == .playable else {
+            return
+        }
+        if participant.info.isLocal {
+            ReproTimer.shared.mark("localMicPlayable")
+        } else {
+            ReproTimer.shared.mark("remoteMicPlayable")
+        }
+    }
+
+    private func endCallKitCallIfNeeded() {
+        guard let uuid = self.callKitCallUUID else {
+            return
+        }
+        self.callKitCallUUID = nil
+        self.shouldJoinOnAudioSessionActivation = false
+        self.callKitProvider.reportCall(with: uuid, endedAt: nil, reason: .remoteEnded)
+        self.simulateIncomingCallButton.isEnabled = true
     }
     
     private func setupDevModeFeaturesViews() {
@@ -464,22 +624,8 @@ class CallViewController: UIViewController {
         let callState = self.callClient.callState
         switch callState {
         case .initialized, .left:
-            let roomURLString = self.roomURLField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-            guard let roomURL = URL(string: roomURLString) else {
-                return
-            }
-            let tokenString = self.tokenField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
-            let roomToken = tokenString.map { MeetingToken(stringValue: $0) }
-            
-            self.callClient.join(url: roomURL, token: roomToken) { result in
-                switch result {
-                case .success(_):
-                    logger.info("Joined room: '\(roomURLString)'")
-                    self.roomURLString = roomURLString
-                case .failure(let error):
-                    logger.error("\(error)")
-                }
-            }
+            ReproTimer.shared.reset(label: "direct join button")
+            self.startJoin(source: "join button")
         case .joined:
             self.callClient.leave(completion: nil)
         case .joining, .leaving:
@@ -953,6 +1099,7 @@ extension CallViewController: CallClientDelegate {
         if case .left = callClient.callState {
             self.localParticipantViewController.participant = nil
             self.remoteParticipantViewController.participant = nil
+            self.endCallKitCallIfNeeded()
         } else if case .joined = callClient.callState {
             if let callConfiguration = callClient.callConfiguration {
                 logger.info("callConfiguration: \(callConfiguration)")
@@ -995,7 +1142,8 @@ extension CallViewController: CallClientDelegate {
         
         // Check if our logic adds said participant to the collection from event...
         assert(callClient.participants.all[participant.id] != nil)
-        
+
+        recordMicrophoneMarks(for: participant)
         updateParticipantViewControllers()
     }
     
@@ -1007,7 +1155,8 @@ extension CallViewController: CallClientDelegate {
         logger.debug("\(dumped(participant))")
         
         assert(callClient.participants.all[participant.id] == participant)
-        
+
+        recordMicrophoneMarks(for: participant)
         updateParticipantViewControllers()
     }
     
@@ -1182,6 +1331,50 @@ extension CallViewController: CallClientDelegate {
         networkConnectionStatusUpdated status: NetworkConnectionStatusUpdate
     ) {
         logger.info("Network connection updated: \(status)")
+    }
+}
+
+extension CallViewController: CXProviderDelegate {
+    func providerDidReset(_ provider: CXProvider) {
+        logger.info("CallKit provider reset")
+        self.callKitCallUUID = nil
+        self.shouldJoinOnAudioSessionActivation = false
+        if self.isJoined {
+            self.callClient.leave(completion: nil)
+        }
+    }
+
+    func provider(_ provider: CXProvider, perform action: CXAnswerCallAction) {
+        ReproTimer.shared.mark("answer")
+        action.fulfill()
+    }
+
+    func provider(_ provider: CXProvider, perform action: CXEndCallAction) {
+        logger.info("CallKit end call action")
+        self.callKitCallUUID = nil
+        self.shouldJoinOnAudioSessionActivation = false
+        self.simulateIncomingCallButton.isEnabled = true
+        if self.isJoined || self.callClient.callState == .joining {
+            self.callClient.leave(completion: nil)
+        }
+        action.fulfill()
+    }
+
+    func provider(_ provider: CXProvider, didActivate audioSession: AVAudioSession) {
+        ReproTimer.shared.mark("didActivate")
+        ReproTimer.shared.note(
+            "audio session on activate: \(audioSession.category.rawValue) / \(audioSession.mode.rawValue)"
+        )
+        guard self.shouldJoinOnAudioSessionActivation else {
+            return
+        }
+        self.shouldJoinOnAudioSessionActivation = false
+        self.startJoin(source: "callkit didActivate")
+    }
+
+    func provider(_ provider: CXProvider, didDeactivate audioSession: AVAudioSession) {
+        logger.info("CallKit did deactivate audio session")
+        ReproTimer.shared.note("didDeactivate audio session")
     }
 }
 
