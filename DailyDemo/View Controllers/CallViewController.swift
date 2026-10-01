@@ -232,10 +232,11 @@ class CallViewController: UIViewController {
         self.roomURLField.text = self.roomURLString
         
         // Update inputs to enable/disable inputs prior to joining:
-        // By default, we are always starting the demo app with the mic and camera on
+        // T-4717 repro: keep mic and camera off until join, so the SDK does not
+        // start the audio session before CallKit activates it.
         self.callClient.setInputsEnabled([
-            .camera: true,
-            .microphone: true
+            .camera: false,
+            .microphone: false
         ], completion: nil)
         
         // Update publishing to enable/disable publishing of inputs prior to joining:
@@ -397,6 +398,13 @@ class CallViewController: UIViewController {
 
         ReproTimer.shared.note("join source: \(source)")
         ReproTimer.shared.mark("joinStart")
+
+        // Turn the mic on right before join, like the customer's app does
+        // (update_inputs then join, without waiting).
+        self.callClient.setInputsEnabled([
+            .camera: false,
+            .microphone: true
+        ], completion: nil)
 
         self.callClient.join(url: roomURL, token: roomToken) { result in
             switch result {
@@ -1346,6 +1354,15 @@ extension CallViewController: CXProviderDelegate {
 
     func provider(_ provider: CXProvider, perform action: CXAnswerCallAction) {
         ReproTimer.shared.mark("answer")
+        // CallKit apps set the audio category before fulfilling the answer
+        // action, so CallKit can activate the session (Apple Speakerbox pattern).
+        // Category only: CallKit does the activation, not us.
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .voiceChat, options: [.allowBluetooth])
+            ReproTimer.shared.note("set category playAndRecord / voiceChat")
+        } catch {
+            ReproTimer.shared.note("setCategory failed: \(error)")
+        }
         action.fulfill()
     }
 
