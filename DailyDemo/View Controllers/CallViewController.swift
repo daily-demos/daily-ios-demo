@@ -70,6 +70,19 @@ class CallViewController: UIViewController {
 
     private var adaptiveHEVCEnabled: Bool = false
 
+    /// The codec the camera and the custom video track ask to be sent with.
+    /// It only applies when the SFU offers it; otherwise the SFU's default is used.
+    private var preferredCodec: VideoSendSettingsCodecName = .vp8
+
+    private lazy var codecButton: UIButton = {
+        var configuration = UIButton.Configuration.plain()
+        configuration.title = self.preferredCodec.rawValue.uppercased()
+        let button = UIButton(configuration: configuration)
+        button.showsMenuAsPrimaryAction = true
+        button.accessibilityIdentifier = "preferred-codec"
+        return button
+    }()
+
     private let userDefaults: UserDefaults = .standard
     
     private var localVideoSizeObserver: AnyCancellable? = nil
@@ -272,6 +285,51 @@ class CallViewController: UIViewController {
         
         self.systemBroadcastPickerView.preferredExtension = "co.daily.DailyDemo.DailyDemoScreenCaptureExtension"
         self.systemBroadcastPickerView.showsMicrophoneButton = false
+
+        self.setupCodecButton()
+    }
+
+    // Adds a menu at the end of the publishing row to pick the preferred video
+    // codec. That row has free space; the toolbar row is already full.
+    private func setupCodecButton() {
+        guard let stackView = self.microphonePublishingButton.superview as? UIStackView else {
+            return
+        }
+        stackView.addArrangedSubview(self.codecButton)
+        self.updateCodecMenu()
+    }
+
+    private func updateCodecMenu() {
+        self.codecButton.configuration?.title = self.preferredCodec.rawValue.uppercased()
+        self.codecButton.menu = UIMenu(
+            title: "Preferred codec",
+            children: VideoSendSettingsCodecName.allCases.map { codec in
+                UIAction(
+                    title: codec.rawValue.uppercased(),
+                    state: codec == self.preferredCodec ? .on : .off
+                ) { [weak self] _ in
+                    self?.setPreferredCodec(codec)
+                }
+            }
+        )
+    }
+
+    private func setPreferredCodec(_ codec: VideoSendSettingsCodecName) {
+        self.preferredCodec = codec
+        self.updateCodecMenu()
+
+        var customVideo: [String: CustomVideoPublishingSettingsUpdate] = [:]
+        if self.callClient.inputs.customVideo[customVideoName] != nil {
+            customVideo[customVideoName] = CustomVideoPublishingSettingsUpdate(
+                sendSettings: .set(preferredCodec: .set(codec))
+            )
+        }
+        self.callClient.updatePublishing(.set(
+            camera: .set(
+                sendSettings: .set(preferredCodec: .set(codec))
+            ),
+            customVideo: customVideo
+        ), completion: nil)
     }
     
     private func setupDevModeFeaturesViews() {
@@ -396,7 +454,11 @@ class CallViewController: UIViewController {
             self.callClient.updatePublishing(.set(
                 camera: .set(
                     isPublishing: .set(self.cameraIsPublishing),
-                    sendSettings: .fromDefaults
+                    sendSettings: .set(
+                        maxQuality: .fromDefaults,
+                        encodings: .fromDefaults,
+                        preferredCodec: .set(self.preferredCodec)
+                    )
                 )
             ), completion: nil)
         }
@@ -574,7 +636,10 @@ class CallViewController: UIViewController {
         let isPublishing = self.callClient.publishing.customVideo[customVideoName]?.isPublishing != true
         self.callClient.updatePublishing(.set(
             customVideo: [
-                customVideoName: .publishing(isPublishing)
+                customVideoName: CustomVideoPublishingSettingsUpdate(
+                    isPublishing: .set(isPublishing),
+                    sendSettings: .set(preferredCodec: .set(self.preferredCodec))
+                )
             ]), completion: nil)
     }
     
@@ -661,6 +726,11 @@ class CallViewController: UIViewController {
         // Update views based on current state:
         
         self.roomURLField.isEnabled = !self.isJoined
+
+        // The codec is chosen when the track is first sent, so it can only be
+        // changed before joining or after leaving.
+        let callState = self.callClient.callState
+        self.codecButton.isEnabled = callState == .initialized || callState == .left
         
         self.joinOrLeaveButton.isEnabled = self.canJoinOrLeave
         self.joinOrLeaveButton.isSelected = self.isJoined
